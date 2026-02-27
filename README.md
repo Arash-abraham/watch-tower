@@ -7,153 +7,150 @@
 <h1 align="center">⚡ Watch Tower</h1>
 
 <p align="center">
-  <strong>Real-Time Asset Monitoring Platform built with Laravel 12 & Livewire 3</strong>
+  <strong>Enterprise-Ready Real-Time Asset Monitoring</strong><br>
+  Built with Laravel 12 + Livewire 3
 </p>
 
 <p align="center">
-  Modern. Reactive. Scalable. Powerful.
+  <img src="https://img.shields.io/badge/Laravel-12-red?style=for-the-badge&logo=laravel" />
+  <img src="https://img.shields.io/badge/Livewire-3-blue?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Status-Active_Development-success?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Version-2.0-informational?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/License-MIT-lightgrey?style=for-the-badge" />
 </p>
 
 ---
 
-## 🚀 About Watch Tower
+# 🚀 Monitor Smarter. React Faster. Miss Nothing.
 
-**Watch Tower (v2)** is a complete evolution of the original project:
+**Watch Tower v2** is a full-scale transformation of the original CLI-based monitoring tool into a modern, reactive SaaS-ready platform.
 
-🔗 **Version 1 (Bat-Tower)**  
-Python + Flask CLI Tool  
-👉 https://github.com/Arash-abraham/Bat-Tower  
+> From script → to system  
+> From notifier → to real-time platform  
 
-Version 1 was:
-- Command-line only
-- Built with Python & Flask
-- Sent notifications **only to Discord**
-- Triggered only when a new asset was detected
-
-It worked.  
-But it was limited.
+🔗 **Version 1 (Bat-Tower – Python/Flask CLI)**  
+https://github.com/Arash-abraham/Bat-Tower  
 
 ---
 
-## ⚡ What Changed in Version 2?
+# 🧠 The Evolution
 
-Version 2 is not just an update —  
-It’s a full architectural transformation.
+## 🦇 Version 1 — Bat-Tower
 
-Now built with:
+- Built with Python + Flask  
+- CLI-only interface  
+- Triggered when new asset detected  
+- Sent notification only to Discord  
+- No dashboard  
+- No real-time UI  
+- No multi-user capability  
+
+It worked — but it was limited.
+
+---
+
+## ⚡ Version 2 — Watch Tower
+
+Now rebuilt with:
 
 - **Laravel 12**
 - **Livewire 3**
 - **Volt (Class-Based Components)**
 - **Tailwind CSS**
-- (Upcoming) **Laravel Echo for real-time broadcasting**
+- **Laravel Echo (Planned for WebSocket Broadcasting)**
 
-No more CLI.  
-No more single-channel alerts.  
-No more static outputs.
-
-Welcome to a full monitoring dashboard.
+This is not a refactor.  
+This is a complete architectural redesign.
 
 ---
 
-## ✨ Core Features (v2)
+# 💎 SaaS-Style Feature Highlights
 
-### 🖥 Reactive Web Dashboard
-Live updates without refreshing — powered by Livewire 3.
+## 🖥 Real-Time Reactive Dashboard
+No refresh.  
+No polling hacks.  
+Pure Livewire 3 reactivity.
 
-### 🔔 Multi-Channel Notifications
+Assets appear instantly when detected.
 
-When a new asset is detected from your targets, you can choose:
+---
 
-- ✅ Discord  
-- ✅ Telegram  
+## 🔔 Multi-Channel Smart Notifications
+
+When a new asset is detected from your targets, choose your preferred alert channel:
+
+- ✅ Discord Webhook  
+- ✅ Telegram Bot  
 - ✅ Instant In-Dashboard Notification  
-- 🔜 SMS (very high probability – planned integration)
+- 🔜 SMS Integration (high probability, planned)
 
-Unlike v1 which only supported Discord,  
-v2 gives you flexibility and real-time visibility.
+Unlike v1 which only supported Discord —  
+v2 gives you flexibility and redundancy.
 
 ---
 
-### ⚡ Real-Time Ready (Laravel Echo)
+## ⚡ Laravel Echo Ready (Real-Time Broadcasting)
 
-The system is designed to integrate with **Laravel Echo** for:
+The system is structured to integrate **Laravel Echo** for:
 
-- Live broadcast notifications  
-- Instant UI updates  
+- WebSocket-powered notifications  
+- Live broadcast events  
 - Future collaborative monitoring  
-- WebSocket-powered real-time interactions  
+- Real-time multi-user sync  
 
-Infrastructure is ready — full implementation is on the roadmap.
+Infrastructure prepared. Full rollout on roadmap.
 
 ---
 
-### 🧩 Clean Architecture
+## 🏗 Clean, Scalable Architecture
 
 - Volt class-based components  
-- Full Livewire 3 reactivity  
-- Structured backend logic  
-- Role-based authentication system  
-- Expandable for teams and APIs  
+- Fully reactive UI  
+- Role-based authentication  
+- Expandable to teams  
+- API-ready structure  
+- Designed for Docker deployment  
 
 ---
 
-### 🌙 Modern UI
+## 🌙 Modern Monitoring Experience
 
-- Tailwind CSS v3
-- Dark mode support
-- Responsive design
-- Clean monitoring-focused layout
+- Dark mode  
+- Responsive layout  
+- Clean monitoring-centric design  
+- Built for performance  
 
-Because monitoring should feel powerful.
-
----
-
-## 🛠 Tech Stack
-
-**Backend**
-- Laravel 12.x
-- PHP 8.3+
-
-**Frontend**
-- Livewire 3
-- Volt
-- Tailwind CSS
-
-**Database**
-- MySQL
-- PostgreSQL
-- SQLite
-
-**Notifications**
-- Discord Webhooks
-- Telegram Bot API
-- SMS Gateway (planned)
-
-**Real-Time**
-- Laravel Echo (Upcoming)
+Monitoring should feel powerful — not primitive.
 
 ---
 
-## 📊 Version 1 vs Version 2
+# 📊 Complete Comparison — v1 vs v2
 
-| Feature | 🦇 Bat-Tower (v1) | ⚡ Watch Tower (v2) |
-|----------|------------------|--------------------|
-| Tech Stack | Python + Flask | Laravel 12 + Livewire 3 + Volt |
-| Interface | CLI Only | Modern Web Dashboard |
-| Real-Time UI | ❌ None | ✅ Live Reactive UI |
+| Category | 🦇 Bat-Tower (v1) | ⚡ Watch Tower (v2) |
+|-----------|------------------|--------------------|
+| Core Stack | Python + Flask | Laravel 12 + Livewire 3 + Volt |
+| Interface | Command Line Only | Modern Web Dashboard |
+| UI Reactivity | ❌ None | ✅ Full Livewire Reactivity |
+| Real-Time Updates | ❌ No | ⚡ Laravel Echo (Planned) |
 | Notification Channels | Discord Only | Discord + Telegram + In-App |
-| SMS Support | ❌ No | 🔜 Very Likely |
-| Architecture | Script-Based | Full Web Application |
-| Scalability | Limited | Expandable (Teams / APIs) |
-| User Experience | Text Output | Responsive + Dark Mode |
+| SMS Support | ❌ No | 🔜 Planned |
+| User Authentication | ❌ None | ✅ Built-in Auth |
+| Role System | ❌ None | ✅ Expandable |
+| Multi-User Support | ❌ No | ✅ Architecture Ready |
+| Dashboard Visibility | ❌ None | ✅ Live Asset Feed |
+| Scalability | Limited Script | Full Web Application |
+| Deployment | Manual Execution | Docker-Ready (WIP) |
+| Code Structure | Script-Based | Component-Based Architecture |
+| API Capability | ❌ No | 🔜 Planned |
+| UX | Text Output | Responsive + Dark Mode |
+| Extensibility | Hard | Designed for Expansion |
 
-v1 was a script.  
-v2 is a platform.
+v1 was a utility.  
+v2 is a monitoring platform.
 
 ---
 
-## 🚀 Quick Start
+# 🚀 Quick Start
 
 ```bash
 # Clone repository
@@ -164,18 +161,18 @@ cd watch-tower
 composer install
 npm install && npm run dev
 
-# Setup environment
+# Environment setup
 cp .env.example .env
 php artisan key:generate
 
-# Run database
+# Database
 php artisan migrate --seed
 
-# Start server
+# Run server
 php artisan serve
 ```
 
-Open:
+Visit:
 
 http://localhost:8000
 
@@ -183,35 +180,40 @@ Start monitoring instantly.
 
 ---
 
-## 🗺 Roadmap
+# 🗺 Roadmap
 
-- [ ] Full Laravel Echo integration
-- [ ] SMS Notifications (Twilio or similar)
-- [ ] Multi-user team dashboards
+- [ ] Full Laravel Echo broadcasting
+- [ ] SMS integration (Twilio or similar)
+- [ ] Team dashboards
 - [ ] Advanced analytics
-- [ ] Mobile API layer
-- [ ] Full automated test suite
-- [ ] Docker production setup
+- [ ] Mobile/API layer
+- [ ] CI/CD pipeline
+- [ ] Full automated testing
+- [ ] Production Docker setup
 
 ---
 
-## 🤝 Contributing
+# 🤝 Contributing
 
-Ideas, improvements, performance optimizations?
+This project is evolving fast.
 
-Open an issue.  
-Submit a PR.  
+Have ideas?
+Performance optimizations?
+Architecture suggestions?
+
+Open an issue or submit a PR.
+
 Let’s build something powerful.
 
 ---
 
-## 📄 License
+# 📄 License
 
 MIT License
 
 ---
 
 <p align="center">
-  Crafted with ⚡ + ☕ by Arash Abraham  
-  February 2026
+  Built with ⚡ + ☕ by Arash Abraham  
+  2026
 </p>
