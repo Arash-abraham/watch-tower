@@ -4,8 +4,6 @@
   <img src="https://laravel.com/img/logotype.min.svg" width="180" alt="Laravel"> 
   <span style="font-size: 3rem; margin: 0 1rem;">+</span>
   <img src="https://livewire.laravel.com/img/logo.svg" width="180" alt="Livewire"> 
-  <span style="font-size: 3rem; margin: 0 1rem;">+</span>
-  <img src="https://volt.laravel.com/images/volt-logo.svg" width="140" alt="Volt">
 </div>
 
 <br>
@@ -18,12 +16,6 @@
 <br>
 
 <p align="center">
-  <a href="https://github.com/Arash-abraham/watch-tower/releases">
-    <img src="https://img.shields.io/github/v/release/Arash-abraham/watch-tower?style=for-the-badge&color=ef4444&logo=laravel&logoColor=white" alt="Latest Release">
-  </a>
-  <a href="https://github.com/Arash-abraham/watch-tower/stargazers">
-    <img src="https://img.shields.io/github/stars/Arash-abraham/watch-tower?style=for-the-badge&color=yellow" alt="Stars">
-  </a>
   <img src="https://img.shields.io/badge/Laravel-12.x-ff2d20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel 12">
   <img src="https://img.shields.io/badge/Livewire-3.x-4f46e5?style=for-the-badge&logo=livewire&logoColor=white" alt="Livewire 3">
   <img src="https://img.shields.io/badge/Volt-%E2%9A%A1-6366f1?style=for-the-badge" alt="Volt">
