@@ -192,10 +192,14 @@ This project is open to all — because knowledge and tools should not be limite
 
 <p align="center">
   <strong>Built by Arash Abraham — 2026</strong> 💡  
-  Watch Tower started as a tiny personal experiment, grew into a full web platform, and continues to evolve.  
-  This project is actively **in development**, and I’m exploring the possibility of collaborating with a small team in the near future.  
-  If you’re interested in contributing or working together, feel free to reach out on Telegram: <strong>@Octawian</strong> 📬  
-  Your ideas, feedback, or code contributions are welcome — let’s build it together! 🚀
+  Watch Tower started as a tiny personal experiment and grew into a full web platform. 🌐✨
+</p>
+
+<p align="center">
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHpkajdlMzgwb2VlMzQ2Mm91cW10ZHpqcDd0cnQxM2Z0NnYyemV4MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0DcbpggSvE5I0BK14f/giphy.gif" 
+       alt="Obito GIF" 
+       width="400" 
+       style="border-radius:15px;box-shadow:0px 8px 20px rgba(0,0,0,0.4);"/>
 </p>
 
 <p align="center">
