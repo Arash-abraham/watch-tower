@@ -1,111 +1,93 @@
-# Watch Tower v2 ⚡👀
+# Watch Tower ⚡ <img src="https://laravel.com/img/logomark.min.svg" alt="Laravel" width="30" height="30" style="vertical-align: middle; margin-left: 10px;"> <img src="https://livewire.laravel.com/img/livewire-logo.svg" alt="Livewire" width="30" height="30" style="vertical-align: middle; margin-left: 5px;">
 
-<div align="center">
-  <img src="https://laravel.com/img/logotype.min.svg" width="180" alt="Laravel"> 
-  <span style="font-size: 3rem; margin: 0 1rem;">+</span>
-  <img src="https://livewire.laravel.com/img/logo.svg" width="180" alt="Livewire"> 
-</div>
+A sleek, modern web application for monitoring and notifications – powered by **Laravel 12**, **Livewire 3** + **Volt**.  
+This is **Version 2** of the original [Bat-Tower](https://github.com/Arash-abraham/Bat-Tower), rebuilt from the ground up for better performance, usability, and features.  
+Currently under active development – stay tuned for more!
 
-<br>
+> "Elevate your monitoring game: real-time insights, flexible notifications, and effortless scalability."
 
-<div align="center">
-  <h3>The next generation of asset & target monitoring</h3>
-  <p><strong>v2 is here</strong> — faster, prettier, more channels, real dashboard</p>
-</div>
+## Why Version 2? (Better Than Ever)
 
-<br>
+The original Bat-Tower (v1) was a Python + Flask CLI tool – efficient but limited: it ran in the terminal, detected new assets from targets, and only sent notifications to Discord.  
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Laravel-12.x-ff2d20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel 12">
-  <img src="https://img.shields.io/badge/Livewire-3.x-4f46e5?style=for-the-badge&logo=livewire&logoColor=white" alt="Livewire 3">
-  <img src="https://img.shields.io/badge/Volt-%E2%9A%A1-6366f1?style=for-the-badge" alt="Volt">
-</p>
+Now, **Watch Tower (v2)** transforms it into a full-fledged web app:  
+- Choose your notification channels: Discord, Telegram, or both.  
+- Real-time alerts right in the dashboard – no more waiting for external apps.  
+- High chance of SMS integration soon for even broader reach.  
+- Built with a reactive UI for seamless user experience.  
 
-<br>
+Upgrade to v2 for a more intuitive, extensible, and powerful monitoring solution!
 
-### What’s new in v2 (compared to v1)
+## ✨ Key Features
 
-| Feature                          | Watch Tower v1 (Python + Flask)     | Watch Tower v2 (Laravel + Livewire + Volt)              |
-|----------------------------------|--------------------------------------|-----------------------------------------------------------|
-| Interface                        | Only CLI                            | Beautiful real-time dashboard + CLI support              |
-| Notification channels            | Discord only                        | Discord + Telegram + In-app dashboard notifications      |
-| SMS support                      | No                                  | Very likely coming soon                                  |
-| Real-time updates                | No (polling or manual refresh)      | Full reactive UI with Livewire                           |
-| Asset / target discovery         | Basic                               | Smarter detection + richer metadata                      |
-| Tech stack                       | Python + Flask + Requests           | Laravel 12 + Livewire 3 + Volt + Tailwind                |
-| Development speed & maintainability | Moderate                          | Much faster iteration & cleaner code                     |
-| Mobile friendliness              | None                                | Responsive design + dark mode                            |
+- **Reactive Dashboard**: Live updates on new assets – powered by Livewire 3 and Volt's class-based components.  
+- **Multi-Channel Notifications**: Send alerts to Discord, Telegram, or view them instantly in-app. (SMS coming soon?)  
+- **Asset Monitoring**: Scan and detect new targets efficiently, with customizable rules.  
+- **User Authentication**: Secure login with Laravel Breeze (or your preferred stack).  
+- **Responsive Design**: Works beautifully on desktop, tablet, and mobile – with dark mode for late-night sessions.  
+- **Real-Time Ready**: Integrating Laravel Echo for broadcast notifications and live events.  
+- **Clean Architecture**: Single-file Volt components for rapid development and maintenance.  
 
-**v1 was a proof-of-concept CLI tool. v2 is the real product.**
+## 🛠️ Tech Stack
 
-<br>
+- **Backend**: Laravel 12.x – robust, scalable, and developer-friendly.  
+- **Frontend**: Livewire 3 + Volt – reactive components without the JavaScript fatigue.  
+- **Styling**: Tailwind CSS v3 + your favorite UI kit (e.g., DaisyUI or Flowbite) for pixel-perfect interfaces.  
+- **Database**: MySQL / PostgreSQL / SQLite – flexible storage options.  
+- **Real-Time**: Laravel Echo (upcoming) for seamless broadcasts.  
+- **Icons & Extras**: Heroicons or Lucide for crisp visuals; ready for expansions like Docker.  
 
-### ✨ Core Features
-
-- Real-time dashboard with Livewire reactivity
-- Instant in-app notifications when new assets/targets are discovered
-- Multiple notification channels:
-  - Discord webhook
-  - Telegram bot
-  - Browser/in-app toast notifications
-- Upcoming: SMS gateway integration
-- Clean Volt class-based components
-- Tailwind + modern UI components
-- Dark / light mode toggle
-- Easy target & asset management
-- History & logs viewer
-- Secure authentication
-
-<br>
-
-### 🚀 Quick Start
+## 🚀 Quick Start
 
 ```bash
-# Clone & enter directory
+# 1. Clone the repo
 git clone https://github.com/Arash-abraham/watch-tower.git
 cd watch-tower
 
-# Install PHP & JS dependencies
+# 2. Install dependencies
 composer install
-npm install && npm run dev    # or pnpm install && pnpm dev
+npm install && npm run dev    # or use pnpm / yarn / bun
 
-# Environment setup
+# 3. Setup environment
 cp .env.example .env
 php artisan key:generate
 
-# Database & migrations
-php artisan migrate --seed    # optional seed for demo data
+# 4. Run migrations & seed (if applicable)
+php artisan migrate --seed
 
-# Run (two terminals)
+# 5. Start the servers
 php artisan serve
+# In another terminal:
 npm run dev
 ```
 
-→ Open http://localhost:8000
+Head to http://localhost:8000 – start monitoring!
 
-<br>
+## 📸 Screenshots (Coming Soon)
 
-### 🗺️ Roadmap (short-term)
+- v1 CLI simplicity vs. v2's polished dashboard.  
+- Real-time notification previews in action.
 
-- [ ] SMS notifications (Twilio / Kavenegar / ... integration)
-- [ ] Advanced filtering & search on dashboard
-- [ ] Export reports (CSV / PDF)
-- [ ] Multi-user & team support
-- [ ] Docker compose ready for production
-- [ ] Unit + feature tests coverage ↑
-- [ ] Reverb / Echo for even faster real-time
+## 🗺️ Roadmap
 
-<br>
+- [ ] Full Laravel Echo integration for broadcast events.  
+- [ ] SMS notifications via Twilio or similar.  
+- [ ] Advanced asset scanning with AI enhancements.  
+- [ ] Role-based access for teams.  
+- [ ] Mobile app API endpoints.  
+- [ ] Comprehensive testing suite.  
+- [ ] Dockerized deployment for easy scaling.  
 
-### 🤝 Contributing & Feedback
+## 🤝 Contributing
 
-PRs, issues, feature requests, bug reports — all welcome.  
-Especially if you have ideas about better UX or new notification channels.
+Love Laravel and Livewire? Jump in! Open issues for bugs, suggestions, or PRs for features.  
+Especially welcome: ideas to make notifications even smarter.
 
-<br>
+## 📄 License
 
-<div align="center">
-  Made with ❤️ + Laravel 12 + Livewire + Volt + lots of ☕  
-  <br><br>
-  <strong>Enjoy watching your targets! 👀</strong>
-</div>
+MIT License – fork, modify, and build upon it freely (a star ⭐ would make my day!).
+
+---
+
+Crafted with ❤️, ⚡, and endless curiosity.  
+Last updated: February 2026
