@@ -1,160 +1,216 @@
+
 <p align="center">
   <img src="https://laravel.com/img/logomark.min.svg" height="80" alt="Laravel Logo" />
   &nbsp;&nbsp;&nbsp;&nbsp;
   <img src="https://livewire.laravel.com/img/logo.svg" height="80" alt="Livewire Logo" />
 </p>
 
-<h1 align="center">⚡ Watch Tower</h1>
+<h1 align="center">Watch Tower</h1>
 
 <p align="center">
-  <strong>Real-Time Asset Monitoring Platform</strong><br>
-  Built with Laravel 12 + Livewire 3
+  Real-Time Asset Monitoring Platform<br>
+  Built with Laravel 12 & Livewire 3
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Laravel-12-red?style=for-the-badge&logo=laravel" />
   <img src="https://img.shields.io/badge/Livewire-3-4E56A6?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Version-2.0-blue?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Status-Actively_Developed-success?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" />
   <img src="https://img.shields.io/badge/License-MIT-lightgrey?style=for-the-badge" />
 </p>
 
 ---
 
-# 🚀 From CLI Tool → To Real-Time Monitoring Platform
+# Real-Time Monitoring Without Blind Spots
 
-**Watch Tower v2** is a complete evolution of:
+Watch Tower is a modern monitoring system designed to detect newly added assets from defined targets and notify you instantly across multiple channels.
 
-🦇 **Bat-Tower (Version 1)**  
-Python + Flask CLI Tool  
-🔗 https://github.com/Arash-abraham/Bat-Tower  
+Version 2 is a complete architectural rebuild of:
 
----
-
-## 🦇 Version 1 – What It Was
-
-- Built with Python + Flask  
-- CLI-only interface  
-- Checked targets for new assets  
-- If found → Sent notification to Discord  
-- No dashboard  
-- No real-time UI  
-- No flexibility in notification channels  
-
-Simple. Functional. Limited.
+Bat-Tower (Version 1 – Python/Flask CLI)  
+https://github.com/Arash-abraham/Bat-Tower  
 
 ---
 
-# ⚡ Version 2 – What It Became
+# Hero Preview
 
-Rebuilt from the ground up using:
+<p align="center">
+  <img src="img/demo.gif" alt="Watch Tower Live Demo" width="900"/>
+</p>
 
-- **Laravel 12**
-- **Livewire 3**
-- **Volt (Class-Based Components)**
-- **Tailwind CSS**
-- Designed for **Laravel Echo (WebSocket Broadcasting)**
+> Replace `img/demo.gif` with your animated dashboard recording.
 
-This isn’t an upgrade.
+This dashboard demonstrates:
 
-It’s an architectural transformation.
-
----
-
-# 💎 SaaS-Style Feature Highlights
-
-## 🖥 1️⃣ Real-Time Reactive Dashboard
-
-A live monitoring control panel.
-
-- Assets appear instantly  
-- No refresh required  
-- Powered by Livewire 3 reactivity  
-- Designed for real-time experience  
-
-Feels like a SaaS product — not a script.
+- Live asset feed updates  
+- Instant notification triggers  
+- Multi-channel alert routing  
+- Reactive UI powered by Livewire 3  
 
 ---
 
-## 🔔 2️⃣ Smart Multi-Channel Notifications
+# Product Evolution
 
-When a new asset is detected from your targets:
+## Before Version 1 (Early Prototype)
 
-Choose your delivery channel:
+Originally, the system was a very small local script.
 
-- ✅ Discord Webhook  
-- ✅ Telegram Bot  
-- ✅ Instant In-Dashboard Notification  
-- 🔜 SMS Integration (very high probability – planned)
+It simply monitored HackerOne program updates and immediately printed when a new asset was added.
 
-Unlike v1 which only supported Discord,  
-v2 provides redundancy + flexibility.
+<p align="center">
+  <img src="img/photo_2026-02-27_18-22-04.jpg" alt="Early Monitoring Script Screenshot" width="700"/>
+</p>
 
-Never miss critical updates again.
+This was the seed.
 
 ---
 
-## ⚡ 3️⃣ Laravel Echo Ready (Real-Time Broadcasting)
+## Version 1 – Bat-Tower
 
-Infrastructure prepared for:
+- Python + Flask
+- CLI-only interface
+- Trigger-based detection
+- Discord-only notifications
+- No dashboard
+- No multi-user support
 
-- WebSocket-based live events  
-- Instant broadcast notifications  
-- Multi-user live synchronization  
-- Future collaborative monitoring  
-
-Laravel Echo integration is on the roadmap and architecturally supported.
-
----
-
-## 🔐 4️⃣ Authentication & Expandability
-
-- Built-in authentication system  
-- Role-ready structure  
-- Multi-user scalable design  
-- API-ready foundation  
-
-Ready to evolve into a team-ready SaaS platform.
+Functional, but limited in scope.
 
 ---
 
-## 🌙 5️⃣ Modern Monitoring Experience
+## Version 2 – Watch Tower
 
-- Dark mode  
-- Responsive layout  
-- Clean Tailwind UI  
-- Monitoring-focused UX  
+Rebuilt entirely using:
 
-Because powerful tools should look powerful.
+- Laravel 12
+- Livewire 3
+- Volt class-based components
+- Tailwind CSS
+- Architected for Laravel Echo (WebSocket broadcasting)
+
+This version introduces:
+
+- Reactive web dashboard
+- Multi-channel notifications
+- Authentication system
+- Scalable architecture
+- SaaS-ready foundation
 
 ---
 
-# 📊 Full Comparison — v1 vs v2
+# Core Capabilities
 
-| Category | 🦇 Bat-Tower (v1) | ⚡ Watch Tower (v2) |
-|-----------|------------------|--------------------|
+## Real-Time Reactive Dashboard
+
+Assets appear instantly without refresh.
+
+Powered by Livewire 3 reactivity, structured for Laravel Echo integration.
+
+Designed for speed and clarity.
+
+---
+
+## Multi-Channel Notification Engine
+
+When a new asset is detected:
+
+You choose how you’re notified:
+
+- Discord
+- Telegram
+- In-dashboard alerts
+- SMS (planned, high probability)
+
+Unlike v1 which supported only Discord, v2 introduces redundancy and flexibility.
+
+---
+
+## Laravel Echo Ready
+
+The architecture is prepared for:
+
+- WebSocket-powered live broadcasting
+- Real-time UI synchronization
+- Multi-user concurrent updates
+- Future collaborative monitoring features
+
+---
+
+# Full Comparison — v1 vs v2
+
+| Category | Bat-Tower (v1) | Watch Tower (v2) |
+|-----------|----------------|------------------|
 | Core Stack | Python + Flask | Laravel 12 + Livewire 3 + Volt |
 | Interface | CLI Only | Modern Web Dashboard |
-| UI Reactivity | ❌ None | ✅ Full Livewire Reactivity |
-| Real-Time Capability | ❌ No | ⚡ Laravel Echo Ready |
+| Real-Time UI | None | Live Reactive UI |
+| WebSockets | No | Laravel Echo Ready |
 | Notification Channels | Discord Only | Discord + Telegram + In-App |
-| SMS Alerts | ❌ No | 🔜 Planned |
-| Dashboard | ❌ None | ✅ Live Asset Feed |
-| Authentication | ❌ None | ✅ Built-in Auth |
-| Multi-User | ❌ No | ✅ Architecture Ready |
-| Role System | ❌ No | 🔜 Expandable |
+| SMS Support | No | Planned |
+| Dashboard | None | Live Monitoring Panel |
+| Authentication | None | Built-in Auth |
+| Multi-User | No | Architecture Ready |
+| Role System | No | Expandable |
 | Scalability | Script-Based | Full Web Application |
-| Deployment | Manual Run | Docker-Ready (WIP) |
+| Deployment | Manual | Docker-Ready (WIP) |
 | Extensibility | Limited | Designed for Growth |
 | UX | Text Output | Responsive + Dark Mode |
-| Architecture | Single Script | Component-Based System |
 
-v1 was a tool.  
-v2 is a platform.
+Version 1 was a script.
+
+Version 2 is a monitoring platform.
 
 ---
 
-# 🚀 Quick Start
+# For Users
+
+Watch Tower helps you:
+
+- Detect new assets instantly
+- Reduce manual monitoring
+- Centralize alerts
+- Scale monitoring workflows
+- Eliminate blind spots
+
+Built for security researchers, DevSecOps teams, and monitoring-heavy workflows.
+
+---
+
+# For Investors & Product Vision
+
+Watch Tower is positioned as:
+
+A scalable monitoring infrastructure platform.
+
+Potential expansion paths:
+
+- SaaS multi-tenant deployment
+- Subscription-based alert tiers
+- Team collaboration features
+- Enterprise integrations
+- API-based monitoring ecosystem
+- Advanced analytics & reporting layer
+
+With Laravel 12 foundation and reactive architecture, the product is designed for growth, not just utility.
+
+The goal is to evolve from a monitoring dashboard into a full asset intelligence platform.
+
+---
+
+# Roadmap
+
+- Full Laravel Echo broadcasting
+- SMS integration (Twilio or similar)
+- Multi-user team dashboards
+- Advanced analytics module
+- Public API
+- CI/CD automation
+- Production Docker setup
+- Comprehensive test coverage
+
+---
+
+# Quick Start
 
 ```bash
 git clone https://github.com/Arash-abraham/watch-tower.git
@@ -170,46 +226,18 @@ php artisan migrate --seed
 php artisan serve
 ```
 
-Open:
+Visit:
 
 http://localhost:8000
 
-Start monitoring instantly.
-
 ---
 
-# 🗺 Roadmap
-
-- [ ] Full Laravel Echo broadcasting
-- [ ] SMS integration (Twilio or similar)
-- [ ] Team dashboards
-- [ ] Advanced analytics
-- [ ] Mobile/API integration
-- [ ] CI/CD pipeline
-- [ ] Full test coverage
-- [ ] Production Docker setup
-
----
-
-# 🤝 Contributing
-
-Watch Tower is evolving fast.
-
-Ideas? Improvements? Architecture upgrades?
-
-Open an issue.  
-Submit a PR.  
-Let’s build something serious.
-
----
-
-# 📄 License
+# License
 
 MIT License
 
 ---
 
 <p align="center">
-  Crafted with ⚡ + ☕ by Arash Abraham  
-  2026
+  Built by Arash Abraham — 2026
 </p>
