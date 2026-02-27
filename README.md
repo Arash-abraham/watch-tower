@@ -1,4 +1,3 @@
-
 <p align="center">
   <img src="https://laravel.com/img/logomark.min.svg" height="80" alt="Laravel Logo" />
   &nbsp;&nbsp;&nbsp;&nbsp;
@@ -30,23 +29,6 @@ Version 2 is a complete architectural rebuild of:
 
 Bat-Tower (Version 1 – Python/Flask CLI)  
 https://github.com/Arash-abraham/Bat-Tower  
-
----
-
-# Hero Preview
-
-<p align="center">
-  <img src="img/demo.gif" alt="Watch Tower Live Demo" width="900"/>
-</p>
-
-> Replace `img/demo.gif` with your animated dashboard recording.
-
-This dashboard demonstrates:
-
-- Live asset feed updates  
-- Instant notification triggers  
-- Multi-channel alert routing  
-- Reactive UI powered by Livewire 3  
 
 ---
 
@@ -141,20 +123,20 @@ The architecture is prepared for:
 
 | Category | Bat-Tower (v1) | Watch Tower (v2) |
 |-----------|----------------|------------------|
-| Core Stack | Python + Flask | Laravel 12 + Livewire 3 + Volt |
-| Interface | CLI Only | Modern Web Dashboard |
-| Real-Time UI | None | Live Reactive UI |
-| WebSockets | No | Laravel Echo Ready |
-| Notification Channels | Discord Only | Discord + Telegram + In-App |
-| SMS Support | No | Planned |
-| Dashboard | None | Live Monitoring Panel |
-| Authentication | None | Built-in Auth |
-| Multi-User | No | Architecture Ready |
-| Role System | No | Expandable |
-| Scalability | Script-Based | Full Web Application |
-| Deployment | Manual | Docker-Ready (WIP) |
-| Extensibility | Limited | Designed for Growth |
-| UX | Text Output | Responsive + Dark Mode |
+| Core Stack | Python + Flask 🐍 | Laravel 12 + Livewire 3 + Volt 🛡️ |
+| Interface | CLI Only | Modern Web Dashboard 💻 |
+| Real-Time UI | ❌ None | ✅ Live Reactive UI |
+| WebSockets | ❌ No | ✅ Laravel Echo Ready |
+| Notification Channels | Discord Only | Discord + Telegram + In-App 🔔 |
+| SMS Support | ❌ No | Planned 📱 |
+| Dashboard | ❌ None | Live Monitoring Panel 📊 |
+| Authentication | ❌ None | Built-in Auth 🔑 |
+| Multi-User | ❌ No | Architecture Ready 👥 |
+| Role System | ❌ No | Expandable 🏷️ |
+| Scalability | Script-Based | Full Web Application 🌐 |
+| Deployment | Manual | Docker-Ready (WIP) 🐳 |
+| Extensibility | Limited | Designed for Growth 🌱 |
+| UX | Text Output | Responsive + Dark Mode 🌙 |
 
 Version 1 was a script.
 
@@ -210,28 +192,6 @@ The goal is to evolve from a monitoring dashboard into a full asset intelligence
 
 ---
 
-# Quick Start
-
-```bash
-git clone https://github.com/Arash-abraham/watch-tower.git
-cd watch-tower
-
-composer install
-npm install && npm run dev
-
-cp .env.example .env
-php artisan key:generate
-
-php artisan migrate --seed
-php artisan serve
-```
-
-Visit:
-
-http://localhost:8000
-
----
-
 # License
 
 MIT License
@@ -240,4 +200,11 @@ MIT License
 
 <p align="center">
   Built by Arash Abraham — 2026
+</p>
+
+<p align="center">
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHpkajdlMzgwb2VlMzQ2Mm91cW10ZHpqcDd0cnQxM2Z0NnYyemV4MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0DcbpggSvE5I0BK14f/giphy.gif" 
+       alt="Obito GIF" 
+       width="400" 
+       style="border-radius:15px;box-shadow:0px 8px 20px rgba(0,0,0,0.4);"/>
 </p>
