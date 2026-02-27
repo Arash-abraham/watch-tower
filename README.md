@@ -1,88 +1,98 @@
-# Watch Tower v2 ⚡🔭
+# Watch Tower v2 ⚡
 
 <div align="center">
-  <img src="https://laravel.com/img/logotype.min.svg" width="180" alt="Laravel Logo">
-  <br><br>
-  <img src="https://livewire.laravel.com/img/logo.svg" width="140" alt="Livewire Logo">
-  <br><br>
-  <h3>A modern, reactive web dashboard built with Laravel 12 + Livewire 3 + Volt</h3>
-  <p><strong>v2 is here – way better, prettier, and actually usable!</strong></p>
+  <img src="https://download.logo.wine/logo/Laravel/Laravel-Logo.wine.png" alt="Laravel" width="80" style="vertical-align: middle; margin: 0 10px;">
+  <span style="font-size: 2.5em; vertical-align: middle; color: #ff2d20;">+</span>
+  <img src="https://picperf.io/https://laravelnews.s3.amazonaws.com/images/laravel-livewire.png" alt="Livewire" width="180" style="vertical-align: middle; margin: 0 10px;">
+  <span style="font-size: 2.5em; vertical-align: middle; color: #007bff;">+</span>
+  <img src="https://pbs.twimg.com/media/F1gZ_otWwAc9qGp.jpg" alt="Volt" width="80" style="vertical-align: middle; margin: 0 10px; border-radius: 12px;">
 </div>
 
----
+<br>
 
-> From a simple Python + Flask CLI tool → to a beautiful, real-time web application  
-> Watch Tower v2 is the complete glow-up.
+**Watch Tower v2** – A modern, reactive web application rebuilt from the ground up.
 
-## What's New in v2 (compared to v1)
+This is the **second major version** – completely rewritten in **Laravel 12** + **Livewire 3** + **Volt** for a dramatically better experience.
 
-| Feature                  | v1 (Python + Flask)          | v2 (Laravel 12 + Livewire + Volt)              |
-|--------------------------|------------------------------|-------------------------------------------------|
-| Interface                | Command-line only            | Modern SPA-like web UI, reactive & beautiful    |
-| Real-time updates        | No                           | Yes – instant reactivity with Livewire          |
-| Frontend framework       | None (just HTML?)            | Livewire 3 + Volt (class-based components)      |
-| Styling                  | Basic / none                 | Tailwind CSS + modern component library         |
-| Authentication           | Maybe basic                  | Built-in (Breeze/Jetstream or custom)           |
-| Mobile / Responsive      | No                           | Yes – looks great on phone & tablet             |
-| Dark mode                | No                           | Yes – automatic + toggle                        |
-| Development speed        | Slow iterations              | Blazing fast with Volt & Laravel's ecosystem    |
-| Future-proof             | Limited                      | Laravel 12 ecosystem + Reverb, Pulse, etc.      |
+Previous version (v1): [Bat-Tower](https://github.com/Arash-abraham/Bat-Tower)  
+→ Built with **Python + Flask**, **pure command-line interface** (no real UI, just terminal magic).
 
-## ✨ Highlights of v2
+v2 brings a beautiful, interactive, real-time capable web UI while keeping the core idea alive.
 
-- Laravel **12** – the latest & greatest
-- **Volt** functional components – clean, elegant, powerful
-- Full **Livewire 3** magic – zero JavaScript fatigue
-- Tailwind + modern UI kit (DaisyUI / Flowbite / Shadcn-Laravel / ...)
-- Beautiful dark mode by default
-- Clean architecture with domain-driven structure
-- Ready for real-time (Laravel Reverb / Echo planned)
-- Much better DX – hot-reloading, auto-refresh, Volt dev tools
+> "From terminal to browser – faster, prettier, more powerful."
 
-## 🚀 Get Started in 60 Seconds
+## ✨ Why v2 is way better
+
+- Full modern web interface (no more staring at terminal output)
+- Instant reactivity with Livewire 3 & Volt functional components
+- Elegant single-file components (logic + view together)
+- Stunning Tailwind + modern component library look
+- Built on **Laravel 12** – latest features, better performance
+- Dark mode, responsive, mobile-friendly from day one
+- Ready for real-time (Reverb, Echo, notifications...)
+- Much cleaner code structure & easier to extend
+
+## 🛠 Tech Stack (v2)
+
+- **Backend** → Laravel 12.x
+- **Frontend Magic** → Livewire 3 + **Volt** (functional/class-based components)
+- **Styling** → Tailwind CSS v3 + (DaisyUI / Flowbite / custom components)
+- **Database** → MySQL / PostgreSQL / SQLite
+- **Icons** → Heroicons / Lucide
+- **Future** → Laravel Reverb, PWA support, Docker
+
+## 🚀 Quick Start
 
 ```bash
+# Clone & enter
 git clone https://github.com/Arash-abraham/watch-tower.git
 cd watch-tower
 
+# Install PHP deps
 composer install
+
+# Install frontend deps
 npm install && npm run dev    # or pnpm install && pnpm dev
 
+# Environment setup
 cp .env.example .env
 php artisan key:generate
+
+# Database
 php artisan migrate --seed    # if you have seeders
 
-# Run both in separate terminals
+# Run (two terminals)
 php artisan serve
+# second terminal:
 npm run dev
 ```
 
-→ Open http://localhost:8000
+Open → http://localhost:8000  
+Enjoy the glow-up! ✨
 
-Welcome to the upgraded Watch Tower! 🌙✨
+## 🗺 Roadmap (v2 & beyond)
 
-## 🗺️ What's Coming Next
+- [ ] More Volt functional components & cleanup
+- [ ] Real-time updates with Reverb + Echo
+- [ ] User roles, permissions, multi-tenancy
+- [ ] Advanced search & filtering
+- [ ] Export / import features
+- [ ] API layer for future mobile apps
+- [ ] Comprehensive test suite
+- [ ] Docker Compose + production deployment guide
 
-- Real-time notifications & live updates
-- Multi-user support + roles/permissions
-- PWA + offline capabilities
-- More Volt components & reusable blocks
-- API layer for future mobile apps
-- Better testing suite
-- Docker + production deployment guides
+## 🤝 Contributing
 
-## 🤝 Contributing & Feedback
+Love reactive UIs? Found a bug? Have a crazy idea?  
+Issues, PRs, discussions – all welcome!
 
-Love Volt? Hate something? Found a bug?  
-Issues, PRs, ideas – all welcome!
-
-Star ⭐ if you're excited about v2!
+Stars are very appreciated 🌟
 
 ## 📄 License
 
-MIT – free to use, modify, enjoy.
+MIT License – free to use, modify, enjoy.
 
 ---
 
-Made with ❤️ Laravel 12 + Livewire + Volt + way too much coffee  
+Made with ❤️, Laravel 12, Livewire 3, Volt & endless ☕  
 February 2026
