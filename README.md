@@ -188,6 +188,10 @@ With Laravel 12 foundation and reactive architecture, the product is designed fo
 In the world of the internet, everyone should be free to explore, learn, and share 🌐✨  
 This project is open to all — because knowledge and tools should not be limited by borders or connectivity. 🚀
 
+For the souls of my brave sisters and brothers in Iran, who rose for freedom and were silenced — over 40,000 voices crushed .  
+The world has learned from your courage.  
+
+Long live Iran!
 ---
 
 ## 🤝 Collaboration
