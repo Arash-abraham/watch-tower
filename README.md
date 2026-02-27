@@ -16,7 +16,6 @@
   <img src="https://img.shields.io/badge/Livewire-3-4E56A6?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Version-2.0-blue?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/License-MIT-lightgrey?style=for-the-badge" />
 </p>
 
 ---
@@ -188,10 +187,11 @@ With Laravel 12 foundation and reactive architecture, the product is designed fo
 In the world of the internet, everyone should be free to explore, learn, and share 🌐✨  
 This project is open to all — because knowledge and tools should not be limited by borders or connectivity. 🚀
 
-For the souls of my brave sisters and brothers in Iran, who rose for freedom and were silenced — over 40,000 voices crushed .  
+For the souls of my brave sisters and brothers in Iran, who rose for freedom and were silenced
+over 40,000 voices crushed .  
 The world has learned from your courage.  
-
 Long live Iran!
+
 ---
 
 ## 🤝 Collaboration
