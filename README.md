@@ -1,98 +1,119 @@
-# Watch Tower v2 ⚡
+# Watch Tower v2 ⚡👀
 
 <div align="center">
-  <img src="https://download.logo.wine/logo/Laravel/Laravel-Logo.wine.png" alt="Laravel" width="80" style="vertical-align: middle; margin: 0 10px;">
-  <span style="font-size: 2.5em; vertical-align: middle; color: #ff2d20;">+</span>
-  <img src="https://picperf.io/https://laravelnews.s3.amazonaws.com/images/laravel-livewire.png" alt="Livewire" width="180" style="vertical-align: middle; margin: 0 10px;">
-  <span style="font-size: 2.5em; vertical-align: middle; color: #007bff;">+</span>
-  <img src="https://pbs.twimg.com/media/F1gZ_otWwAc9qGp.jpg" alt="Volt" width="80" style="vertical-align: middle; margin: 0 10px; border-radius: 12px;">
+  <img src="https://laravel.com/img/logotype.min.svg" width="180" alt="Laravel"> 
+  <span style="font-size: 3rem; margin: 0 1rem;">+</span>
+  <img src="https://livewire.laravel.com/img/logo.svg" width="180" alt="Livewire"> 
+  <span style="font-size: 3rem; margin: 0 1rem;">+</span>
+  <img src="https://volt.laravel.com/images/volt-logo.svg" width="140" alt="Volt">
 </div>
 
 <br>
 
-**Watch Tower v2** – A modern, reactive web application rebuilt from the ground up.
+<div align="center">
+  <h3>The next generation of asset & target monitoring</h3>
+  <p><strong>v2 is here</strong> — faster, prettier, more channels, real dashboard</p>
+</div>
 
-This is the **second major version** – completely rewritten in **Laravel 12** + **Livewire 3** + **Volt** for a dramatically better experience.
+<br>
 
-Previous version (v1): [Bat-Tower](https://github.com/Arash-abraham/Bat-Tower)  
-→ Built with **Python + Flask**, **pure command-line interface** (no real UI, just terminal magic).
+<p align="center">
+  <a href="https://github.com/Arash-abraham/watch-tower/releases">
+    <img src="https://img.shields.io/github/v/release/Arash-abraham/watch-tower?style=for-the-badge&color=ef4444&logo=laravel&logoColor=white" alt="Latest Release">
+  </a>
+  <a href="https://github.com/Arash-abraham/watch-tower/stargazers">
+    <img src="https://img.shields.io/github/stars/Arash-abraham/watch-tower?style=for-the-badge&color=yellow" alt="Stars">
+  </a>
+  <img src="https://img.shields.io/badge/Laravel-12.x-ff2d20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel 12">
+  <img src="https://img.shields.io/badge/Livewire-3.x-4f46e5?style=for-the-badge&logo=livewire&logoColor=white" alt="Livewire 3">
+  <img src="https://img.shields.io/badge/Volt-%E2%9A%A1-6366f1?style=for-the-badge" alt="Volt">
+</p>
 
-v2 brings a beautiful, interactive, real-time capable web UI while keeping the core idea alive.
+<br>
 
-> "From terminal to browser – faster, prettier, more powerful."
+### What’s new in v2 (compared to v1)
 
-## ✨ Why v2 is way better
+| Feature                          | Watch Tower v1 (Python + Flask)     | Watch Tower v2 (Laravel + Livewire + Volt)              |
+|----------------------------------|--------------------------------------|-----------------------------------------------------------|
+| Interface                        | Only CLI                            | Beautiful real-time dashboard + CLI support              |
+| Notification channels            | Discord only                        | Discord + Telegram + In-app dashboard notifications      |
+| SMS support                      | No                                  | Very likely coming soon                                  |
+| Real-time updates                | No (polling or manual refresh)      | Full reactive UI with Livewire                           |
+| Asset / target discovery         | Basic                               | Smarter detection + richer metadata                      |
+| Tech stack                       | Python + Flask + Requests           | Laravel 12 + Livewire 3 + Volt + Tailwind                |
+| Development speed & maintainability | Moderate                          | Much faster iteration & cleaner code                     |
+| Mobile friendliness              | None                                | Responsive design + dark mode                            |
 
-- Full modern web interface (no more staring at terminal output)
-- Instant reactivity with Livewire 3 & Volt functional components
-- Elegant single-file components (logic + view together)
-- Stunning Tailwind + modern component library look
-- Built on **Laravel 12** – latest features, better performance
-- Dark mode, responsive, mobile-friendly from day one
-- Ready for real-time (Reverb, Echo, notifications...)
-- Much cleaner code structure & easier to extend
+**v1 was a proof-of-concept CLI tool. v2 is the real product.**
 
-## 🛠 Tech Stack (v2)
+<br>
 
-- **Backend** → Laravel 12.x
-- **Frontend Magic** → Livewire 3 + **Volt** (functional/class-based components)
-- **Styling** → Tailwind CSS v3 + (DaisyUI / Flowbite / custom components)
-- **Database** → MySQL / PostgreSQL / SQLite
-- **Icons** → Heroicons / Lucide
-- **Future** → Laravel Reverb, PWA support, Docker
+### ✨ Core Features
 
-## 🚀 Quick Start
+- Real-time dashboard with Livewire reactivity
+- Instant in-app notifications when new assets/targets are discovered
+- Multiple notification channels:
+  - Discord webhook
+  - Telegram bot
+  - Browser/in-app toast notifications
+- Upcoming: SMS gateway integration
+- Clean Volt class-based components
+- Tailwind + modern UI components
+- Dark / light mode toggle
+- Easy target & asset management
+- History & logs viewer
+- Secure authentication
+
+<br>
+
+### 🚀 Quick Start
 
 ```bash
-# Clone & enter
+# Clone & enter directory
 git clone https://github.com/Arash-abraham/watch-tower.git
 cd watch-tower
 
-# Install PHP deps
+# Install PHP & JS dependencies
 composer install
-
-# Install frontend deps
 npm install && npm run dev    # or pnpm install && pnpm dev
 
 # Environment setup
 cp .env.example .env
 php artisan key:generate
 
-# Database
-php artisan migrate --seed    # if you have seeders
+# Database & migrations
+php artisan migrate --seed    # optional seed for demo data
 
 # Run (two terminals)
 php artisan serve
-# second terminal:
 npm run dev
 ```
 
-Open → http://localhost:8000  
-Enjoy the glow-up! ✨
+→ Open http://localhost:8000
 
-## 🗺 Roadmap (v2 & beyond)
+<br>
 
-- [ ] More Volt functional components & cleanup
-- [ ] Real-time updates with Reverb + Echo
-- [ ] User roles, permissions, multi-tenancy
-- [ ] Advanced search & filtering
-- [ ] Export / import features
-- [ ] API layer for future mobile apps
-- [ ] Comprehensive test suite
-- [ ] Docker Compose + production deployment guide
+### 🗺️ Roadmap (short-term)
 
-## 🤝 Contributing
+- [ ] SMS notifications (Twilio / Kavenegar / ... integration)
+- [ ] Advanced filtering & search on dashboard
+- [ ] Export reports (CSV / PDF)
+- [ ] Multi-user & team support
+- [ ] Docker compose ready for production
+- [ ] Unit + feature tests coverage ↑
+- [ ] Reverb / Echo for even faster real-time
 
-Love reactive UIs? Found a bug? Have a crazy idea?  
-Issues, PRs, discussions – all welcome!
+<br>
 
-Stars are very appreciated 🌟
+### 🤝 Contributing & Feedback
 
-## 📄 License
+PRs, issues, feature requests, bug reports — all welcome.  
+Especially if you have ideas about better UX or new notification channels.
 
-MIT License – free to use, modify, enjoy.
+<br>
 
----
-
-Made with ❤️, Laravel 12, Livewire 3, Volt & endless ☕  
-February 2026
+<div align="center">
+  Made with ❤️ + Laravel 12 + Livewire + Volt + lots of ☕  
+  <br><br>
+  <strong>Enjoy watching your targets! 👀</strong>
+</div>
