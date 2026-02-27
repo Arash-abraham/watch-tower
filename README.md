@@ -201,10 +201,3 @@ This project is open to all — because knowledge and tools should not be limite
        width="400" 
        style="border-radius:15px;box-shadow:0px 8px 20px rgba(0,0,0,0.4);"/>
 </p>
-
-<p align="center">
-  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHpkajdlMzgwb2VlMzQ2Mm91cW10ZHpqcDd0cnQxM2Z0NnYyemV4MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0DcbpggSvE5I0BK14f/giphy.gif" 
-       alt="Obito GIF" 
-       width="400" 
-       style="border-radius:15px;box-shadow:0px 8px 20px rgba(0,0,0,0.4);"/>
-</p>
