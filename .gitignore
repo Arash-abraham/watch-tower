@@ -1,11 +1,23 @@
 /.phpunit.cache
+<<<<<<< HEAD
+=======
+/bootstrap/ssr
+>>>>>>> ee061b6750e2b23acc033af57bd6b9f0573a7266
 /node_modules
 /public/build
 /public/hot
 /public/storage
 /storage/*.key
 /storage/pail
+<<<<<<< HEAD
 /vendor
+=======
+/resources/js/actions
+/resources/js/routes
+/resources/js/wayfinder
+/vendor
+.DS_Store
+>>>>>>> ee061b6750e2b23acc033af57bd6b9f0573a7266
 .env
 .env.backup
 .env.production
