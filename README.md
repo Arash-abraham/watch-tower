@@ -1,59 +1,60 @@
-# Watch Tower - Laravel Livewire Wallet
+<div align="center">
 
-A simple digital wallet system built with **Laravel** + **Livewire** (v3).
+  <img src="https://laravel.com/img/logotype.min.svg" alt="Laravel" width="120">
+  <h1>Watch Tower ⚡</h1>
 
-> **Status:** In active development – not production-ready yet
+  <p>
+    <strong>A clean, modern Laravel project powered by Livewire 3 + Volt</strong><br>
+    Building something useful, one functional component at a time.
+  </p>
 
-Personal finance / virtual wallet project for learning & experimenting.
+  <p>
+    <a href="https://laravel.com"><img src="https://img.shields.io/badge/Laravel-12.x-ff2d20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel"></a>
+    <a href="https://livewire.laravel.com"><img src="https://img.shields.io/badge/Livewire-v3-4f46e5?style=for-the-badge&logo=livewire&logoColor=white" alt="Livewire"></a>
+    <a href="https://livewire.laravel.com/docs/volt"><img src="https://img.shields.io/badge/Volt-%E2%9A%A1-blueviolet?style=for-the-badge" alt="Volt"></a>
+  </p>
 
-## Current Features (so far)
+  <p>
+    <em>Under active development → expect magic ✨ soon</em>
+  </p>
 
-- User authentication (register/login)
-- Wallet balance display (real-time with Livewire)
-- Deposit money (manual for now)
-- Withdraw money with simple validation
-- Basic transaction history list
-- Responsive layout (Tailwind + some custom CSS)
+</div>
 
-## Planned / Coming Soon
+<br>
 
-- Multiple wallets per user
-- Transaction categories & search/filter
-- Export transactions (CSV/PDF)
-- Email notifications
-- Better security (2FA, rate limiting)
-- Dark mode toggle
-- Mobile-friendly improvements
+## ✨ What's this project?
 
-## Tech Stack
+Just a fresh Laravel application that's being shaped with:
 
-- Laravel 11 / 12 (depending on when you read this)
-- Livewire 3.x
-- Alpine.js
-- Tailwind CSS
-- MySQL / SQLite (for local dev)
-- Laravel Breeze or custom auth
+- **Livewire 3** + **Volt** → single-file components that feel like magic
+- Functional components (no more huge class files)
+- Tailwind CSS (of course)
+- Clean folder structure & modern practices
 
-## Installation (local development)
+Currently building [your main idea – e.g. a real-time dashboard / task manager / monitoring tool / whatever it is].  
+More features coming every week.
+
+<br>
+
+## 🚀 Quick Start
 
 ```bash
-# 1. Clone the repo
+# 1. Clone & go inside
 git clone https://github.com/Arash-abraham/watch-tower.git
 cd watch-tower
 
 # 2. Install dependencies
 composer install
-npm install && npm run dev    # or npm run build
+npm install && npm run dev    # or pnpm / yarn
 
-# 3. Copy env file
+# 3. Setup environment
 cp .env.example .env
-
-# 4. Generate app key
 php artisan key:generate
 
-# 5. Setup database
-php artisan migrate --seed   # optional: seeds some test data
+# 4. Database (sqlite for quick testing)
+touch database/database.sqlite
+php artisan migrate --seed
 
-# 6. Run the app
+# 5. Run it!
 php artisan serve
-# or better: php artisan livewire:serve (if you like hot-reload)
+# open http://127.0.0.1:8000
