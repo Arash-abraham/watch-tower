@@ -1,77 +1,94 @@
-# Watch Tower ⚡
+# Watch Tower ⚡ v2
 
-Modern, reactive web app powered by **Laravel 11** + **Livewire 3** + **Volt**  
-✨ Currently cooking v2 – expect something even cleaner and faster!
+**Modern, reactive dashboard & monitoring app**  
+Built with **Laravel 12** + **Livewire 3** + **Volt**  
 
-> "Watch what matters. React instantly. Stay elegant."
+This is **version 2** — cleaner, faster, more elegant than the previous one.
 
-## ✨ What's Cooking Right Now
+[Previous version (v1)](https://github.com/Arash-abraham/Bat-Tower) → much simpler structure, fewer features, old-school Livewire components.
 
-- Volt class-based components (the cool new Laravel way)
-- Zero-reload magic with Livewire 3
-- Tailwind CSS + beautiful component library vibes
-- Single-file Volt components – clean & organized
-- Breeze / custom auth with nice flows
-- Mobile-first responsive design that actually feels premium
-- Dark mode baked in (light mode is for screenshots only)
-- Preparing for real-time superpowers (Reverb + Echo on the horizon)
+v2 brings a complete rethink with class-based Volt components, better organization, improved DX, and modern Laravel 12 goodies.
 
-## 🛠 Tech That Feels Good
+> "Watch everything that matters — beautifully, reactively, without the bloat."
 
-- **Backend** → Laravel 11.x  
-- **Frontend Magic** → Livewire 3 + Volt  
-- **Styling** → Tailwind CSS v3 + (DaisyUI / Flowbite / your flavor)  
-- **Database** → MySQL • PostgreSQL • SQLite  
-- **Icons** → Heroicons / Lucide / whatever sparks joy  
-- **Future-proof** → Docker + deployment goodies in v2
+## ✨ What's New & Better in v2
 
-## 🚀 Get It Running in 60 Seconds
+- Pure **class-based Volt components** (no more messy blade + @script mess)
+- Laravel **12.x** — latest performance, type-hinting improvements, new packages ecosystem
+- Full **Livewire 3** reactivity + Volt functional elegance
+- Much cleaner architecture & naming conventions
+- Tailwind CSS v4-ready styling (with your favorite UI kit: DaisyUI / Flowbite / etc.)
+- Dark mode that actually looks premium
+- Mobile-first responsive design from day one
+- Prepared for real-time (Reverb + Echo integration planned)
+- Better separation of concerns → easier to scale & maintain
+
+## 🛠 Tech Stack (v2)
+
+- **Backend** → Laravel 12.x
+- **Frontend** → Livewire 3 + Volt (class-based)
+- **Styling** → Tailwind CSS v3/v4 + component library of choice
+- **Database** → MySQL / PostgreSQL / SQLite
+- **Icons** → Heroicons / Lucide / Remix Icon
+- **Future** → Laravel Reverb, Horizon, Telescope, Docker Compose
+
+## 🚀 Quick Start (v2)
 
 ```bash
-# Clone & jump in
+# Clone v2
 git clone https://github.com/Arash-abraham/watch-tower.git
 cd watch-tower
 
 # Install everything
 composer install
-npm install && npm run dev    # pnpm / yarn / bun also welcome
+npm install && npm run dev
 
 # Environment setup
 cp .env.example .env
 php artisan key:generate
 
-# Database (if needed)
-php artisan migrate --seed
+# Database
+php artisan migrate --seed   # if you have seeders
 
-# Fire it up!
-php artisan serve              # http://localhost:8000
-# In another terminal:
+# Run (two terminals)
+php artisan serve
 npm run dev
 ```
 
-Open http://localhost:8000 – and enjoy the reactivity ✨
+Open http://localhost:8000 — welcome to v2 ✨
 
-## 🗺️ v2 Roadmap (Getting Excited)
+## 🗺 Roadmap (still cooking)
 
-- [ ] More Volt functional-style love
-- [ ] Real-time everything (notifications, live updates)
-- [ ] Proper roles & permissions system
-- [ ] PWA + offline goodies
-- [ ] Public API layer
-- [ ] Solid test coverage
-- [ ] Docker Compose + GitHub Actions CI/CD
+- Real-time notifications & live updates
+- Advanced filtering & search
+- Role-based access control
+- API layer for future mobile/web apps
+- PWA support
+- Comprehensive test suite
+- Docker + production deployment guide
 
-## 🤝 Wanna Join the Fun?
+## Why v2 > v1?
 
-Issues, PRs, feature ideas, design suggestions – all welcome!  
-Especially if you're as obsessed with Volt as we are.
+- Better developer experience (Volt classes >> old Livewire syntax)
+- More maintainable code structure
+- Leverages latest Laravel 12 features
+- Prettier UI defaults
+- Easier to extend & add features
+
+v1 was a solid proof-of-concept — v2 is production-grade thinking.
+
+## 🤝 Contributing
+
+Love Volt? Hate messy code?  
+Issues, PRs, ideas — all welcome.  
+Let's make this even more beautiful together.
 
 ## 📄 License
 
-MIT – free to use, fork, remix, whatever.  
-A star 🌟 would make my day though!
+MIT — free to use, fork, modify.  
+A star would be awesome though 🌟
 
 ---
 
-Built with passion, caffeine, and a bit of Laravel magic  
-February 2026 • v1.x • v2 loading...
+Made with ❤️ + Laravel 12 + Volt magic  
+February 2026
