@@ -184,9 +184,7 @@ With Laravel 13 foundation and reactive architecture, the product is designed fo
 
 # With Respect and Remembrance
 
-Dedicated to the brave souls of Iran — my sisters and brothers who rose for freedom.
-Over 40,000 voices were silenced, but their courage echoes across the world.
-The world has learned from you.
+Dedicated to the bravest people on earth, my sisters and brothers who stood up for freedom. More than 40,000 voices were silenced, but their courage resonates around the world. The world has learned from you.
 
 Long live Iran. ❤️
 
