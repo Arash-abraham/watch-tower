@@ -182,15 +182,13 @@ With Laravel 13 foundation and reactive architecture, the product is designed fo
 
 ---
 
-# License
+# With Respect and Remembrance
 
-In the world of the internet, everyone should be free to explore, learn, and share 🌐✨  
-This project is open to all — because knowledge and tools should not be limited by borders or connectivity. 🚀
+Dedicated to the brave souls of Iran — my sisters and brothers who rose for freedom.
+Over 40,000 voices were silenced, but their courage echoes across the world.
+The world has learned from you.
 
-For the souls of my brave sisters and brothers in Iran, who rose for freedom and were silenced
-over 40,000 voices crushed .  
-The world has learned from your courage.  
-Long live Iran!
+Long live Iran. ❤️
 
 ---
 
