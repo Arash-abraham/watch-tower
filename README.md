@@ -64,7 +64,7 @@ Functional, but limited in scope. Bat-Tower was the bridge from experiment to pr
 
 Rebuilt entirely using:
 
-- Laravel 12  
+- Laravel 13  
 - Livewire 3  
 - Volt class-based components  
 - Tailwind CSS  
@@ -118,7 +118,7 @@ Unlike v1 which supported only Discord, v2 introduces **redundancy and flexibili
 
 | Category | Bat-Tower (v1) | Watch Tower (v2) |
 |-----------|----------------|------------------|
-| Core Stack | Python + Flask 🐍 | Laravel 12 + Livewire 3 + Volt 🛡️ |
+| Core Stack | Python + Flask 🐍 | Laravel 13 + Livewire 3 + Volt 🛡️ |
 | Interface | CLI Only | Modern Web Dashboard 💻 |
 | Real-Time UI | ❌ None | ✅ Live Reactive UI |
 | WebSockets | ❌ No | ✅ Laravel Echo Ready |
@@ -165,7 +165,7 @@ Potential expansion paths:
 - API-based monitoring ecosystem  
 - Advanced analytics & reporting layer 📊  
 
-With Laravel 12 foundation and reactive architecture, the product is designed for **growth, not just utility**.  
+With Laravel 13 foundation and reactive architecture, the product is designed for **growth, not just utility**.  
 
 ---
 
