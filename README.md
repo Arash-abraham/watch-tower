@@ -206,3 +206,6 @@ Interested in collaborating? You can reach out to me via:
 ![Obito GIF](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHpkajdlMzgwb2VlMzQ2Mm91cW10ZHpqcDd0cnQxM2Z0NnYyemV4MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0DcbpggSvE5I0BK14f/giphy.gif)
 
 > Made with ❤️ by Arash Abraham
+> Due to the unveiling of Laravel 13 and an ongoing internet outage in my country, the release of this project has been delayed by two months. Thank you for your understanding.
+
+
