@@ -8,11 +8,11 @@
 
 <p align="center">
   Real-Time Asset Monitoring Platform<br>
-  Built with Laravel 12 & Livewire 3
+  Built with Laravel 13 & Livewire 3
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Laravel-12-red?style=for-the-badge&logo=laravel" />
+  <img src="https://img.shields.io/badge/Laravel-13-red?style=for-the-badge&logo=laravel" />
   <img src="https://img.shields.io/badge/Livewire-3-4E56A6?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Version-2.0-blue?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" />
