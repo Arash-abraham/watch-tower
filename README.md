@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3.13-blue?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/Python-3-blue?style=for-the-badge&logo=python&logoColor=white" />
   <img src="https://img.shields.io/badge/Laravel-13-red?style=for-the-badge&logo=laravel" />
   <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" />
 </p>
