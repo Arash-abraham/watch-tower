@@ -8,7 +8,7 @@
 
 <p align="center">
   Real-Time Asset Monitoring Platform<br>
-  Built with Python3 & Laravel 13 & Livewire 3 
+  Built with Python3 & Laravel 13
 </p>
 
 <p align="center">
