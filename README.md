@@ -1,12 +1,7 @@
-<p align="center">
-<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" 
-       height="80"
-       margin-top="60px"
-       alt="Python Logo" />
-  <img src="https://laravel.com/img/logomark.min.svg" height="80" alt="Laravel Logo" />
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="https://livewire.laravel.com/img/logo.svg" height="80" alt="Livewire Logo" />
-  &nbsp;&nbsp;&nbsp;&nbsp;
+<p align="center" style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+  <img src="https://laravel.com/img/logomark.min.svg" height="80" alt="Laravel Logo" style="display: inline-block; vertical-align: middle;" />
+  <img src="https://livewire.laravel.com/img/logo.svg" height="80" alt="Livewire Logo" style="display: inline-block; vertical-align: middle;" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" height="50" alt="Python Logo" style="display: inline-block; vertical-align: middle;" />
 </p>
 <h1 align="center">Watch Tower</h1>
 
