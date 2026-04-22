@@ -1,8 +1,6 @@
 <p align="center">
   <img src="https://laravel.com/img/logomark.min.svg" width="80" height="80" alt="Laravel Logo" />
-  &nbsp;&nbsp;&nbsp;&nbsp;
   <img src="https://livewire.laravel.com/img/logo.svg" width="80" height="80" alt="Livewire Logo" />
-  &nbsp;&nbsp;&nbsp;&nbsp;
   <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" width="80" height="80" alt="Python Logo" />
 </p>
 
