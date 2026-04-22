@@ -2,8 +2,6 @@
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" height="50" alt="Python Logo" style="display: inline-block; vertical-align: middle;" />
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <img src="https://laravel.com/img/logomark.min.svg" height="80" alt="Laravel Logo" style="display: inline-block; vertical-align: middle;" />
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="https://livewire.laravel.com/img/logo.svg" height="80" alt="Livewire Logo" style="display: inline-block; vertical-align: middle;" />
 </p>
 
 <h1 align="center">Watch Tower</h1>
