@@ -2,13 +2,15 @@
   <img src="https://laravel.com/img/logomark.min.svg" height="80" alt="Laravel Logo" />
   &nbsp;&nbsp;&nbsp;&nbsp;
   <img src="https://livewire.laravel.com/img/logo.svg" height="80" alt="Livewire Logo" />
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="https://www.python.org/static/img/python-logo@2x.png" height="80" alt="Python Logo" />
 </p>
 
 <h1 align="center">Watch Tower</h1>
 
 <p align="center">
   Real-Time Asset Monitoring Platform<br>
-  Built with Laravel 13 & Livewire 3
+  Built with Python3 & Laravel 13 & Livewire 3 
 </p>
 
 <p align="center">
