@@ -182,12 +182,6 @@ With Laravel 13 foundation and reactive architecture, the product is designed fo
 
 ---
 
-# With Respect and Remembrance
-
-Dedicated to the bravest people on earth, my sisters and brothers who stood up for freedom but died in the most cruel way possible.Their courage resonates around the world.
-
----
-
 ## 🤝 Collaboration
 
 Interested in collaborating? You can reach out to me via:
