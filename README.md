@@ -1,11 +1,12 @@
 <p align="center">
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" 
+       height="80"
+       margin-top="10px"
+       alt="Python Logo" />
   <img src="https://laravel.com/img/logomark.min.svg" height="80" alt="Laravel Logo" />
   &nbsp;&nbsp;&nbsp;&nbsp;
   <img src="https://livewire.laravel.com/img/logo.svg" height="80" alt="Livewire Logo" />
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" 
-       height="80" 
-       alt="Python Logo" />
 </p>
 <h1 align="center">Watch Tower</h1>
 
