@@ -1,7 +1,7 @@
-<div style="display: flex; justify-content: center; align-items: center; gap: 50px; flex-wrap: nowrap;">
+<div style="display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: nowrap;">
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" height="50" alt="Python Logo" />
   <img src="https://laravel.com/img/logomark.min.svg" height="80" alt="Laravel Logo" />
   <img src="https://livewire.laravel.com/img/logo.svg" height="80" alt="Livewire Logo" />
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" height="70" alt="Python Logo" />
 </div>
 <h1 align="center">Watch Tower</h1>
 
