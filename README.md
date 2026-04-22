@@ -3,10 +3,9 @@
   &nbsp;&nbsp;&nbsp;&nbsp;
   <img src="https://livewire.laravel.com/img/logo.svg" height="80" alt="Livewire Logo" />
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" 
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" 
        height="80" 
-       alt="Python Logo"
-       style="transform: scale(1.4); transform-origin: center;" />
+       alt="Python Logo" />
 </p>
 <h1 align="center">Watch Tower</h1>
 
