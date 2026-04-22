@@ -1,9 +1,11 @@
 <p align="center">
   <img src="https://laravel.com/img/logomark.min.svg" height="80" alt="Laravel Logo" />
   &nbsp;&nbsp;&nbsp;&nbsp;
+  
   <img src="https://livewire.laravel.com/img/logo.svg" height="80" alt="Livewire Logo" />
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="https://www.python.org/static/img/python-logo@2x.png" height="80" alt="Python Logo" />
+  
+  <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" height="80" alt="Python Logo" />
 </p>
 
 <h1 align="center">Watch Tower</h1>
