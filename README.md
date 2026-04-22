@@ -1,7 +1,7 @@
 <p align="center">
 <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" 
        height="80"
-       margin-top="10px"
+       margin-top="60px"
        alt="Python Logo" />
   <img src="https://laravel.com/img/logomark.min.svg" height="80" alt="Laravel Logo" />
   &nbsp;&nbsp;&nbsp;&nbsp;
