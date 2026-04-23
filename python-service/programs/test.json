@@ -1,0 +1,14 @@
+{
+    "program_name" : "test",
+    "scope" : [
+        "test.com",
+        "test-1.com",
+        "test-12.com"
+
+    ],
+    "outScopes" : [
+        "test-2.com",
+        "test-1.com",
+        "test-12.com"
+    ]
+}
