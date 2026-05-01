@@ -92,6 +92,21 @@ class Subdomains(Base):
     created_date = Column(DateTime, default=datetime.now)
     last_update = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
+class ProgramsInBugCrowd(Base):
+    __tablename__ = 'bugcrowd_programs'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    program_name = Column(String(255), unique=True, nullable=False)
+    program_url = Column(String(500), nullable=True)
+    allows_disclosure = Column(String(50), nullable=True)
+    managed_by_bugcrowd = Column(String(50), nullable=True)
+    safe_harbor = Column(String(50), nullable=True)
+    max_payout = Column(Integer, nullable=True)
+    in_scope = Column(JSON, default=[])
+    out_of_scope = Column(JSON, default=[])
+    created_date = Column(DateTime, default=datetime.now)
+    last_update = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+
 
 def upsert_program(program_name, scopes, outScopes, config):
     if scopes is None:
@@ -185,3 +200,74 @@ def current_time():
 
     return now.strftime("%Y-%m-%d %H:%M:%S")
 
+
+
+def insert_all_bugcrowd_programs(all_data):
+    db_status = check_and_create_database()
+    if db_status != 'Exist':
+        if db_status == 'NoExist':
+            print('To use the program with a specified name in env, create a database for the database.')
+            sys.exit(1)
+        else:
+            print(Fore.WHITE + 'We have a problem! ' + Fore.RED + f'\n{db_status}')
+            sys.exit(1)
+    
+    Base.metadata.create_all(engine)
+    
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    
+    inserted_count = 0
+    updated_count = 0
+    
+    try:
+        for program_data in all_data:
+            program_name = program_data.get('name')
+            if not program_name:
+                print(Fore.RED + f"Warning: Program without name, skipping..." + Fore.RESET)
+                continue
+
+            in_scope_list = program_data.get('targets', {}).get('in_scope', [])
+            out_of_scope_list = program_data.get('targets', {}).get('out_of_scope', [])
+            
+            existing = session.query(ProgramsInBugCrowd).filter_by(program_name=program_name).first()
+            
+            if existing:
+                existing.program_url = program_data.get('url')
+                existing.allows_disclosure = str(program_data.get('allows_disclosure', False))
+                existing.managed_by_bugcrowd = str(program_data.get('managed_by_bugcrowd', False))
+                existing.safe_harbor = program_data.get('safe_harbor')
+                existing.max_payout = program_data.get('max_payout')
+                existing.in_scope = in_scope_list
+                existing.out_of_scope = out_of_scope_list
+                existing.last_update = datetime.now()
+                updated_count += 1
+            else:
+                new_program = ProgramsInBugCrowd(
+                    program_name=program_name,
+                    program_url=program_data.get('url'),
+                    allows_disclosure=str(program_data.get('allows_disclosure', False)),
+                    managed_by_bugcrowd=str(program_data.get('managed_by_bugcrowd', False)),
+                    safe_harbor=program_data.get('safe_harbor'),
+                    max_payout=program_data.get('max_payout'),
+                    in_scope=in_scope_list,
+                    out_of_scope=out_of_scope_list,
+                    created_date=datetime.now()
+                )
+                session.add(new_program)
+                inserted_count += 1
+        
+        session.commit()
+        print(f"\n[{current_time()}] Bugcrowd programs saved successfully!")
+        print(f"  + Inserted: {inserted_count} new programs")
+        print(f"  ~ Updated: {updated_count} existing programs")
+        print(f"  ★ Total: {inserted_count + updated_count} programs")
+        
+        return True
+        
+    except Exception as e:
+        session.rollback()
+        print(Fore.RED + f"Error inserting bugcrowd programs: {e}" + Fore.RESET)
+        return None
+    finally:
+        session.close()
