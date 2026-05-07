@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-    <!-- Notification Toast -->
+    <!-- Notification -->
     <div v-if="notification.show" class="fixed top-5 right-5 z-50 animate-fade-in">
       <div :class="[
         'px-4 py-3 rounded-xl shadow-lg backdrop-blur-md border',
