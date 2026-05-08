@@ -1,150 +1,90 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" height="50" alt="Python Logo" style="display: inline-block; vertical-align: middle;" />
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="https://laravel.com/img/logomark.min.svg" height="80" alt="Laravel Logo" style="display: inline-block; vertical-align: middle;" />
-</p>
+<div align="center">
+  
+# ☀️ AryaKhorasan
+  
+### Iranian Backend & Security Engineering Team
+  
+[![Sponsor AryaKhorasan](https://img.shields.io/badge/Sponsor_AryaKhorasan-_-ea4aaa?style=for-the-badge&logo=githubsponsors&logoColor=white&labelColor=ea4aaa&color=ea4aaa)](https://github.com/sponsors/AryaKhorasan)
 
-<h1 align="center">Watch Tower</h1>
-
-<p align="center">
-  Real-Time Asset Monitoring Platform<br>
-  Built with Python3 & Laravel 13
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3-blue?style=for-the-badge&logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/Laravel-13-red?style=for-the-badge&logo=laravel" />
-  <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" />
-</p>
+</div>
 
 ---
 
-# Real-Time Monitoring Without Blind Spots
+## 📌 Who We Are
 
-Watch Tower is a modern monitoring system designed to detect newly added assets from defined targets and notify you instantly across multiple channels.
+We are a **private engineering team from Iran**. No fluff. No over‑promising.  
+We design, build, and scale backend systems — from **REST APIs** to **security automation pipelines**.
 
-
-
----
-
-# Product Evolution
-
-## Before This Version – The Early Prototype 🛠️
-
-The origin of Watch Tower was humble: a small, local script that I wrote to **monitor HackerOne program updates**.  
-
-It had only one goal: the moment a new asset appeared, I wanted to **know immediately**. There was no dashboard, no notifications beyond the console — just a simple script printing results in real time.  
-
-<p align="center">
-  <img src="img/photo_2026-02-27_18-22-04.jpg" alt="Early Monitoring Script Screenshot" width="700"/>
-</p>
-
-This early version taught me **the power of instant awareness**. Despite being tiny and local, it proved that monitoring could be reactive — not just passive. Every line of code here planted the seed for the fully-fledged Watch Tower platform that would follow. 🚀 
+**Core belief:** Code should be clean, secure, and maintainable years from now.
 
 ---
 
-## Before This Version - Mechanism
+## ⚙️ Technology Stack
 
-- Python 
-- CLI-only interface  
-- Trigger-based detection  
-- Discord-only notifications  
-- No dashboard  
+We don't chase trends. We master tools that last.
 
-Functional, but limited in scope. The initial version was a bridge from testing to the final product.
-
----
-
-## New Version (Watch Tower)  – Mechanism
-
-Rebuilt entirely using:
-
-- Python
-- Laravel 13  
-- Volt class-based components  
-- Architected for Laravel Echo (WebSocket broadcasting)  
-
-This version introduces:
-
-- Reactive web dashboard 
-- Multi-channel notifications (Discord, Telegram, In-App)  
-- Authentication system  
-- Scalable architecture 
-- SaaS-ready foundation  
+| Layer | Technologies |
+|-------|--------------|
+| **Backend** | Laravel, Python (Django, FastAPI), Go |
+| **Frontend** | Vue.js, React, Next.js, Livewire, Alpine.js |
+| **Database** | PostgreSQL, MySQL, Redis, SQLite |
+| **API** | REST, GraphQL, WebSocket |
+| **Security Tools** | Custom Python/PHP scripts, log analyzers, automated scanners |
+| **DevOps** | Docker, GitHub Actions, Kubernetes (basic), Linux |
 
 ---
 
-# Core Capabilities
+## 🔭 Featured Open‑Source Project
 
-## Multi-Channel Notification Engine
+### [Watch Tower](https://github.com/AryaKhorasan/watch-tower)
 
-When a new asset is detected:
+**Real‑Time Asset Monitoring Platform** — Built with **Python3 + Laravel 13**
 
-You choose how you’re notified:
+Watch Tower detects newly added assets from defined targets and notifies you instantly across multiple channels.
 
-- Discord  
-- Telegram  
-- In-dashboard alerts  
-- SMS (planned)  
+| Feature | Description |
+|---------|-------------|
+| **Multi‑Channel Notifications** | Discord, Telegram, in‑dashboard alerts (SMS planned) |
+| **Laravel Echo Ready** | WebSocket‑powered live broadcasting, real‑time UI sync |
+| **Reactive Dashboard** | Built with Volt class‑based components + Vue core |
+| **Authentication** | Full user system, SaaS‑ready foundation |
+| **Scalable Architecture** | Designed for growth, not just utility |
 
-Unlike the initial version which only supported Discord, the main version introduces **redundancy and flexibility**.
+> Originally started as a local script to monitor HackerOne program updates. Now it’s a full platform.
 
----
-
-## Laravel Echo Ready
-
-- WebSocket-powered live broadcasting  
-- Real-time UI synchronization  
-- Multi-user concurrent updates  
-- Future collaborative monitoring features  
+**Stack:** PHP 62% · Vue 26% · Python 10% · CSS/JS/HTML/Shell 2%
 
 ---
 
-# For Users
+## 🤝 Why Sponsor AryaKhorasan?
 
-Watch Tower helps you:
+Sponsorship directly supports:
+- **Open‑source security tools** maintained and updated
+- **Iranian engineering talent** without corporate backing
+- **Technical documentation** and free educational content (coming)
 
-- Detect new assets instantly  
-- Reduce manual monitoring  
-- Centralize alerts  
-- Scale monitoring workflows  
-- Eliminate blind spots  
-
-Built for security researchers, DevSecOps teams, and monitoring-heavy workflows. 
-
----
-
-# For Investors & Product Vision
-
-Watch Tower is positioned as a **scalable monitoring infrastructure platform**.  
-
-Potential expansion paths:
-
-- SaaS multi-tenant deployment  
-- Subscription-based alert tiers  
-- Team collaboration features 👥  
-- Enterprise integrations  
-- API-based monitoring ecosystem  
-- Advanced analytics & reporting layer
-
-With Python and Laravel foundation and reactive architecture, the product is designed for **growth, not just utility**.  
+**Sponsors receive:**
+- Priority technical consultation (private channel)
+- Early access to new tools
+- Name in sponsors section of each repository
 
 ---
 
-## 🤝 Collaboration
+## 📫 Work With Us (Private Contracts)
 
-Interested in collaborating? You can reach out to me via:
+We accept **select private projects**:
+- MVP development for startups
+- Custom internal tools (automation, dashboards, security)
+- Backend architecture consulting
 
-- **Telegram:** [@Octawian](https://t.me/Octawian)  
-- **Email:** [arashebi777@gmail.com](mailto:arashebi777@gmail.com)
+**Contact:** [Arash](https://github.com/Arash-abraham) — team lead
 
 ---
 
-![Obito GIF](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHpkajdlMzgwb2VlMzQ2Mm91cW10ZHpqcDd0cnQxM2Z0NnYyemV4MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0DcbpggSvE5I0BK14f/giphy.gif)
+<div align="center">
+  
+**AryaKhorasan** – *Backend that endures. Security that works.*
 
-> Made with ❤️ by Arash Abraham
+[GitHub Organization](https://github.com/AryaKhorasan) • Open Source • Built in Iran
 
-
-> Due to the unveiling of Laravel 13 and an ongoing internet outage in my country, the release of this project has been delayed by two months. Thank you for your understanding.
-
-
+</div>
