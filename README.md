@@ -1,90 +1,87 @@
 <div align="center">
   
-# ☀️ AryaKhorasan
+<img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=28&duration=3000&pause=500&center=true&vCenter=true&width=600&lines=AryaKhorasan;Iranian+Engineering+Team;Backend+%26+Security+%E2%9A%A1" alt="Typing SVG">
+
+# ☀️ **AryaKhorasan**
+
+### Where Backend Meets Security
+
+</div>
+
+<br>
+
+## 🎯 **What We Do**
+
+> We turn complex ideas into **clean, secure, production-ready code**.
+
+From startup MVPs to enterprise security tools — we build what matters.
+
+---
+
+## ⚡ **Tech Arsenal**
+
+| Area | Stack |
+|------|-------|
+| **Backend** | Laravel · Python (Django/FastAPI) · Go |
+| **Frontend** | Vue · React · Next.js · Livewire · Alpine |
+| **Database** | PostgreSQL · MySQL · Redis · SQLite |
+| **Infra** | Docker · GitHub Actions · K8s · Linux |
+
+---
+
+## 🔭 **Featured: Watch Tower**
+
+<div align="center">
   
-### Iranian Backend & Security Engineering Team
+**Real‑Time Asset Monitoring Platform**  
+`Python3` + `Laravel 13` + `Vue Core`
+
+</div>
+
+| Capability | What It Does |
+|------------|---------------|
+| 📡 **Multi‑Channel Alerts** | Discord · Telegram · In‑App · SMS (soon) |
+| ⚡ **Real‑Time Sync** | Laravel Echo + WebSockets |
+| 🎛️ **Reactive Dashboard** | Volt components + Vue |
+| 🔐 **Auth Ready** | Multi‑user, SaaS foundation |
+
+> *Started as a HackerOne monitor. Now it's a full platform.*
+
+📦 **Language Mix:** PHP 62% · Vue 26% · Python 10% · Other 2%
+
+🔗 **[Explore Watch Tower →](https://github.com/AryaKhorasan/watch-tower)**
+
+---
+
+## 💎 **Sponsor Us**
+
+<div align="center">
   
-[![Sponsor AryaKhorasan](https://img.shields.io/badge/Sponsor_AryaKhorasan-_-ea4aaa?style=for-the-badge&logo=githubsponsors&logoColor=white&labelColor=ea4aaa&color=ea4aaa)](https://github.com/sponsors/AryaKhorasan)
+**Help us build open‑source security tools that matter.**
+
+[![GitHub Sponsors](https://img.shields.io/badge/★_Sponsor_AryaKhorasan_★-ff69b4?style=for-the-badge&logo=githubsponsors&logoColor=white&labelColor=ff1493&color=ff69b4)](https://github.com/sponsors/AryaKhorasan)
+
+*Sponsors get priority consultation + early access + name in repos*
 
 </div>
 
 ---
 
-## 📌 Who We Are
+## 🤝 **Let's Build Together**
 
-We are a **private engineering team from Iran**. No fluff. No over‑promising.  
-We design, build, and scale backend systems — from **REST APIs** to **security automation pipelines**.
+**Private work?** Yes — MVPs, internal tools, security automation.
 
-**Core belief:** Code should be clean, secure, and maintainable years from now.
-
----
-
-## ⚙️ Technology Stack
-
-We don't chase trends. We master tools that last.
-
-| Layer | Technologies |
-|-------|--------------|
-| **Backend** | Laravel, Python (Django, FastAPI), Go |
-| **Frontend** | Vue.js, React, Next.js, Livewire, Alpine.js |
-| **Database** | PostgreSQL, MySQL, Redis, SQLite |
-| **API** | REST, GraphQL, WebSocket |
-| **Security Tools** | Custom Python/PHP scripts, log analyzers, automated scanners |
-| **DevOps** | Docker, GitHub Actions, Kubernetes (basic), Linux |
-
----
-
-## 🔭 Featured Open‑Source Project
-
-### [Watch Tower](https://github.com/AryaKhorasan/watch-tower)
-
-**Real‑Time Asset Monitoring Platform** — Built with **Python3 + Laravel 13**
-
-Watch Tower detects newly added assets from defined targets and notifies you instantly across multiple channels.
-
-| Feature | Description |
-|---------|-------------|
-| **Multi‑Channel Notifications** | Discord, Telegram, in‑dashboard alerts (SMS planned) |
-| **Laravel Echo Ready** | WebSocket‑powered live broadcasting, real‑time UI sync |
-| **Reactive Dashboard** | Built with Volt class‑based components + Vue core |
-| **Authentication** | Full user system, SaaS‑ready foundation |
-| **Scalable Architecture** | Designed for growth, not just utility |
-
-> Originally started as a local script to monitor HackerOne program updates. Now it’s a full platform.
-
-**Stack:** PHP 62% · Vue 26% · Python 10% · CSS/JS/HTML/Shell 2%
-
----
-
-## 🤝 Why Sponsor AryaKhorasan?
-
-Sponsorship directly supports:
-- **Open‑source security tools** maintained and updated
-- **Iranian engineering talent** without corporate backing
-- **Technical documentation** and free educational content (coming)
-
-**Sponsors receive:**
-- Priority technical consultation (private channel)
-- Early access to new tools
-- Name in sponsors section of each repository
-
----
-
-## 📫 Work With Us (Private Contracts)
-
-We accept **select private projects**:
-- MVP development for startups
-- Custom internal tools (automation, dashboards, security)
-- Backend architecture consulting
-
-**Contact:** [Arash](https://github.com/Arash-abraham) — team lead
+📫 **Reach out:** [Arash](https://github.com/Arash-abraham) — Team Lead
 
 ---
 
 <div align="center">
   
-**AryaKhorasan** – *Backend that endures. Security that works.*
+**☀️ AryaKhorasan** — *Backend that endures. Security that works.*
 
-[GitHub Organization](https://github.com/AryaKhorasan) • Open Source • Built in Iran
+<br>
+
+[![GitHub](https://img.shields.io/badge/Organization-181717?style=flat-square&logo=github)](https://github.com/AryaKhorasan)
+![Location](https://img.shields.io/badge/Built_in-Iran-red?style=flat-square)
 
 </div>
