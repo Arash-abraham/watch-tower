@@ -5,7 +5,7 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/home-test')
 def home(): 
     user_input = request.args.get('input')
     
