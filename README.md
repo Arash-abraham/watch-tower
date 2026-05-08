@@ -73,7 +73,7 @@ Open‑source security tools need ongoing maintenance, documentation, and innova
 | 🛡️ **Tool Maintenance** | Keeping Watch Tower and future tools updated, secure, and compatible |
 | 📚 **Documentation** | Tutorials, setup guides, and API docs for everyone to use |
 | 🚀 **New Features** | SMS notifications, team collaboration, enterprise integrations |
-| 🇮🇷 **Iranian Talent** | Supporting developers building world‑class software without corporate backing |
+| ☀️ **Iranian Talent** | Supporting developers building world‑class software without corporate backing |
 
 ### 🎁 What Sponsors Get:
 
