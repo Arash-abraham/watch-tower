@@ -1,143 +1,150 @@
-<div align="center">
-  
-<img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=28&duration=3000&pause=500&center=true&vCenter=true&width=600&lines=AryaKhorasan;Iranian+Engineering+Team;Backend+%26+Security+%E2%9A%A1" alt="Typing SVG">
+<p align="center">
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" height="50" alt="Python Logo" style="display: inline-block; vertical-align: middle;" />
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="https://laravel.com/img/logomark.min.svg" height="80" alt="Laravel Logo" style="display: inline-block; vertical-align: middle;" />
+</p>
 
-# ☀️ **AryaKhorasan**
+<h1 align="center">Watch Tower</h1>
 
-### Iranian Backend & Security Engineering Team
+<p align="center">
+  Real-Time Asset Monitoring Platform<br>
+  Built with Python3 & Laravel 13
+</p>
 
-</div>
-
----
-
-## 📌 **Who We Are**
-
-We are a **private engineering team from Iran** — a collective of backend architects, security engineers, and problem solvers who actually ship.
-
-**No fluff. No over‑promising. Just clean code that lasts.**
-
-We design, build, and scale:
-- **Backend systems** (REST APIs, microservices, real‑time apps)
-- **Security automation pipelines** (scanners, log analyzers, watchtowers)
-- **MVPs for startups** and **internal tools for enterprises**
-
-> *Our core belief:* Code should be secure, maintainable, and readable years from now.
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3-blue?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/Laravel-13-red?style=for-the-badge&logo=laravel" />
+  <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" />
+</p>
 
 ---
 
-## ⚙️ **Technology Stack**
+# Real-Time Monitoring Without Blind Spots
 
-We don't chase trends. We master tools that work in production.
+Watch Tower is a modern monitoring system designed to detect newly added assets from defined targets and notify you instantly across multiple channels.
 
-| Layer | Technologies |
-|-------|--------------|
-| **Backend** | Laravel, Python (Django, FastAPI), Go |
-| **Frontend** | Vue.js, React, Next.js, Livewire, Alpine.js |
-| **Database** | PostgreSQL, MySQL, Redis, SQLite |
-| **API** | REST, GraphQL, WebSocket |
-| **Security Tools** | Custom Python/PHP scripts, automated scanners, log analyzers |
-| **DevOps** | Docker, GitHub Actions, Kubernetes (basic), Linux |
+
 
 ---
 
-## 🔭 **Featured Open‑Source Project**
+# Product Evolution
 
-### [Watch Tower](https://github.com/AryaKhorasan/watch-tower) — Real‑Time Asset Monitoring Platform
+## Before This Version – The Early Prototype 🛠️
 
-**Built with:** `Python3` + `Laravel 13` + `Vue Core`
+The origin of Watch Tower was humble: a small, local script that I wrote to **monitor HackerOne program updates**.  
 
-Watch Tower detects newly added assets from defined targets and notifies you instantly. Originally started as a local script to monitor HackerOne program updates — now it's a full platform.
+It had only one goal: the moment a new asset appeared, I wanted to **know immediately**. There was no dashboard, no notifications beyond the console — just a simple script printing results in real time.  
 
-| Feature | Description |
-|---------|-------------|
-| 📡 **Multi‑Channel Notifications** | Discord, Telegram, in‑dashboard alerts (SMS planned) |
-| ⚡ **Laravel Echo Ready** | WebSocket‑powered live broadcasting, real‑time UI sync |
-| 🎛️ **Reactive Dashboard** | Built with Volt class‑based components + Vue core |
-| 🔐 **Authentication** | Full user system, SaaS‑ready foundation |
-| 📈 **Scalable Architecture** | Designed for growth, not just utility |
+<p align="center">
+  <img src="img/photo_2026-02-27_18-22-04.jpg" alt="Early Monitoring Script Screenshot" width="700"/>
+</p>
 
-**Stack breakdown:** PHP 62% · Vue 26% · Python 10% · CSS/JS/HTML/Shell 2%
-
-🔗 **[Explore Watch Tower on GitHub →](https://github.com/AryaKhorasan/watch-tower)**
+This early version taught me **the power of instant awareness**. Despite being tiny and local, it proved that monitoring could be reactive — not just passive. Every line of code here planted the seed for the fully-fledged Watch Tower platform that would follow. 🚀 
 
 ---
 
-## 💎 **Why Sponsor AryaKhorasan?**
+## Before This Version - Mechanism
 
-Open‑source security tools need ongoing maintenance, documentation, and innovation. Most die because the creators move on. **We don't want that to happen.**
+- Python 
+- CLI-only interface  
+- Trigger-based detection  
+- Discord-only notifications  
+- No dashboard  
 
-### Your sponsorship directly funds:
-
-| Area | What You Enable |
-|------|-----------------|
-| 🛡️ **Tool Maintenance** | Keeping Watch Tower and future tools updated, secure, and compatible |
-| 📚 **Documentation** | Tutorials, setup guides, and API docs for everyone to use |
-| 🚀 **New Features** | SMS notifications, team collaboration, enterprise integrations |
-| ☀️ **Iranian Talent** | Supporting developers building world‑class software without corporate backing |
-
-### 🎁 What Sponsors Get:
-
-| Tier | Benefits |
-|------|----------|
-| **Any amount** | Name in SPONSORS.md across all repos |
-| **$5+/month** | Priority technical consultation (private Discord channel) |
-| **$20+/month** | Early access to new tools + direct feature voting |
-| **Enterprise** | Custom development, private deployment support |
-
-> *No amount is too small. Every sponsor helps keep the lights on.*
-
-<div align="center">
-  
-[![Sponsor AryaKhorasan](https://img.shields.io/badge/⭐_Sponsor_AryaKhorasan_⭐-ff69b4?style=for-the-badge&logo=githubsponsors&logoColor=white&labelColor=ff1493&color=ff69b4)](https://github.com/sponsors/AryaKhorasan)
-
-**Click to become a sponsor →**
-
-</div>
+Functional, but limited in scope. The initial version was a bridge from testing to the final product.
 
 ---
 
-## 🤝 **Work With Us (Private Contracts)**
+## New Version (Watch Tower)  – Mechanism
 
-We accept **select private projects** for companies and startups:
+Rebuilt entirely using:
 
-| Service | Description |
-|---------|-------------|
-| 🚀 **MVP Development** | From idea to working product — fast and clean |
-| 🛠️ **Custom Internal Tools** | Automation, dashboards, security scripts |
-| 🏗️ **Backend Architecture** | Consulting, code reviews, system design |
-| 🔒 **Security Audits** | Basic vulnerability assessment for your codebase |
+- Python
+- Laravel 13  
+- Volt class-based components  
+- Architected for Laravel Echo (WebSocket broadcasting)  
 
-**Contact:** [Arash](https://github.com/Arash-abraham) — Team Lead
+This version introduces:
 
----
-
-## 📊 **Why This Team is Different**
-
-| Most Teams | **AryaKhorasan** |
-|------------|-------------------|
-| Talk a lot | Ship quietly |
-| Need perfect specs | Understand the problem anyway |
-| Disappear after payment | Stay responsive |
-| Avoid hard problems | "We'll figure it out" |
+- Reactive web dashboard 
+- Multi-channel notifications (Discord, Telegram, In-App)  
+- Authentication system  
+- Scalable architecture 
+- SaaS-ready foundation  
 
 ---
 
-## 🌟 **Our North Star**
+# Core Capabilities
 
-To prove that **Iranian developers can build world‑class software** — secure, elegant, and brutally reliable.
+## Multi-Channel Notification Engine
 
-And to build a small, sustainable island of creators who don't need permission from anyone.
+When a new asset is detected:
+
+You choose how you’re notified:
+
+- Discord  
+- Telegram  
+- In-dashboard alerts  
+- SMS (planned)  
+
+Unlike the initial version which only supported Discord, the main version introduces **redundancy and flexibility**.
 
 ---
 
-<div align="center">
-  
-**☀️ AryaKhorasan** — *Backend that endures. Security that works.*
+## Laravel Echo Ready
 
-<br>
+- WebSocket-powered live broadcasting  
+- Real-time UI synchronization  
+- Multi-user concurrent updates  
+- Future collaborative monitoring features  
 
-[![GitHub Organization](https://img.shields.io/badge/Organization-181717?style=flat-square&logo=github)](https://github.com/AryaKhorasan)
-[![Open Source](https://img.shields.io/badge/Open_Source-❤️-red?style=flat-square)](https://github.com/AryaKhorasan)
-![Location](https://img.shields.io/badge/Built_in-Iran-red?style=flat-square)
+---
 
-</div>
+# For Users
+
+Watch Tower helps you:
+
+- Detect new assets instantly  
+- Reduce manual monitoring  
+- Centralize alerts  
+- Scale monitoring workflows  
+- Eliminate blind spots  
+
+Built for security researchers, DevSecOps teams, and monitoring-heavy workflows. 
+
+---
+
+# For Investors & Product Vision
+
+Watch Tower is positioned as a **scalable monitoring infrastructure platform**.  
+
+Potential expansion paths:
+
+- SaaS multi-tenant deployment  
+- Subscription-based alert tiers  
+- Team collaboration features 👥  
+- Enterprise integrations  
+- API-based monitoring ecosystem  
+- Advanced analytics & reporting layer
+
+With Python and Laravel foundation and reactive architecture, the product is designed for **growth, not just utility**.  
+
+---
+
+## 🤝 Collaboration
+
+Interested in collaborating? You can reach out to me via:
+
+- **Telegram:** [@Octawian](https://t.me/Octawian)  
+- **Email:** [arashebi777@gmail.com](mailto:arashebi777@gmail.com)
+
+---
+
+![Obito GIF](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHpkajdlMzgwb2VlMzQ2Mm91cW10ZHpqcDd0cnQxM2Z0NnYyemV4MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0DcbpggSvE5I0BK14f/giphy.gif)
+
+> Made with ❤️ by Arash Abraham
+
+
+> Due to the unveiling of Laravel 13 and an ongoing internet outage in my country, the release of this project has been delayed by two months. Thank you for your understanding.
+
+
