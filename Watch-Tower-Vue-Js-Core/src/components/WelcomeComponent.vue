@@ -1,5 +1,7 @@
 <template>
     <div class="min-h-screen bg-black relative overflow-hidden">
+      <Navbar @navigate="navigateTo" />
+      <component :is="currentComponent" />
       <div class="absolute inset-0 opacity-30">
         <div class="absolute top-0 left-0 w-full h-full bg-[linear-gradient(rgba(0,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
       </div>
@@ -226,21 +228,45 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue'
+  import { ref, shallowRef } from 'vue'
+  import Navbar from './layouts/Navbar.vue'
+  import TargetsPage from './TargetsPage.vue'
+  // کامپوننت‌های دیگه رو بعداً اضافه کن
+  // import HomePage from './components/HomePage.vue'
+  // import AppsPage from './components/AppsPage.vue'
   
-  const showModal = ref(false)
+  // مسیر فعلی
+  const currentRoute = ref(window.location.hash.slice(1) || 'home')
   
-  const openGitHub = () => {
-    window.open('https://github.com/AryaKhorasan/watch-tower', '_blank')
+  // مپینگ مسیرها به کامپوننت‌ها
+  const componentsMap = {
+    'home': null, // یا HomePage
+    'dashboard': null,
+    'apps': null,
+    'targets': TargetsPage,
+    'monitors': null,
+    'alerts': null
   }
   
-  const showDevelopmentModal = () => {
-    showModal.value = true
+  const currentComponent = shallowRef(null)
+  
+  // تابع نویگیشن
+  const navigateTo = (route) => {
+    currentRoute.value = route
+    window.location.hash = route
+    currentComponent.value = componentsMap[route] || null
   }
   
-  const closeModal = () => {
-    showModal.value = false
+  // هندل کردن تغییر هش (وقتی کاربر از لینک مستقیم یا دکمه back/forward استفاده میکنه)
+  const handleHashChange = () => {
+    const hash = window.location.hash.slice(1) || 'home'
+    currentRoute.value = hash
+    currentComponent.value = componentsMap[hash] || null
   }
+  
+  // راه‌اندازی اولیه
+  window.addEventListener('hashchange', handleHashChange)
+  handleHashChange()
   </script>
   
   <style scoped>
