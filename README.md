@@ -1,150 +1,144 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" height="50" alt="Python Logo" style="display: inline-block; vertical-align: middle;" />
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="https://laravel.com/img/logomark.min.svg" height="80" alt="Laravel Logo" style="display: inline-block; vertical-align: middle;" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" height="50" alt="Python Logo" />
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="https://laravel.com/img/logomark.min.svg" height="50" alt="Laravel Logo" />
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/vuejs/vuejs-original.svg" height="50" alt="Vue.js Logo" />
 </p>
 
 <h1 align="center">Watch Tower</h1>
 
 <p align="center">
   Real-Time Asset Monitoring Platform<br>
-  Built with Python3 & Laravel 13
+  Built with Python 3 · Laravel 13 · Vue.js
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3-blue?style=for-the-badge&logo=python&logoColor=white" />
   <img src="https://img.shields.io/badge/Laravel-13-red?style=for-the-badge&logo=laravel" />
+  <img src="https://img.shields.io/badge/Vue.js-Dashboard-42b883?style=for-the-badge&logo=vue.js&logoColor=white" />
   <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" />
 </p>
 
 ---
 
-# Real-Time Monitoring Without Blind Spots
+## Real-Time Monitoring Without Blind Spots
 
 Watch Tower is a modern monitoring system designed to detect newly added assets from defined targets and notify you instantly across multiple channels.
 
+---
 
+## Product Evolution
+
+### Before This Version — The Early Prototype
+
+The origin of Watch Tower was a small local script written to monitor HackerOne program updates. The moment a new asset appeared, the goal was simple: **know immediately**. No dashboard, no multi-channel notifications — just a trigger-based script printing results in real time.
+
+This early version proved that monitoring could be **reactive, not just passive**. Every line planted the seed for the full Watch Tower platform.
+
+**Prototype stack:**
+
+- Python CLI only
+- Trigger-based detection
+- Discord-only notifications
+- No dashboard or UI
 
 ---
 
-# Product Evolution
+### New Version — Watch Tower
 
-## Before This Version – The Early Prototype 🛠️
+Rebuilt entirely from the ground up:
 
-The origin of Watch Tower was humble: a small, local script that I wrote to **monitor HackerOne program updates**.  
+| Layer | Technology |
+|---|---|
+| Backend | Python + Laravel 13 |
+| Frontend | Vue.js (reactive dashboard) |
+| Real-time | Laravel Echo (WebSocket broadcasting) |
+| Components | Volt class-based components |
 
-It had only one goal: the moment a new asset appeared, I wanted to **know immediately**. There was no dashboard, no notifications beyond the console — just a simple script printing results in real time.  
+**What's new:**
 
-<p align="center">
-  <img src="img/photo_2026-02-27_18-22-04.jpg" alt="Early Monitoring Script Screenshot" width="700"/>
-</p>
-
-This early version taught me **the power of instant awareness**. Despite being tiny and local, it proved that monitoring could be reactive — not just passive. Every line of code here planted the seed for the fully-fledged Watch Tower platform that would follow. 🚀 
-
----
-
-## Before This Version - Mechanism
-
-- Python 
-- CLI-only interface  
-- Trigger-based detection  
-- Discord-only notifications  
-- No dashboard  
-
-Functional, but limited in scope. The initial version was a bridge from testing to the final product.
+- Reactive Vue.js web dashboard
+- Multi-channel notifications (Discord, Telegram, In-App)
+- Authentication system
+- Scalable, SaaS-ready architecture
+- WebSocket-powered live UI synchronization
 
 ---
 
-## New Version (Watch Tower)  – Mechanism
+## Core Capabilities
 
-Rebuilt entirely using:
+### Multi-Channel Notification Engine
 
-- Python
-- Laravel 13  
-- Volt class-based components  
-- Architected for Laravel Echo (WebSocket broadcasting)  
+When a new asset is detected, you choose how you're notified:
 
-This version introduces:
+| Channel | Status |
+|---|---|
+| Discord | ✅ Available |
+| Telegram | ✅ Available |
+| In-App Dashboard | ✅ Available |
+| SMS | 🔜 Planned |
 
-- Reactive web dashboard 
-- Multi-channel notifications (Discord, Telegram, In-App)  
-- Authentication system  
-- Scalable architecture 
-- SaaS-ready foundation  
+### Vue.js Dashboard
 
----
+- Component-driven reactive interface
+- Real-time data binding via Laravel Echo
+- Multi-user concurrent updates
+- Built for future collaborative monitoring features
 
-# Core Capabilities
+### Laravel Echo / WebSocket
 
-## Multi-Channel Notification Engine
-
-When a new asset is detected:
-
-You choose how you’re notified:
-
-- Discord  
-- Telegram  
-- In-dashboard alerts  
-- SMS (planned)  
-
-Unlike the initial version which only supported Discord, the main version introduces **redundancy and flexibility**.
+- Live broadcasting to all connected clients
+- Real-time UI synchronization
+- Foundation for multi-user team features
 
 ---
 
-## Laravel Echo Ready
+## Who Is This For?
 
-- WebSocket-powered live broadcasting  
-- Real-time UI synchronization  
-- Multi-user concurrent updates  
-- Future collaborative monitoring features  
+Watch Tower is built for:
 
----
+- **Security researchers** monitoring program scope changes
+- **DevSecOps teams** tracking infrastructure assets
+- **Monitoring-heavy workflows** that need instant awareness
 
-# For Users
+Benefits:
 
-Watch Tower helps you:
-
-- Detect new assets instantly  
-- Reduce manual monitoring  
-- Centralize alerts  
-- Scale monitoring workflows  
-- Eliminate blind spots  
-
-Built for security researchers, DevSecOps teams, and monitoring-heavy workflows. 
+- Detect new assets instantly
+- Reduce manual monitoring overhead
+- Centralize alerts across channels
+- Eliminate blind spots entirely
 
 ---
 
-# For Investors & Product Vision
+## Product Vision
 
-Watch Tower is positioned as a **scalable monitoring infrastructure platform**.  
+Watch Tower is positioned as a **scalable monitoring infrastructure platform**.
 
-Potential expansion paths:
+Expansion roadmap:
 
-- SaaS multi-tenant deployment  
-- Subscription-based alert tiers  
-- Team collaboration features 👥  
-- Enterprise integrations  
-- API-based monitoring ecosystem  
+- SaaS multi-tenant deployment
+- Subscription-based alert tiers
+- Team collaboration & shared workspaces
+- Enterprise integrations
+- API-based monitoring ecosystem
 - Advanced analytics & reporting layer
 
-With Python and Laravel foundation and reactive architecture, the product is designed for **growth, not just utility**.  
+With a Python + Laravel + Vue.js foundation and a reactive architecture, the product is designed for **growth, not just utility**.
 
 ---
 
-## 🤝 Collaboration
+## Collaboration
 
-Interested in collaborating? You can reach out to me via:
+Interested in collaborating or have questions?
 
-- **Telegram:** [@Octawian](https://t.me/Octawian)  
+- **Telegram:** [@Octawian](https://t.me/Octawian)
 - **Email:** [arashebi777@gmail.com](mailto:arashebi777@gmail.com)
 
 ---
 
-![Obito GIF](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHpkajdlMzgwb2VlMzQ2Mm91cW10ZHpqcDd0cnQxM2Z0NnYyemV4MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0DcbpggSvE5I0BK14f/giphy.gif)
+> **Note:** Release was delayed by two months due to the Laravel 13 unveiling coinciding with an ongoing internet outage. Thank you for your understanding.
 
-> Made with ❤️ by Arash Abraham
+---
 
-
-> Due to the unveiling of Laravel 13 and an ongoing internet outage in my country, the release of this project has been delayed by two months. Thank you for your understanding.
-
-
+<p align="center">Made with ❤️ by Arash Abraham</p>
