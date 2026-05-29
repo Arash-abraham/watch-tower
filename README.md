@@ -22,15 +22,9 @@
   <img src="https://img.shields.io/badge/Focus-RealTime-blue?style=flat-square" />
 </p>
 
----
-
-## Overview
-
 Watch Tower is a real-time monitoring platform designed to detect newly added assets across defined targets and instantly notify users through multiple channels.
 
-Originally started as a lightweight Python monitoring script for HackerOne scope tracking, the project gradually evolved into a scalable monitoring infrastructure with reactive synchronization, real-time broadcasting, and multi-user support.
-
-The idea behind Watch Tower is simple:
+Originally started as a lightweight Python monitoring script for HackerOne scope tracking, the project gradually evolved into a scalable monitoring infrastructure focused on reactive synchronization, real-time broadcasting, and multi-user workflows.
 
 > monitoring should be proactive, not passive.
 
@@ -47,21 +41,17 @@ The idea behind Watch Tower is simple:
   />
 </p>
 
-The first version of Watch Tower was a lightweight local Python script focused entirely on instant asset detection.
+The first version of Watch Tower was intentionally simple:
 
-There was no dashboard.
-No frontend.
-No infrastructure layer.
-
-Just terminal output, detection logic, and Discord notifications the moment a new asset appeared.
+* local Python monitoring script
+* instant Discord notifications
+* terminal-based output
+* no dashboard or frontend
+* lightweight trigger-based detection
 
 That prototype proved the concept worked — and became the foundation for the current generation.
 
----
-
 ### Current Generation
-
-Watch Tower is now being rebuilt entirely with a scalable and reactive architecture:
 
 | Layer             | Technology      |
 | ----------------- | --------------- |
@@ -71,47 +61,23 @@ Watch Tower is now being rebuilt entirely with a scalable and reactive architect
 | Real-Time Sync    | Laravel Echo    |
 | Architecture      | WebSocket-based |
 
-The current generation focuses on:
-
-* scalable backend architecture
-* reactive synchronization
-* infrastructure-focused workflows
-* real-time event broadcasting
-* multi-user monitoring support
+The current generation focuses on scalable backend architecture, reactive synchronization, infrastructure-focused workflows, and real-time event broadcasting.
 
 ---
 
-## Features
+## Core Features
 
 * Real-time asset detection
 * Multi-channel notifications
 * Reactive dashboard
 * Live synchronization
-* Multi-user architecture
+* Multi-user support
 * Infrastructure-focused design
 * Scalable backend structure
 
----
+### Notification Channels
 
-## Notification Channels
-
-| Channel          | Status  |
-| ---------------- | ------- |
-| Discord          | ✅       |
-| Telegram         | ✅       |
-| In-App Dashboard | ✅       |
-| SMS              | Planned |
-
----
-
-## Use Cases
-
-Watch Tower is designed for:
-
-* Security researchers
-* DevSecOps workflows
-* Infrastructure monitoring
-* Real-time alert systems
+Discord · Telegram · In-App Dashboard · SMS (planned)
 
 ---
 
@@ -125,14 +91,16 @@ The delay slowed development — not the vision behind it.
 
 ---
 
-## Roadmap
+## Future Direction
 
 * SaaS deployment
 * Team collaboration
 * Shared workspaces
 * Enterprise integrations
-* Analytics layer
 * API ecosystem
+* Analytics & automation workflows
+
+Watch Tower is being built as a scalable monitoring infrastructure platform — not just another monitoring script.
 
 ---
 
@@ -141,13 +109,9 @@ The delay slowed development — not the vision behind it.
 * Telegram: [@Octawian](https://t.me/Octawian)
 * Email: [arashebi777@gmail.com](mailto:arashebi777@gmail.com)
 
----
-
-
 <p align="center">
   <img 
     src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHpkajdlMzgwb2VlMzQ2Mm91cW10ZHpqcDd0cnQxM2Z0NnYyemV4MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0DcbpggSvE5I0BK14f/giphy.gif"
-    width="65%"
+    width="68%"
   />
 </p>
-
