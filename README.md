@@ -1,159 +1,142 @@
+# Watch Tower
+
 <p align="center">
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" height="52" />
-  &nbsp;&nbsp;&nbsp;
-  <img src="https://laravel.com/img/logomark.min.svg" height="52" />
-  &nbsp;&nbsp;&nbsp;
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/vuejs/vuejs-original.svg" height="52" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" height="42" />
+  &nbsp;&nbsp;
+  <img src="https://laravel.com/img/logomark.min.svg" height="42" />
+  &nbsp;&nbsp;
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/vuejs/vuejs-original.svg" height="42" />
 </p>
 
 <h1 align="center">Watch Tower</h1>
 
 <p align="center">
-  Real-Time Monitoring Infrastructure
+  Real-Time Asset Monitoring Platform
   <br>
-  Built with Python · Laravel 13 · Vue.js
+  Built with Python · Laravel · Vue.js
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Core-Python-blue?style=for-the-badge&logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/Laravel-13-red?style=for-the-badge&logo=laravel" />
-  <img src="https://img.shields.io/badge/Vue.js-Reactive_UI-42b883?style=for-the-badge&logo=vue.js&logoColor=white" />
-  <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Status-Active-success?style=flat-square" />
+  <img src="https://img.shields.io/badge/Architecture-Reactive-black?style=flat-square" />
+  <img src="https://img.shields.io/badge/Focus-RealTime-blue?style=flat-square" />
 </p>
 
 ---
 
-# Monitoring Without Blind Spots
+## Overview
 
-Watch Tower is a real-time monitoring infrastructure platform built to detect newly added assets across defined targets and instantly broadcast updates through multiple notification channels.
+Watch Tower is a real-time monitoring platform designed to detect newly added assets across defined targets and instantly notify users through multiple channels.
 
-The project started as a small Python script monitoring HackerOne scope changes locally.
+Originally started as a lightweight Python monitoring script for HackerOne scope tracking, the project gradually evolved into a scalable monitoring infrastructure with reactive synchronization, real-time broadcasting, and multi-user support.
 
-Over time, that simple idea evolved into something much larger:
+The idea behind Watch Tower is simple:
 
-> real-time infrastructure awareness with scalable architecture and reactive synchronization.
-
-Watch Tower is now being rebuilt from the ground up with long-term scalability, multi-user workflows, and infrastructure-grade reliability in mind.
+> monitoring should be proactive, not passive.
 
 ---
 
-# Product Evolution
+## Product Evolution
 
-## Early Prototype
+### Early Prototype
 
 <p align="center">
   <img 
-    src="/img/old-version.jpg"
+    src="img/old-version.jpg"
     width="88%"
   />
 </p>
 
-The first generation of Watch Tower was intentionally simple.
+The first version of Watch Tower was a lightweight local Python script focused entirely on instant asset detection.
 
-No dashboard.
+There was no dashboard.
 No frontend.
 No infrastructure layer.
 
-Just a lightweight Python monitoring script running locally and instantly sending Discord alerts whenever new assets appeared.
+Just terminal output, detection logic, and Discord notifications the moment a new asset appeared.
 
-The objective was straightforward:
-
-> detect changes immediately and eliminate passive monitoring.
-
-That prototype validated the concept and became the foundation for the current generation.
+That prototype proved the concept worked — and became the foundation for the current generation.
 
 ---
 
-## Current Generation
+### Current Generation
 
-Watch Tower is now evolving into a complete monitoring infrastructure platform.
+Watch Tower is now being rebuilt entirely with a scalable and reactive architecture:
 
-Rebuilt entirely with a modern architecture stack:
+| Layer             | Technology      |
+| ----------------- | --------------- |
+| Backend Core      | Python 3        |
+| Application Layer | Laravel 13      |
+| Frontend          | Vue.js          |
+| Real-Time Sync    | Laravel Echo    |
+| Architecture      | WebSocket-based |
 
-| Layer              | Technology             |
-| ------------------ | ---------------------- |
-| Monitoring Core    | Python 3               |
-| Application Layer  | Laravel 13             |
-| Frontend Dashboard | Vue.js                 |
-| Real-Time Layer    | Laravel Echo           |
-| Synchronization    | WebSocket Broadcasting |
-| Components         | Volt                   |
+The current generation focuses on:
 
----
-
-# Core Capabilities
-
-## Real-Time Asset Detection
-
-Continuously monitor targets and detect newly added assets the moment they appear.
-
-## Multi-Channel Notification Engine
-
-Broadcast updates across multiple delivery channels:
-
-| Channel          | Status     |
-| ---------------- | ---------- |
-| Discord          | ✅ Active   |
-| Telegram         | ✅ Active   |
-| In-App Dashboard | ✅ Active   |
-| SMS              | 🔜 Planned |
-
-## Reactive Dashboard
-
-A Vue.js-powered monitoring interface built around real-time synchronization.
-
-Features include:
-
-* Live broadcasting
-* Concurrent multi-user updates
-* Reactive UI synchronization
-* Infrastructure-focused workflows
-* Real-time event propagation
-
-## Scalable Backend Architecture
-
-Watch Tower is being engineered around long-term maintainability and scalability rather than short-term convenience.
-
-The architecture prioritizes:
-
-* modular infrastructure
-* event-driven communication
+* scalable backend architecture
 * reactive synchronization
-* maintainable service layers
-* infrastructure awareness
-* scalable notification pipelines
+* infrastructure-focused workflows
+* real-time event broadcasting
+* multi-user monitoring support
 
 ---
 
-# Development Status
+## Features
 
-Watch Tower recently resumed active development after a long interruption caused by internet instability and infrastructure limitations.
-
-The current generation is actively being rebuilt and is expected to reach a stable release within the next 2–3 months.
-
-The interruption delayed development — not the vision behind it.
+* Real-time asset detection
+* Multi-channel notifications
+* Reactive dashboard
+* Live synchronization
+* Multi-user architecture
+* Infrastructure-focused design
+* Scalable backend structure
 
 ---
 
-# Future Direction
+## Notification Channels
 
-Planned expansion includes:
+| Channel          | Status  |
+| ---------------- | ------- |
+| Discord          | ✅       |
+| Telegram         | ✅       |
+| In-App Dashboard | ✅       |
+| SMS              | Planned |
 
-* SaaS multi-tenant deployment
-* Team collaboration systems
-* Shared monitoring workspaces
+---
+
+## Use Cases
+
+Watch Tower is designed for:
+
+* Security researchers
+* DevSecOps workflows
+* Infrastructure monitoring
+* Real-time alert systems
+
+---
+
+## Development Status
+
+Development recently resumed after a long interruption caused by internet instability and infrastructure limitations.
+
+The project is now actively being rebuilt again, with the current generation expected to reach a stable release within the next 2–3 months.
+
+The delay slowed development — not the vision behind it.
+
+---
+
+## Roadmap
+
+* SaaS deployment
+* Team collaboration
+* Shared workspaces
 * Enterprise integrations
-* API-driven automation
-* Advanced analytics
-* Monitoring orchestration workflows
-
-The goal is not just another monitoring tool.
-
-The goal is a scalable monitoring ecosystem.
+* Analytics layer
+* API ecosystem
 
 ---
 
-# Contact
+## Contact
 
 * Telegram: [@Octawian](https://t.me/Octawian)
 * Email: [arashebi777@gmail.com](mailto:arashebi777@gmail.com)
@@ -163,10 +146,6 @@ The goal is a scalable monitoring ecosystem.
 <p align="center">
   <img 
     src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHpkajdlMzgwb2VlMzQ2Mm91cW10ZHpqcDd0cnQxM2Z0NnYyemV4MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0DcbpggSvE5I0BK14f/giphy.gif"
-    width="340"
+    width="260"
   />
-</p>
-
-<p align="center">
-  Built by Arash Abraham
 </p>
