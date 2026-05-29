@@ -1,21 +1,21 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" height="50" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" height="52" />
   &nbsp;&nbsp;&nbsp;
-  <img src="https://laravel.com/img/logomark.min.svg" height="50" />
+  <img src="https://laravel.com/img/logomark.min.svg" height="52" />
   &nbsp;&nbsp;&nbsp;
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/vuejs/vuejs-original.svg" height="50" />
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/vuejs/vuejs-original.svg" height="52" />
 </p>
 
 <h1 align="center">Watch Tower</h1>
 
 <p align="center">
-  Real-Time Asset Monitoring Infrastructure
+  Real-Time Monitoring Infrastructure
   <br>
   Built with Python · Laravel 13 · Vue.js
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3-blue?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/Core-Python-blue?style=for-the-badge&logo=python&logoColor=white" />
   <img src="https://img.shields.io/badge/Laravel-13-red?style=for-the-badge&logo=laravel" />
   <img src="https://img.shields.io/badge/Vue.js-Reactive_UI-42b883?style=for-the-badge&logo=vue.js&logoColor=white" />
   <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" />
@@ -23,139 +23,137 @@
 
 ---
 
-## Real-Time Monitoring Without Blind Spots
+# Monitoring Without Blind Spots
 
-Watch Tower is a monitoring infrastructure platform designed to detect newly added assets from defined targets and instantly broadcast updates across multiple notification channels.
+Watch Tower is a real-time monitoring infrastructure platform built to detect newly added assets across defined targets and instantly broadcast updates through multiple notification channels.
 
-What started as a lightweight Python script monitoring HackerOne scope changes gradually evolved into a much larger idea:
+The project started as a small Python script monitoring HackerOne scope changes locally.
 
-> monitoring should be proactive, not passive.
+Over time, that simple idea evolved into something much larger:
 
-The project is now being rebuilt from the ground up with a scalable architecture, reactive synchronization, and multi-user capabilities in mind.
+> real-time infrastructure awareness with scalable architecture and reactive synchronization.
+
+Watch Tower is now being rebuilt from the ground up with long-term scalability, multi-user workflows, and infrastructure-grade reliability in mind.
 
 ---
 
-## Product Evolution
+# Product Evolution
 
-### Before This Version — The Early Prototype
+## Early Prototype
 
 <p align="center">
   <img 
     src="/img/old-version.jpg"
-    width="85%"
+    width="88%"
   />
 </p>
 
-The first version of Watch Tower started as a lightweight local Python script created to monitor HackerOne program scope changes in real time.
+The first generation of Watch Tower was intentionally simple.
 
-There was no dashboard.
-No reactive frontend.
+No dashboard.
+No frontend.
 No infrastructure layer.
 
-Just detection logic, terminal output, and instant Discord notifications.
+Just a lightweight Python monitoring script running locally and instantly sending Discord alerts whenever new assets appeared.
 
-The goal was simple:
+The objective was straightforward:
 
-> know immediately when a new asset appears.
+> detect changes immediately and eliminate passive monitoring.
 
-That prototype became the foundation for everything that followed.
-
----
-
-### Current Generation — Watch Tower
-
-Rebuilt entirely from the ground up with a scalable architecture and modern infrastructure stack:
-
-* Python monitoring core
-* Laravel application layer
-* Vue.js reactive dashboard
-* WebSocket-powered synchronization
-* Multi-channel notification engine
-* SaaS-ready backend architecture
-
-The project is no longer just a monitoring script.
-
-It is evolving into a full monitoring infrastructure platform.
+That prototype validated the concept and became the foundation for the current generation.
 
 ---
 
-## Architecture
+## Current Generation
 
-| Layer                  | Technology      |
-| ---------------------- | --------------- |
-| Core Monitoring Engine | Python 3        |
-| Application Layer      | Laravel 13      |
-| Frontend Dashboard     | Vue.js          |
-| Real-Time Broadcasting | Laravel Echo    |
-| Synchronization        | WebSocket-based |
-| Component System       | Volt            |
+Watch Tower is now evolving into a complete monitoring infrastructure platform.
+
+Rebuilt entirely with a modern architecture stack:
+
+| Layer              | Technology             |
+| ------------------ | ---------------------- |
+| Monitoring Core    | Python 3               |
+| Application Layer  | Laravel 13             |
+| Frontend Dashboard | Vue.js                 |
+| Real-Time Layer    | Laravel Echo           |
+| Synchronization    | WebSocket Broadcasting |
+| Components         | Volt                   |
 
 ---
 
-## Core Capabilities
+# Core Capabilities
 
-### Real-Time Asset Detection
+## Real-Time Asset Detection
 
-Detect newly added assets the moment they appear across monitored targets.
+Continuously monitor targets and detect newly added assets the moment they appear.
 
-### Multi-Channel Notification Engine
+## Multi-Channel Notification Engine
 
-Choose how updates are delivered:
+Broadcast updates across multiple delivery channels:
 
-| Channel          | Status      |
-| ---------------- | ----------- |
-| Discord          | ✅ Available |
-| Telegram         | ✅ Available |
-| In-App Dashboard | ✅ Available |
-| SMS              | 🔜 Planned  |
+| Channel          | Status     |
+| ---------------- | ---------- |
+| Discord          | ✅ Active   |
+| Telegram         | ✅ Active   |
+| In-App Dashboard | ✅ Active   |
+| SMS              | 🔜 Planned |
 
-### Reactive Dashboard
+## Reactive Dashboard
 
-* Live synchronization
-* Real-time broadcasting
-* Multi-user ready architecture
-* Concurrent dashboard updates
+A Vue.js-powered monitoring interface built around real-time synchronization.
+
+Features include:
+
+* Live broadcasting
+* Concurrent multi-user updates
+* Reactive UI synchronization
 * Infrastructure-focused workflows
+* Real-time event propagation
 
-### Scalable Backend Design
+## Scalable Backend Architecture
 
-Watch Tower is being designed around long-term scalability rather than short-term utility.
+Watch Tower is being engineered around long-term maintainability and scalability rather than short-term convenience.
 
-The architecture focuses on:
+The architecture prioritizes:
 
-* modularity
-* maintainability
-* event-driven synchronization
+* modular infrastructure
+* event-driven communication
+* reactive synchronization
+* maintainable service layers
 * infrastructure awareness
-* real-time communication
+* scalable notification pipelines
 
 ---
 
-## Development Status
+# Development Status
 
 Watch Tower recently resumed active development after a long interruption caused by internet instability and infrastructure limitations.
 
-Development is now fully active again, with the current generation expected to reach a stable release within the next 2–3 months.
+The current generation is actively being rebuilt and is expected to reach a stable release within the next 2–3 months.
 
-The delay slowed the timeline — not the vision.
+The interruption delayed development — not the vision behind it.
 
 ---
 
-## Future Direction
+# Future Direction
 
 Planned expansion includes:
 
-* Team collaboration
-* Shared workspaces
 * SaaS multi-tenant deployment
-* API-driven integrations
+* Team collaboration systems
+* Shared monitoring workspaces
+* Enterprise integrations
+* API-driven automation
 * Advanced analytics
-* Monitoring automation workflows
-* Enterprise-grade infrastructure tooling
+* Monitoring orchestration workflows
+
+The goal is not just another monitoring tool.
+
+The goal is a scalable monitoring ecosystem.
 
 ---
 
-## Contact
+# Contact
 
 * Telegram: [@Octawian](https://t.me/Octawian)
 * Email: [arashebi777@gmail.com](mailto:arashebi777@gmail.com)
@@ -165,7 +163,7 @@ Planned expansion includes:
 <p align="center">
   <img 
     src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHpkajdlMzgwb2VlMzQ2Mm91cW10ZHpqcDd0cnQxM2Z0NnYyemV4MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0DcbpggSvE5I0BK14f/giphy.gif"
-    width="360"
+    width="340"
   />
 </p>
 
