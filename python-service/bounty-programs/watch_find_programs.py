@@ -1,36 +1,24 @@
-import requests, json
-import subprocess, os , sys
-
-# try:
-#     result = subprocess.run(["./sendRequest.sh"], capture_output=True, text=True)
-# except PermissionError:
-#     os.system('chmod +x sendRequest.sh')
-
+import requests, os, sys
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'database')))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-
 from db import insert_all_bugcrowd_programs
+
+URL = "https://raw.githubusercontent.com/arkadiyt/bounty-targets-data/refs/heads/main/data/bugcrowd_data.json"
 
 def RunCode():
     try:
-        script_path = "sendRequest.sh"
-            
-        result = subprocess.run(["bash", script_path], capture_output=True, text=True)
+        response = requests.get(URL, timeout=30)
+        response.raise_for_status()
         
-        if result.returncode == 0:
-            data = json.loads(result.stdout)
-            
-            insert_all_bugcrowd_programs(data)
-            
-            return data
-        else:
-            print("error", result.stderr)
-            return None
-    except PermissionError:
-        os.system("chmod +x sendRequest.sh")
-        RunCode()
+        data = response.json()
+        insert_all_bugcrowd_programs(data)
+        
+        return data
+    except requests.RequestException as e:
+        print("error:", e)
+        return None
 
 if __name__ == '__main__':
     RunCode()
