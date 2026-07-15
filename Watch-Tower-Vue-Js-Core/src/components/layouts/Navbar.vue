@@ -1,11 +1,10 @@
-<!-- components/Navbar.vue -->
 <template>
   <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" :class="scrolled ? 'bg-black/80 backdrop-blur-xl border-b border-cyan-500/20' : 'bg-transparent'">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         
         <!-- Logo Section -->
-        <div class="flex items-center gap-2 group cursor-pointer" @click="scrollToTop">
+        <div class="flex items-center gap-2 group cursor-pointer" @click="goHome">
           <div class="relative">
             <div class="absolute inset-0 bg-cyan-500/20 blur-lg rounded-full group-hover:bg-cyan-500/30 transition-all duration-300"></div>
             <div class="relative w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center">
@@ -19,63 +18,20 @@
           </span>
         </div>
 
-        <!-- Desktop Navigation Links - اینجا منوها مستقیم نوشته شدن -->
-        <!-- جایگزین بخش Desktop Navigation Links -->
+        <!-- Desktop Navigation Links -->
         <div class="hidden md:flex items-center gap-1">
-        <button 
-            @click="$emit('navigate', 'dashboard')"
+          <button 
+            v-for="item in navItems"
+            :key="item.route"
+            @click="navigateTo(item.route)"
             class="relative px-4 py-2 text-sm font-medium transition-all duration-300 group"
-            :class="activeSection === 'dashboard' ? 'text-cyan-400' : 'text-gray-400 hover:text-white'"
-        >
-            Dashboard
+            :class="isActive(item.route) ? 'text-cyan-400' : 'text-gray-400 hover:text-white'"
+          >
+            {{ item.label }}
             <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-300 group-hover:w-full"
-            :class="activeSection === 'dashboard' ? 'w-full' : ''">
+              :class="isActive(item.route) ? 'w-full' : ''">
             </span>
-        </button>
-
-        <button 
-            @click="$emit('navigate', 'apps')"
-            class="relative px-4 py-2 text-sm font-medium transition-all duration-300 group"
-            :class="activeSection === 'apps' ? 'text-cyan-400' : 'text-gray-400 hover:text-white'"
-        >
-            Apps
-            <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-300 group-hover:w-full"
-            :class="activeSection === 'apps' ? 'w-full' : ''">
-            </span>
-        </button>
-
-        <button 
-            @click="$emit('navigate', 'targets')"
-            class="relative px-4 py-2 text-sm font-medium transition-all duration-300 group"
-            :class="activeSection === 'targets' ? 'text-cyan-400' : 'text-gray-400 hover:text-white'"
-        >
-            Targets
-            <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-300 group-hover:w-full"
-            :class="activeSection === 'targets' ? 'w-full' : ''">
-            </span>
-        </button>
-
-        <button 
-            @click="$emit('navigate', 'monitors')"
-            class="relative px-4 py-2 text-sm font-medium transition-all duration-300 group"
-            :class="activeSection === 'monitors' ? 'text-cyan-400' : 'text-gray-400 hover:text-white'"
-        >
-            Monitors
-            <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-300 group-hover:w-full"
-            :class="activeSection === 'monitors' ? 'w-full' : ''">
-            </span>
-        </button>
-
-        <button 
-            @click="$emit('navigate', 'alerts')"
-            class="relative px-4 py-2 text-sm font-medium transition-all duration-300 group"
-            :class="activeSection === 'alerts' ? 'text-cyan-400' : 'text-gray-400 hover:text-white'"
-        >
-            Alerts
-            <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-300 group-hover:w-full"
-            :class="activeSection === 'alerts' ? 'w-full' : ''">
-            </span>
-        </button>
+          </button>
         </div>
 
         <!-- Status Indicator -->
@@ -111,11 +67,14 @@
       >
         <div v-if="mobileMenuOpen" class="md:hidden py-4 border-t border-cyan-500/20 mt-2">
           <div class="flex flex-col gap-2">
-            <a href="#dashboard" @click="closeMobileMenu" class="px-4 py-2 text-gray-300 hover:text-cyan-400 transition-colors rounded-lg hover:bg-cyan-500/10">Dashboard</a>
-            <a href="#apps" @click="closeMobileMenu" class="px-4 py-2 text-gray-300 hover:text-cyan-400 transition-colors rounded-lg hover:bg-cyan-500/10">Apps</a>
-            <a href="#targets" @click="closeMobileMenu" class="px-4 py-2 text-gray-300 hover:text-cyan-400 transition-colors rounded-lg hover:bg-cyan-500/10">Targets</a>
-            <a href="#monitors" @click="closeMobileMenu" class="px-4 py-2 text-gray-300 hover:text-cyan-400 transition-colors rounded-lg hover:bg-cyan-500/10">Monitors</a>
-            <a href="#alerts" @click="closeMobileMenu" class="px-4 py-2 text-gray-300 hover:text-cyan-400 transition-colors rounded-lg hover:bg-cyan-500/10">Alerts</a>
+            <button 
+              v-for="item in navItems"
+              :key="item.route"
+              @click="navigateTo(item.route)"
+              class="px-4 py-2 text-gray-300 hover:text-cyan-400 transition-colors rounded-lg hover:bg-cyan-500/10 text-left"
+            >
+              {{ item.label }}
+            </button>
           </div>
         </div>
       </transition>
@@ -127,35 +86,48 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+
+const route = useRoute()
+const router = useRouter()
 
 const scrolled = ref(false)
 const mobileMenuOpen = ref(false)
-const activeSection = ref('dashboard')
+
+const navItems = [
+  { label: 'Dashboard', route: '/dashboard' },
+  { label: 'Apps', route: '/apps' },
+  { label: 'Targets', route: '/targets' },
+  { label: 'Monitors', route: '/monitors' },
+  { label: 'Alerts', route: '/alerts' }
+]
+
+const isActive = (path) => {
+  return route.path === path
+}
+
+const navigateTo = (path) => {
+  router.push(path)
+  mobileMenuOpen.value = false 
+}
+
+const goHome = () => {
+  router.push('/')
+  mobileMenuOpen.value = false
+}
 
 const handleScroll = () => {
   scrolled.value = window.scrollY > 20
-  
-  const sections = ['dashboard', 'apps', 'targets', 'monitors', 'alerts']
-  for (const section of sections) {
-    const element = document.getElementById(section)
-    if (element) {
-      const rect = element.getBoundingClientRect()
-      if (rect.top <= 100 && rect.bottom >= 100) {
-        activeSection.value = section
-        break
-      }
-    }
-  }
-}
-
-const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
 const closeMobileMenu = () => {
   mobileMenuOpen.value = false
 }
+
+watch(() => route.path, () => {
+  closeMobileMenu()
+})
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
