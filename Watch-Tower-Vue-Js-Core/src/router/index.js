@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomePage from '../components/HomePage.vue'
-import TargetsPage from '../components/TargetsPage.vue'
-import AppsPage from '../components/AppsPage.vue'
-import DashboardPage from '../components/DashboardPage.vue'
-import MonitorsPage from '../components/MonitorsPage.vue'
-import AlertsPage from '../components/AlertsPage.vue'
+import HomePage from '../components/Content/HomePage.vue'
+import TargetsPage from '../components/Content/TargetsPage.vue'
+import AppsPage from '../components/Content/AppsPage.vue'
+import DashboardPage from '../components/Content/DashboardPage.vue'
+import MonitorsPage from '../components/Content/MonitorsPage.vue'
+import AlertsPage from '../components/Content/AlertsPage.vue'
 
 const routes = [
   { 

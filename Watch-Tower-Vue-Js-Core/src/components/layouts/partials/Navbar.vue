@@ -45,7 +45,7 @@
 
         <!-- Mobile Menu Button -->
         <button 
-          @click="mobileMenuOpen = !mobileMenuOpen"
+          @click="toggleMobileMenu"
           class="md:hidden relative w-10 h-10 flex items-center justify-center rounded-lg border border-cyan-500/20 hover:border-cyan-500/40 transition-colors"
         >
           <div class="absolute inset-0 bg-cyan-500/5 rounded-lg"></div>
@@ -57,27 +57,18 @@
       </div>
 
       <!-- Mobile Menu Dropdown -->
-      <transition
-        enter-active-class="transition-all duration-300 ease-out"
-        enter-from-class="opacity-0 -translate-y-4"
-        enter-to-class="opacity-100 translate-y-0"
-        leave-active-class="transition-all duration-200 ease-in"
-        leave-from-class="opacity-100 translate-y-0"
-        leave-to-class="opacity-0 -translate-y-4"
-      >
-        <div v-if="mobileMenuOpen" class="md:hidden py-4 border-t border-cyan-500/20 mt-2">
-          <div class="flex flex-col gap-2">
-            <button 
-              v-for="item in navItems"
-              :key="item.route"
-              @click="navigateTo(item.route)"
-              class="px-4 py-2 text-gray-300 hover:text-cyan-400 transition-colors rounded-lg hover:bg-cyan-500/10 text-left"
-            >
-              {{ item.label }}
-            </button>
-          </div>
+      <div v-if="mobileMenuOpen" class="md:hidden py-4 border-t border-cyan-500/20 mt-2">
+        <div class="flex flex-col gap-2">
+          <button 
+            v-for="item in navItems"
+            :key="item.route"
+            @click="navigateTo(item.route)"
+            class="px-4 py-2 text-gray-300 hover:text-cyan-400 transition-colors rounded-lg hover:bg-cyan-500/10 text-left"
+          >
+            {{ item.label }}
+          </button>
         </div>
-      </transition>
+      </div>
     </div>
 
     <!-- Bottom Glow Effect -->
@@ -86,7 +77,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
@@ -95,6 +86,7 @@ const router = useRouter()
 const scrolled = ref(false)
 const mobileMenuOpen = ref(false)
 
+// آیتم‌های منو
 const navItems = [
   { label: 'Dashboard', route: '/dashboard' },
   { label: 'Apps', route: '/apps' },
@@ -103,32 +95,44 @@ const navItems = [
   { label: 'Alerts', route: '/alerts' }
 ]
 
+// بررسی فعال بودن مسیر - استفاده از computed به جای تابع
 const isActive = (path) => {
+  if (!route || !route.path) return false
   return route.path === path
 }
 
+// نویگیشن به مسیر
 const navigateTo = (path) => {
-  router.push(path)
-  mobileMenuOpen.value = false 
+  if (router) {
+    router.push(path)
+    mobileMenuOpen.value = false
+  }
 }
 
+// رفتن به صفحه اصلی
 const goHome = () => {
-  router.push('/')
-  mobileMenuOpen.value = false
+  if (router) {
+    router.push('/')
+    mobileMenuOpen.value = false
+  }
 }
 
+// مدیریت اسکرول
 const handleScroll = () => {
   scrolled.value = window.scrollY > 20
 }
 
+// توگل منو موبایل
+const toggleMobileMenu = () => {
+  mobileMenuOpen.value = !mobileMenuOpen.value
+}
+
+// بستن منو موبایل
 const closeMobileMenu = () => {
   mobileMenuOpen.value = false
 }
 
-watch(() => route.path, () => {
-  closeMobileMenu()
-})
-
+// Lifecycle hooks
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
   handleScroll()
