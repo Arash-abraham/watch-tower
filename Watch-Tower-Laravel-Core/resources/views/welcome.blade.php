@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Watch Tower</title> 
+    <title>Watch Tower · terminal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
 
         * {
             margin: 0;
@@ -15,8 +15,8 @@
         }
 
         body {
-            font-family: 'Nunito', sans-serif;
-            background: #000000;
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 30% 10%, #111 0%, #030303 95%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -24,81 +24,234 @@
             padding: 20px;
         }
 
+        .glass {
+            background: rgba(20, 20, 22, 0.75);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: 0 25px 50px -8px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        }
+
         .container {
             width: 100%;
-            max-width: 800px;
-            background: #2b2929;
-            border-radius: 12px;
-            padding: 48px 56px 40px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.02);
+            max-width: 820px;
+            border-radius: 28px;
+            padding: 32px 40px 32px;
+            transition: all 0.2s ease;
         }
 
         .header {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-
-        .header .logo {
-            font-weight: 800;
-            font-size: 32px;
-            color: #ffffff;
-            letter-spacing: 1px;
-        }
-
-        .header .logo span {
-            color: #e53e3e;
-        }
-
-        .header .sub {
-            font-size: 14px;
-            color: #718096;
-            margin-top: 4px;
-            font-weight: 400;
-        }
-
-        .header .status {
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 6px;
-            margin-top: 12px;
-            font-size: 12px;
-            color: #48bb78;
-            font-weight: 600;
+            justify-content: space-between;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            gap: 12px 8px;
         }
 
-        .header .status .dot {
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #1a1a1e, #2a2a2e);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(229, 62, 62, 0.15);
+            box-shadow: 0 4px 12px -4px rgba(229, 62, 62, 0.15);
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .tower-icon {
+            position: relative;
+            width: 24px;
+            height: 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .tower-body {
+            position: relative;
+            width: 18px;
+            height: 20px;
+            background: linear-gradient(180deg, #e53e3e 0%, #b91c1c 100%);
+            border-radius: 3px 3px 0 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            padding-top: 2px;
+            box-shadow: 0 0 12px rgba(229, 62, 62, 0.2);
+        }
+
+        .tower-window {
+            width: 10px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 1px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .tower-window:last-child {
+            width: 6px;
+            height: 3px;
+        }
+
+        .tower-antenna {
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 6px;
+            background: #e53e3e;
+            border-radius: 1px;
+        }
+
+        .tower-antenna::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: #e53e3e;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: radar-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes radar-pulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: translateX(-50%) scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1.2);
+            }
+        }
+
+        .radar-wave {
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            border: 1.5px solid rgba(229, 62, 62, 0.1);
+            border-radius: 50%;
+            animation: radar-wave 3s ease-out infinite;
+        }
+
+        .radar-wave:nth-child(2) {
+            animation-delay: 0.5s;
+            width: 18px;
+            height: 18px;
+        }
+
+        .radar-wave:nth-child(3) {
+            animation-delay: 1s;
+            width: 24px;
+            height: 24px;
+        }
+
+        @keyframes radar-wave {
+            0% {
+                opacity: 0.6;
+                transform: translateX(-50%) scale(0.5);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) scale(1.8);
+            }
+        }
+
+        .tower-base {
+            width: 22px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(229, 62, 62, 0.3), transparent);
+            border-radius: 2px;
+            margin-top: 1px;
+        }
+
+        .brand .logo {
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: -0.3px;
+            color: #f1f5f9;
+        }
+
+        .brand .logo span {
+            color: #e53e3e;
+            font-weight: 800;
+        }
+
+        .badge-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(72, 187, 120, 0.08);
+            padding: 4px 14px 4px 10px;
+            border-radius: 40px;
+            border: 1px solid rgba(72, 187, 120, 0.12);
+        }
+
+        .badge-status .dot-pulse {
             display: inline-block;
             width: 8px;
             height: 8px;
             border-radius: 50%;
             background: #48bb78;
-            animation: dotPulse 2s infinite;
+            box-shadow: 0 0 0 0 rgba(72, 187, 120, 0.5);
+            animation: pulse-dot 2.2s infinite;
         }
 
-        @keyframes dotPulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.2; }
+        @keyframes pulse-dot {
+            0% { box-shadow: 0 0 0 0 rgba(72, 187, 120, 0.5); }
+            70% { box-shadow: 0 0 0 6px rgba(72, 187, 120, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(72, 187, 120, 0); }
+        }
+
+        .badge-status span {
+            font-size: 12px;
+            font-weight: 500;
+            color: #b0f0c0;
+            letter-spacing: 0.2px;
         }
 
         .terminal {
-            background: #1a202c;
-            border-radius: 10px;
-            padding: 20px 24px 16px;
-            margin-bottom: 24px;
+            background: #0b0d0f;
+            border-radius: 18px;
+            padding: 16px 20px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.6);
+            margin-bottom: 22px;
         }
 
         .terminal-bar {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding-bottom: 14px;
-            border-bottom: 1px solid #2d3748;
-            margin-bottom: 14px;
+            gap: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            margin-bottom: 12px;
         }
 
         .terminal-bar .dots {
             display: flex;
-            gap: 6px;
+            gap: 7px;
         }
 
         .terminal-bar .dots span {
@@ -113,31 +266,38 @@
         .terminal-bar .dots span:nth-child(3) { background: #68d391; }
 
         .terminal-bar .path {
-            font-family: 'Courier New', monospace;
+            font-family: 'Menlo', 'Courier New', monospace;
             font-size: 11px;
-            color: #a0aec0;
-            letter-spacing: 0.5px;
+            color: #6b7a8f;
+            letter-spacing: 0.2px;
+            background: rgba(255,255,255,0.02);
+            padding: 2px 12px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.03);
         }
 
         .terminal-bar .version {
             margin-left: auto;
-            font-family: 'Courier New', monospace;
+            font-family: 'Menlo', monospace;
             font-size: 10px;
-            color: #4a5568;
+            color: #3f4a5a;
+            background: rgba(255,255,255,0.02);
+            padding: 2px 12px;
+            border-radius: 30px;
         }
 
         #output {
             max-height: 280px;
             overflow-y: auto;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             padding-right: 4px;
-            font-family: 'Courier New', monospace;
+            font-family: 'Menlo', 'Courier New', monospace;
             font-size: 13px;
-            line-height: 1.8;
+            line-height: 1.9;
         }
 
         #output::-webkit-scrollbar {
-            width: 4px;
+            width: 5px;
         }
 
         #output::-webkit-scrollbar-track {
@@ -145,43 +305,44 @@
         }
 
         #output::-webkit-scrollbar-thumb {
-            background: #4a5568;
-            border-radius: 10px;
+            background: #2a3344;
+            border-radius: 20px;
         }
 
         .line {
             display: flex;
             align-items: flex-start;
-            gap: 10px;
-            padding: 1px 0;
+            gap: 12px;
+            padding: 2px 0;
         }
 
         .line .prompt {
             color: #68d391;
             flex-shrink: 0;
             user-select: none;
-            min-width: 14px;
+            min-width: 16px;
+            font-weight: 500;
         }
 
         .line .text {
-            color: #e2e8f0;
+            color: #d4dcec;
             word-break: break-word;
         }
 
-        .line .text.green { color: #68d391; }
-        .line .text.blue { color: #63b3ed; }
-        .line .text.red { color: #fc8181; }
-        .line .text.yellow { color: #f6ad55; }
-        .line .text.muted { color: #4a5568; }
-        .line .text.bold { color: #ffffff; font-weight: 600; }
+        .line .text.green { color: #6fcf97; }
+        .line .text.blue { color: #7bb3e6; }
+        .line .text.red { color: #f28b82; }
+        .line .text.yellow { color: #f5c542; }
+        .line .text.muted { color: #5c6b7e; }
+        .line .text.bold { color: #eef2f8; font-weight: 500; }
 
         .input-row {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             padding-top: 12px;
-            border-top: 1px solid #2d3748;
-            font-family: 'Courier New', monospace;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            font-family: 'Menlo', 'Courier New', monospace;
         }
 
         .input-row .prompt {
@@ -189,19 +350,19 @@
             flex-shrink: 0;
             font-size: 13px;
             user-select: none;
-            min-width: 14px;
+            min-width: 16px;
+            font-weight: 500;
         }
 
         .input-row .wrap {
             flex: 1;
             display: flex;
             align-items: center;
-            min-height: 24px;
-            position: relative;
+            min-height: 26px;
         }
 
         .input-row .wrap #cmd-text {
-            color: #f6ad55;
+            color: #f5c542;
             font-size: 13px;
             white-space: pre-wrap;
             word-break: break-all;
@@ -209,28 +370,19 @@
 
         .input-row .wrap .cursor {
             display: inline-block;
-            width: 8px;
-            height: 18px;
+            width: 9px;
+            height: 20px;
             background: #68d391;
             animation: blink 1s step-end infinite;
             margin-left: 2px;
             flex-shrink: 0;
-            border-radius: 1px;
+            border-radius: 2px;
+            opacity: 0.9;
         }
 
         @keyframes blink {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        .input-row .wrap .suggestion {
-            position: absolute;
-            left: 0;
-            top: 0;
-            color: #4a5568;
-            font-size: 13px;
-            pointer-events: none;
-            white-space: pre;
+            50% { opacity: 0.1; }
         }
 
         #hidden-input {
@@ -243,64 +395,101 @@
         }
 
         .footer {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #edf2f7;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            gap: 12px 16px;
         }
 
         .footer .links {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            justify-content: center;
-            gap: 4px 20px;
-            margin-bottom: 12px;
+            gap: 4px 18px;
         }
 
         .footer .links a {
-            color: #718096;
+            color: #7e8b9f;
             text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: 500;
             transition: color 0.2s ease;
+            letter-spacing: 0.2px;
+            border-bottom: 1px solid transparent;
         }
 
         .footer .links a:hover {
-            color: #2d3748;
+            color: #d4dcec;
+            border-bottom-color: #e53e3e;
         }
 
         .footer .links .sep {
-            color: #e2e8f0;
+            color: #2a3344;
+            font-weight: 300;
         }
 
         .footer .copy {
-            color: #a0aec0;
-            font-size: 12px;
+            color: #3f4a5a;
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 0.2px;
+        }
+
+        .footer .version-tag {
+            background: rgba(229, 62, 62, 0.08);
+            color: #e53e3e;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 12px;
+            border-radius: 40px;
+            border: 1px solid rgba(229, 62, 62, 0.12);
         }
 
         @media (max-width: 640px) {
-            .container { padding: 24px 16px 20px; }
-            .header .logo { font-size: 24px; }
-            .terminal { padding: 14px 14px 12px; }
+            .container { padding: 20px 14px 18px; }
+            .brand .logo { font-size: 20px; }
+            .brand-icon { width: 34px; height: 34px; }
+            .tower-icon { transform: scale(0.85); }
+            .header { margin-bottom: 18px; }
+            .terminal { padding: 12px 12px 10px; }
             .line { font-size: 11px; gap: 6px; }
             .input-row .prompt { font-size: 11px; }
             .input-row .wrap #cmd-text { font-size: 11px; }
-            #output { max-height: 160px; }
+            #output { max-height: 140px; }
             .footer .links a { font-size: 11px; }
             .footer .links { gap: 2px 12px; }
+            .footer { flex-direction: column; align-items: flex-start; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container glass">
 
     <div class="header">
-        <div class="logo">WATCH <span>TOWER</span></div>
-        <div class="sub">monitoring infrastructure</div>
-        <div class="status">
-            <span class="dot"></span>
-            system ready
+        <div class="brand">
+            <div class="brand-icon">
+                <div class="tower-icon">
+                    <div class="radar-wave"></div>
+                    <div class="radar-wave"></div>
+                    <div class="radar-wave"></div>
+                    <div class="tower-body">
+                        <div class="tower-antenna"></div>
+                        <div class="tower-window"></div>
+                        <div class="tower-window"></div>
+                        <div class="tower-window" style="width:6px;height:3px;"></div>
+                    </div>
+                    <div class="tower-base"></div>
+                </div>
+            </div>
+            <div class="logo">WATCH <span>TOWER</span></div>
+        </div>
+        <div class="badge-status">
+            <span class="dot-pulse"></span>
+            <span>system ready</span>
         </div>
     </div>
 
@@ -315,20 +504,20 @@
         </div>
 
         <div id="output">
-            <div class="line"><span class="prompt">></span><span class="text muted">initializing system...</span></div>
-            <div class="line"><span class="prompt">></span><span class="text green">+ kernel loaded</span></div>
-            <div class="line"><span class="prompt">></span><span class="text blue">+ network interface active</span></div>
-            <div class="line"><span class="prompt">></span><span class="text green">+ user authenticated</span></div>
-            <div class="line"><span class="prompt">></span><span class="text bold">welcome to watch tower</span></div>
-            <div class="line"><span class="prompt">#</span><span class="text muted">type "help" for commands | Tab for autocomplete</span></div>
+            <div class="line"><span class="text muted">initializing system...</span></div>
+            <div class="line"><span class="text green">+ kernel loaded</span></div>
+            <div class="line"><span class="text blue">+ network interface active</span></div>
+            <div class="line"><span class="text green">+ user authenticated</span></div>
+            <div class="line"><span class="text bold">welcome to watch tower</span></div>
+            <div class="line"><span class="prompt">#</span><span class="text muted">type "help" for commands</span></div>
         </div>
 
         <div class="input-row">
             <span class="prompt">></span>
+            
             <div class="wrap">
                 <span id="cmd-text"></span>
                 <span class="cursor"></span>
-                <span id="suggestion" class="suggestion"></span>
             </div>
         </div>
 
@@ -343,10 +532,11 @@
             <a href="#" onclick="return false;">Telegram</a>
             <span class="sep">|</span>
             <a href="#" onclick="return false;">Email</a>
-            <span class="sep">|</span>
-            <span style="color:#a0aec0;font-size:13px;font-weight:600;">v2.1.0</span>
         </div>
-        <div class="copy">© 2026 Watch Tower · All rights reserved</div>
+        <div style="display:flex;align-items:center;gap:16px;">
+            <span class="version-tag">v2.1.0</span>
+            <span class="copy">© 2026 · Watch Tower</span>
+        </div>
     </div>
 
 </div>
@@ -363,7 +553,6 @@
 
     const output = document.getElementById('output');
     const cmdText = document.getElementById('cmd-text');
-    const suggestionEl = document.getElementById('suggestion');
     const hidden = document.getElementById('hidden-input');
 
     let history = [];
@@ -378,7 +567,7 @@
     function print(text, type = '') {
         const div = document.createElement('div');
         div.className = 'line';
-        div.innerHTML = `<span class="prompt">></span><span class="text ${type}">${text}</span>`;
+        div.innerHTML = `<span class="text ${type}">${text}</span>`;
         output.appendChild(div);
         output.scrollTop = output.scrollHeight;
     }
@@ -431,7 +620,7 @@
                 break;
             case 'version':
                 print('watch tower api v2.1.0', 'blue');
-                print('build: 2026-08-06', 'muted');
+                print('build: 2026-08-09', 'muted');
                 break;
             case 'whoami':
                 print('root@watch-tower', 'green');
@@ -460,40 +649,9 @@
         }
     }
 
-    function getSuggestions(input) {
-        if (!input) return [];
-        const lower = input.toLowerCase();
-        return COMMANDS.filter(cmd => cmd.startsWith(lower));
-    }
-
-    function showSuggestion(suggestions) {
-        if (suggestions.length === 1 && suggestions[0] !== currentInput) {
-            const full = suggestions[0];
-            const partial = currentInput;
-            if (full.startsWith(partial)) {
-                suggestionEl.textContent = full.slice(partial.length);
-                return;
-            }
-        }
-        suggestionEl.textContent = '';
-    }
-
-    function applySuggestion() {
-        const sug = suggestionEl.textContent;
-        if (sug) {
-            currentInput = currentInput + sug;
-            cmdText.textContent = currentInput;
-            suggestionEl.textContent = '';
-            hidden.value = currentInput;
-        }
-    }
-
     hidden.addEventListener('input', function() {
         currentInput = this.value;
         cmdText.textContent = currentInput;
-        suggestionEl.textContent = '';
-        const suggestions = getSuggestions(currentInput);
-        showSuggestion(suggestions);
     });
 
     hidden.addEventListener('keydown', function(e) {
@@ -503,27 +661,8 @@
             currentInput = '';
             this.value = '';
             cmdText.textContent = '';
-            suggestionEl.textContent = '';
             print('^C', 'red');
             print('type "help" for commands', 'muted');
-            return;
-        }
-
-        if (e.key === 'Tab') {
-            e.preventDefault();
-            const suggestions = getSuggestions(currentInput);
-            if (suggestions.length > 0) {
-                if (suggestions.length === 1) {
-                    applySuggestion();
-                } else {
-                    print(`  ${suggestions.join('  ')}`, 'muted');
-                    const first = suggestions[0];
-                    currentInput = first;
-                    cmdText.textContent = first;
-                    hidden.value = first;
-                    suggestionEl.textContent = '';
-                }
-            }
             return;
         }
 
@@ -534,7 +673,7 @@
             if (val.trim()) {
                 const div = document.createElement('div');
                 div.className = 'line';
-                div.innerHTML = `<span class="prompt">></span><span class="text yellow">${val}</span>`;
+                div.innerHTML = `<span class="text yellow">${val}</span>`;
                 output.appendChild(div);
             }
 
@@ -543,7 +682,6 @@
             this.value = '';
             currentInput = '';
             cmdText.textContent = '';
-            suggestionEl.textContent = '';
             output.scrollTop = output.scrollHeight;
         }
 
@@ -554,7 +692,6 @@
                 this.value = history[historyIdx];
                 currentInput = this.value;
                 cmdText.textContent = currentInput;
-                suggestionEl.textContent = '';
             }
         }
 
@@ -565,13 +702,11 @@
                 this.value = history[historyIdx];
                 currentInput = this.value;
                 cmdText.textContent = currentInput;
-                suggestionEl.textContent = '';
             } else {
                 historyIdx = history.length;
                 this.value = '';
                 currentInput = '';
                 cmdText.textContent = '';
-                suggestionEl.textContent = '';
             }
         }
 
@@ -579,7 +714,6 @@
             this.value = '';
             currentInput = '';
             cmdText.textContent = '';
-            suggestionEl.textContent = '';
         }
     });
 
