@@ -723,7 +723,7 @@
             let matrixInterval = null;
 
             const COMMANDS = [
-                'help', 'clear', 'version', 'github', 'docs', 'exit', 'history', 'matrix'
+                'help', 'clear', 'version', 'github', 'swagger', 'exit', 'history', 'matrix'
             ];
 
             function focus() { hidden.focus(); }
@@ -780,7 +780,7 @@
                     'clear': 'clear terminal screen',
                     'version': 'show version information',
                     'github': 'repository URL',
-                    'docs': 'documentation link',
+                    'swagger': 'API documentation (Swagger UI)',
                     'exit': 'exit (just for fun)',
                     'history': 'show command history',
                     'matrix': 'show matrix rain effect'
@@ -878,8 +878,9 @@
                     case 'github':
                         print('https://github.com/AryaKhorasan/watch-tower', 'blue');
                         break;
-                    case 'docs':
-                        print('/api/documentation', 'blue');
+                    case 'swagger':
+                        print('Swagger UI: /api/swagger', 'blue');
+                        print('OpenAPI spec: /api/openapi.json', 'muted');
                         break;
                     case 'exit':
                         print('exiting... just kidding, this is a web terminal.', 'muted');
