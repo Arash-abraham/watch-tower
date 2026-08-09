@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Watch Tower · terminal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
 
@@ -133,7 +134,8 @@
         }
 
         @keyframes radar-pulse {
-            0%, 100% {
+            0%,
+            100% {
                 opacity: 0.3;
                 transform: translateX(-50%) scale(0.8);
             }
@@ -219,9 +221,15 @@
         }
 
         @keyframes pulse-dot {
-            0% { box-shadow: 0 0 0 0 rgba(72, 187, 120, 0.5); }
-            70% { box-shadow: 0 0 0 6px rgba(72, 187, 120, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(72, 187, 120, 0); }
+            0% {
+                box-shadow: 0 0 0 0 rgba(72, 187, 120, 0.5);
+            }
+            70% {
+                box-shadow: 0 0 0 6px rgba(72, 187, 120, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(72, 187, 120, 0);
+            }
         }
 
         .badge-status span {
@@ -261,19 +269,25 @@
             display: block;
         }
 
-        .terminal-bar .dots span:nth-child(1) { background: #fc8181; }
-        .terminal-bar .dots span:nth-child(2) { background: #f6ad55; }
-        .terminal-bar .dots span:nth-child(3) { background: #68d391; }
+        .terminal-bar .dots span:nth-child(1) {
+            background: #fc8181;
+        }
+        .terminal-bar .dots span:nth-child(2) {
+            background: #f6ad55;
+        }
+        .terminal-bar .dots span:nth-child(3) {
+            background: #68d391;
+        }
 
         .terminal-bar .path {
             font-family: 'Menlo', 'Courier New', monospace;
             font-size: 11px;
             color: #6b7a8f;
             letter-spacing: 0.2px;
-            background: rgba(255,255,255,0.02);
+            background: rgba(255, 255, 255, 0.02);
             padding: 2px 12px;
             border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.03);
+            border: 1px solid rgba(255, 255, 255, 0.03);
         }
 
         .terminal-bar .version {
@@ -281,7 +295,7 @@
             font-family: 'Menlo', monospace;
             font-size: 10px;
             color: #3f4a5a;
-            background: rgba(255,255,255,0.02);
+            background: rgba(255, 255, 255, 0.02);
             padding: 2px 12px;
             border-radius: 30px;
         }
@@ -329,12 +343,44 @@
             word-break: break-word;
         }
 
-        .line .text.green { color: #6fcf97; }
-        .line .text.blue { color: #7bb3e6; }
-        .line .text.red { color: #f28b82; }
-        .line .text.yellow { color: #f5c542; }
-        .line .text.muted { color: #5c6b7e; }
-        .line .text.bold { color: #eef2f8; font-weight: 500; }
+        .line .text.green {
+            color: #6fcf97;
+        }
+        .line .text.blue {
+            color: #7bb3e6;
+        }
+        .line .text.red {
+            color: #f28b82;
+        }
+        .line .text.yellow {
+            color: #f5c542;
+        }
+        .line .text.muted {
+            color: #5c6b7e;
+        }
+        .line .text.bold {
+            color: #eef2f8;
+            font-weight: 500;
+        }
+        .line .text.cyan {
+            color: #5fc8e8;
+        }
+
+        .help-grid {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 2px 20px;
+            padding: 4px 0;
+        }
+
+        .help-grid .cmd {
+            color: #f5c542;
+            font-weight: 500;
+        }
+
+        .help-grid .desc {
+            color: #8a9bb0;
+        }
 
         .input-row {
             display: flex;
@@ -381,8 +427,13 @@
         }
 
         @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.1; }
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.1;
+            }
         }
 
         #hidden-input {
@@ -449,283 +500,337 @@
         }
 
         @media (max-width: 640px) {
-            .container { padding: 20px 14px 18px; }
-            .brand .logo { font-size: 20px; }
-            .brand-icon { width: 34px; height: 34px; }
-            .tower-icon { transform: scale(0.85); }
-            .header { margin-bottom: 18px; }
-            .terminal { padding: 12px 12px 10px; }
-            .line { font-size: 11px; gap: 6px; }
-            .input-row .prompt { font-size: 11px; }
-            .input-row .wrap #cmd-text { font-size: 11px; }
-            #output { max-height: 140px; }
-            .footer .links a { font-size: 11px; }
-            .footer .links { gap: 2px 12px; }
-            .footer { flex-direction: column; align-items: flex-start; }
+            .container {
+                padding: 20px 14px 18px;
+            }
+            .brand .logo {
+                font-size: 20px;
+            }
+            .brand-icon {
+                width: 34px;
+                height: 34px;
+            }
+            .tower-icon {
+                transform: scale(0.85);
+            }
+            .header {
+                margin-bottom: 18px;
+            }
+            .terminal {
+                padding: 12px 12px 10px;
+            }
+            .line {
+                font-size: 11px;
+                gap: 6px;
+            }
+            .input-row .prompt {
+                font-size: 11px;
+            }
+            .input-row .wrap #cmd-text {
+                font-size: 11px;
+            }
+            #output {
+                max-height: 140px;
+            }
+            .footer .links a {
+                font-size: 11px;
+            }
+            .footer .links {
+                gap: 2px 12px;
+            }
+            .footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .help-grid {
+                grid-template-columns: 70px 1fr;
+                gap: 1px 14px;
+                font-size: 11px;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="container glass">
+    <div class="container glass">
 
-    <div class="header">
-        <div class="brand">
-            <div class="brand-icon">
-                <div class="tower-icon">
-                    <div class="radar-wave"></div>
-                    <div class="radar-wave"></div>
-                    <div class="radar-wave"></div>
-                    <div class="tower-body">
-                        <div class="tower-antenna"></div>
-                        <div class="tower-window"></div>
-                        <div class="tower-window"></div>
-                        <div class="tower-window" style="width:6px;height:3px;"></div>
+        <div class="header">
+            <div class="brand">
+                <div class="brand-icon">
+                    <div class="tower-icon">
+                        <div class="radar-wave"></div>
+                        <div class="radar-wave"></div>
+                        <div class="radar-wave"></div>
+                        <div class="tower-body">
+                            <div class="tower-antenna"></div>
+                            <div class="tower-window"></div>
+                            <div class="tower-window"></div>
+                            <div class="tower-window" style="width:6px;height:3px;"></div>
+                        </div>
+                        <div class="tower-base"></div>
                     </div>
-                    <div class="tower-base"></div>
+                </div>
+                <div class="logo">WATCH <span>TOWER</span></div>
+            </div>
+            <div class="badge-status">
+                <span class="dot-pulse"></span>
+                <span>system ready</span>
+            </div>
+        </div>
+
+        <div class="terminal">
+
+            <div class="terminal-bar">
+                <div class="dots">
+                    <span></span><span></span><span></span>
+                </div>
+                <span class="path">root@watch-tower</span>
+                <span class="version">v2.1.0</span>
+            </div>
+
+            <div id="output">
+                <div class="line"><span class="text muted">initializing system...</span></div>
+                <div class="line"><span class="text green">+ kernel loaded</span></div>
+                <div class="line"><span class="text blue">+ network interface active</span></div>
+                <div class="line"><span class="text green">+ user authenticated</span></div>
+                <div class="line"><span class="text bold">welcome to watch tower</span></div>
+                <div class="line"><span class="prompt">#</span><span class="text muted">type "help" for commands</span></div>
+            </div>
+
+            <div class="input-row">
+                <span class="prompt">></span>
+
+                <div class="wrap">
+                    <span id="cmd-text"></span>
+                    <span class="cursor"></span>
                 </div>
             </div>
-            <div class="logo">WATCH <span>TOWER</span></div>
-        </div>
-        <div class="badge-status">
-            <span class="dot-pulse"></span>
-            <span>system ready</span>
-        </div>
-    </div>
 
-    <div class="terminal">
+        </div>
 
-        <div class="terminal-bar">
-            <div class="dots">
-                <span></span><span></span><span></span>
+        <div class="footer">
+            <div class="links">
+                <a href="#" onclick="return false;">Repository</a>
+                <span class="sep">|</span>
+                <a href="#" onclick="return false;">Commits</a>
+                <span class="sep">|</span>
+                <a href="#" onclick="return false;">Telegram</a>
+                <span class="sep">|</span>
+                <a href="#" onclick="return false;">Email</a>
             </div>
-            <span class="path">root@watch-tower</span>
-            <span class="version">v2.1.0</span>
-        </div>
-
-        <div id="output">
-            <div class="line"><span class="text muted">initializing system...</span></div>
-            <div class="line"><span class="text green">+ kernel loaded</span></div>
-            <div class="line"><span class="text blue">+ network interface active</span></div>
-            <div class="line"><span class="text green">+ user authenticated</span></div>
-            <div class="line"><span class="text bold">welcome to watch tower</span></div>
-            <div class="line"><span class="prompt">#</span><span class="text muted">type "help" for commands</span></div>
-        </div>
-
-        <div class="input-row">
-            <span class="prompt">></span>
-            
-            <div class="wrap">
-                <span id="cmd-text"></span>
-                <span class="cursor"></span>
+            <div style="display:flex;align-items:center;gap:16px;">
+                <span class="version-tag">v2.1.0</span>
+                <span class="copy">© 2026 · Watch Tower</span>
             </div>
         </div>
 
     </div>
 
-    <div class="footer">
-        <div class="links">
-            <a href="#" onclick="return false;">Repository</a>
-            <span class="sep">|</span>
-            <a href="#" onclick="return false;">Commits</a>
-            <span class="sep">|</span>
-            <a href="#" onclick="return false;">Telegram</a>
-            <span class="sep">|</span>
-            <a href="#" onclick="return false;">Email</a>
-        </div>
-        <div style="display:flex;align-items:center;gap:16px;">
-            <span class="version-tag">v2.1.0</span>
-            <span class="copy">© 2026 · Watch Tower</span>
-        </div>
-    </div>
+    <input type="text" id="hidden-input" autofocus>
 
-</div>
+    <script>
+        (function() {
 
-<input type="text" id="hidden-input" autofocus>
+            const output = document.getElementById('output');
+            const cmdText = document.getElementById('cmd-text');
+            const hidden = document.getElementById('hidden-input');
 
-<script>
-(function() {
+            let history = [];
+            let historyIdx = -1;
+            let currentInput = '';
 
-    const COMMANDS = [
-        'help', 'clear', 'status', 'version', 'whoami', 'date', 
-        'github', 'docs', 'exit', 'history', 'echo'
-    ];
+            function focus() { hidden.focus(); }
+            document.addEventListener('click', focus);
+            document.addEventListener('touchstart', focus);
+            setTimeout(focus, 400);
 
-    const output = document.getElementById('output');
-    const cmdText = document.getElementById('cmd-text');
-    const hidden = document.getElementById('hidden-input');
-
-    let history = [];
-    let historyIdx = -1;
-    let currentInput = '';
-
-    function focus() { hidden.focus(); }
-    document.addEventListener('click', focus);
-    document.addEventListener('touchstart', focus);
-    setTimeout(focus, 400);
-
-    function print(text, type = '') {
-        const div = document.createElement('div');
-        div.className = 'line';
-        div.innerHTML = `<span class="text ${type}">${text}</span>`;
-        output.appendChild(div);
-        output.scrollTop = output.scrollHeight;
-    }
-
-    function clearTerminal() {
-        output.innerHTML = '';
-        print('terminal cleared', 'muted');
-        print('type "help" for commands', 'muted');
-    }
-
-    function showHelp() {
-        print(' ─── commands ───', 'yellow');
-        print(' help      show this help', '');
-        print(' clear     clear terminal', '');
-        print(' status    system status', '');
-        print(' version   api version', '');
-        print(' whoami    current user', '');
-        print(' date      current date', '');
-        print(' github    repository url', '');
-        print(' docs      documentation url', '');
-        print(' echo      echo text', '');
-        print(' exit      exit (just for fun)', '');
-        print(' history   show command history', '');
-        print(' ─────────────────', 'yellow');
-    }
-
-    function run(cmd) {
-        const c = cmd.trim();
-        if (!c) return;
-
-        history.push(c);
-        historyIdx = history.length;
-
-        const parts = c.split(' ');
-        const name = parts[0].toLowerCase();
-        const args = parts.slice(1);
-
-        switch (name) {
-            case 'help':
-                showHelp();
-                break;
-            case 'clear':
-                clearTerminal();
-                break;
-            case 'status':
-                print('system: operational', 'green');
-                print('uptime: 99.9%', '');
-                print('connections: 0', '');
-                print('version: 2.1.0', '');
-                break;
-            case 'version':
-                print('watch tower api v2.1.0', 'blue');
-                print('build: 2026-08-09', 'muted');
-                break;
-            case 'whoami':
-                print('root@watch-tower', 'green');
-                break;
-            case 'date':
-                print(new Date().toString(), '');
-                break;
-            case 'github':
-                print('https://github.com/AryaKhorasan/watch-tower', 'blue');
-                break;
-            case 'docs':
-                print('/api/documentation', 'blue');
-                break;
-            case 'echo':
-                print(args.join(' ') || '', '');
-                break;
-            case 'exit':
-                print('exiting... just kidding, this is a web terminal.', 'muted');
-                break;
-            case 'history':
-                history.forEach((h, i) => print(`  ${i+1}  ${h}`, 'muted'));
-                break;
-            default:
-                print(`unknown: ${c}`, 'red');
-                print('type "help" for commands', 'muted');
-        }
-    }
-
-    hidden.addEventListener('input', function() {
-        currentInput = this.value;
-        cmdText.textContent = currentInput;
-    });
-
-    hidden.addEventListener('keydown', function(e) {
-
-        if (e.ctrlKey && e.key === 'c') {
-            e.preventDefault();
-            currentInput = '';
-            this.value = '';
-            cmdText.textContent = '';
-            print('^C', 'red');
-            print('type "help" for commands', 'muted');
-            return;
-        }
-
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            const val = this.value;
-
-            if (val.trim()) {
+            function print(text, type = '') {
                 const div = document.createElement('div');
                 div.className = 'line';
-                div.innerHTML = `<span class="text yellow">${val}</span>`;
+                div.innerHTML = `<span class="text ${type}">${text}</span>`;
                 output.appendChild(div);
+                output.scrollTop = output.scrollHeight;
             }
 
-            run(val);
+            function printHelpGrid(commands) {
+                const div = document.createElement('div');
+                div.className = 'line';
 
-            this.value = '';
-            currentInput = '';
-            cmdText.textContent = '';
-            output.scrollTop = output.scrollHeight;
-        }
+                let html = `<div class="help-grid">`;
+                const sorted = Object.entries(commands).sort((a, b) => a[0].localeCompare(b[0]));
+                sorted.forEach(([cmd, desc]) => {
+                    html += `<span class="cmd">${cmd}</span><span class="desc">${desc}</span>`;
+                });
+                html += `</div>`;
 
-        if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            if (history.length > 0 && historyIdx > 0) {
-                historyIdx--;
-                this.value = history[historyIdx];
-                currentInput = this.value;
-                cmdText.textContent = currentInput;
+                div.innerHTML = `<span class="text"></span>`;
+                div.querySelector('.text').innerHTML = html;
+                output.appendChild(div);
+                output.scrollTop = output.scrollHeight;
             }
-        }
 
-        if (e.key === 'ArrowDown') {
-            e.preventDefault();
-            if (historyIdx < history.length - 1) {
-                historyIdx++;
-                this.value = history[historyIdx];
-                currentInput = this.value;
-                cmdText.textContent = currentInput;
-            } else {
+            function clearTerminal() {
+                output.innerHTML = '';
+                print('terminal cleared', 'muted');
+                print('type "help" for commands', 'muted');
+            }
+
+            function showHelp() {
+                const commands = {
+                    'help': 'show available commands',
+                    'clear': 'clear terminal screen',
+                    'status': 'display system status',
+                    'version': 'show API version',
+                    'whoami': 'current user',
+                    'date': 'current date & time',
+                    'github': 'repository URL',
+                    'docs': 'documentation link',
+                    'echo': 'echo text back',
+                    'exit': 'exit (just for fun)',
+                    'history': 'show command history'
+                };
+
+                print('╭─ available commands ─╮', 'cyan');
+                printHelpGrid(commands);
+                print('╰─────────────────────╯', 'cyan');
+            }
+
+            function run(cmd) {
+                const c = cmd.trim();
+                if (!c) return;
+
+                history.push(c);
                 historyIdx = history.length;
-                this.value = '';
-                currentInput = '';
-                cmdText.textContent = '';
+
+                const parts = c.split(' ');
+                const name = parts[0].toLowerCase();
+                const args = parts.slice(1);
+
+                switch (name) {
+                    case 'help':
+                        showHelp();
+                        break;
+                    case 'clear':
+                        clearTerminal();
+                        break;
+                    case 'status':
+                        print('system: operational', 'green');
+                        print('uptime: 99.9%', '');
+                        print('connections: 0', '');
+                        print('version: 2.1.0', '');
+                        break;
+                    case 'version':
+                        print('watch tower api v2.1.0', 'blue');
+                        print('build: 2026-08-09', 'muted');
+                        break;
+                    case 'whoami':
+                        print('root@watch-tower', 'green');
+                        break;
+                    case 'date':
+                        print(new Date().toString(), '');
+                        break;
+                    case 'github':
+                        print('https://github.com/AryaKhorasan/watch-tower', 'blue');
+                        break;
+                    case 'docs':
+                        print('/api/documentation', 'blue');
+                        break;
+                    case 'echo':
+                        print(args.join(' ') || '', '');
+                        break;
+                    case 'exit':
+                        print('exiting... just kidding, this is a web terminal.', 'muted');
+                        break;
+                    case 'history':
+                        if (history.length === 0) {
+                            print('no commands in history', 'muted');
+                        } else {
+                            history.forEach((h, i) => print(`  ${String(i+1).padStart(2,' ')}  ${h}`, 'muted'));
+                        }
+                        break;
+                    default:
+                        print(`unknown: ${c}`, 'red');
+                        print('type "help" for commands', 'muted');
+                }
             }
-        }
 
-        if (e.key === 'Escape') {
-            this.value = '';
-            currentInput = '';
-            cmdText.textContent = '';
-        }
-    });
+            hidden.addEventListener('input', function() {
+                currentInput = this.value;
+                cmdText.textContent = currentInput;
+            });
 
-    hidden.addEventListener('blur', function() {
-        setTimeout(focus, 10);
-    });
+            hidden.addEventListener('keydown', function(e) {
 
-    console.log('%c WATCH TOWER ', 'background:#1a202c;color:#68d391;font-size:14px;font-weight:700;padding:6px 16px;');
-    console.log('%c https://github.com/AryaKhorasan/watch-tower ', 'color:#718096;font-size:11px;');
+                if (e.ctrlKey && e.key === 'c') {
+                    e.preventDefault();
+                    currentInput = '';
+                    this.value = '';
+                    cmdText.textContent = '';
+                    print('^C', 'red');
+                    print('type "help" for commands', 'muted');
+                    return;
+                }
 
-})();
-</script>
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const val = this.value;
+
+                    if (val.trim()) {
+                        const div = document.createElement('div');
+                        div.className = 'line';
+                        div.innerHTML = `<span class="prompt">></span><span class="text yellow">${val}</span>`;
+                        output.appendChild(div);
+                    }
+
+                    run(val);
+
+                    this.value = '';
+                    currentInput = '';
+                    cmdText.textContent = '';
+                    output.scrollTop = output.scrollHeight;
+                }
+
+                if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (history.length > 0 && historyIdx > 0) {
+                        historyIdx--;
+                        this.value = history[historyIdx];
+                        currentInput = this.value;
+                        cmdText.textContent = currentInput;
+                    }
+                }
+
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (historyIdx < history.length - 1) {
+                        historyIdx++;
+                        this.value = history[historyIdx];
+                        currentInput = this.value;
+                        cmdText.textContent = currentInput;
+                    } else {
+                        historyIdx = history.length;
+                        this.value = '';
+                        currentInput = '';
+                        cmdText.textContent = '';
+                    }
+                }
+
+                if (e.key === 'Escape') {
+                    this.value = '';
+                    currentInput = '';
+                    cmdText.textContent = '';
+                }
+            });
+
+            hidden.addEventListener('blur', function() {
+                setTimeout(focus, 10);
+            });
+
+            console.log('%c WATCH TOWER ', 'background:#1a202c;color:#68d391;font-size:14px;font-weight:700;padding:6px 16px;');
+            console.log('%c https://github.com/AryaKhorasan/watch-tower ', 'color:#718096;font-size:11px;');
+
+        })();
+    </script>
 
 </body>
 </html>
