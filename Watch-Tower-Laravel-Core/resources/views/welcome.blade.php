@@ -38,114 +38,14 @@
             transition: background 0.3s ease;
         }
 
-        body.light-theme {
-            background: radial-gradient(circle at 30% 10%, #e8ecf1 0%, #d5dae3 95%);
-        }
-
-        body.light-theme .glass {
-            background: rgba(245, 247, 250, 0.85);
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            box-shadow: 0 25px 50px -8px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-        }
-
-        body.light-theme .terminal {
-            background: #f0f2f5;
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        body.light-theme .brand .logo {
-            color: #1a202c;
-        }
-
-        body.light-theme .terminal-bar .path {
-            color: #4a5568;
-            background: rgba(0, 0, 0, 0.04);
-            border: 1px solid rgba(0, 0, 0, 0.06);
-        }
-
-        body.light-theme .terminal-bar .version {
-            color: #718096;
-            background: rgba(0, 0, 0, 0.04);
-        }
-
-        body.light-theme .line .text {
-            color: #2d3748;
-        }
-
-        body.light-theme .line .text.muted {
-            color: #718096;
-        }
-
-        body.light-theme .line .text.green {
-            color: #2f855a;
-        }
-
-        body.light-theme .line .text.blue {
-            color: #2b6cb0;
-        }
-
-        body.light-theme .line .text.red {
-            color: #c53030;
-        }
-
-        body.light-theme .line .text.yellow {
-            color: #b7791f;
-        }
-
-        body.light-theme .line .text.cyan {
-            color: #2c7a7a;
-        }
-
-        body.light-theme .line .text.bold {
-            color: #1a202c;
-        }
-
-        body.light-theme .input-row .wrap #cmd-text {
-            color: #b7791f;
-        }
-
-        body.light-theme .input-row .wrap .cursor {
-            background: #2d3748;
-        }
-
-        body.light-theme .badge-status {
-            background: rgba(47, 133, 90, 0.08);
-            border: 1px solid rgba(47, 133, 90, 0.12);
-        }
-
-        body.light-theme .badge-status span {
-            color: #2f855a;
-        }
-
-        body.light-theme .footer .links a {
-            color: #4a5568;
-        }
-
-        body.light-theme .footer .links a:hover {
-            color: #1a202c;
-        }
-
-        body.light-theme .footer .links .sep {
-            color: #a0aec0;
-        }
-
-        body.light-theme .footer .copy {
-            color: #718096;
-        }
-
-        body.light-theme .footer .version-tag {
-            background: rgba(229, 62, 62, 0.08);
-            color: #c53030;
-            border: 1px solid rgba(229, 62, 62, 0.12);
-        }
-
         .glass {
             background: rgba(20, 20, 22, 0.75);
             backdrop-filter: blur(12px) saturate(180%);
             -webkit-backdrop-filter: blur(12px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.04);
             box-shadow: 0 25px 50px -8px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+            position: relative;
+            z-index: 10;
         }
 
         .container {
@@ -185,11 +85,6 @@
             flex-shrink: 0;
         }
 
-        body.light-theme .brand-icon {
-            background: linear-gradient(135deg, #e2e8f0, #cbd5e0);
-            border: 1px solid rgba(229, 62, 62, 0.2);
-        }
-
         .tower-icon {
             position: relative;
             width: 24px;
@@ -213,10 +108,6 @@
             gap: 2px;
             padding-top: 2px;
             box-shadow: 0 0 12px rgba(229, 62, 62, 0.2);
-        }
-
-        body.light-theme .tower-body {
-            background: linear-gradient(180deg, #e53e3e 0%, #c53030 100%);
         }
 
         .tower-window {
@@ -448,10 +339,6 @@
             border-radius: 20px;
         }
 
-        body.light-theme #output::-webkit-scrollbar-thumb {
-            background: #a0aec0;
-        }
-
         .line {
             display: flex;
             align-items: flex-start;
@@ -465,10 +352,6 @@
             user-select: none;
             min-width: 16px;
             font-weight: 500;
-        }
-
-        body.light-theme .line .prompt {
-            color: #2f855a;
         }
 
         .line .text {
@@ -499,10 +382,6 @@
             color: var(--text-cyan);
         }
 
-        body.light-theme .line .text.bold {
-            color: #1a202c;
-        }
-
         .help-grid {
             display: grid;
             grid-template-columns: 100px 1fr;
@@ -517,14 +396,6 @@
 
         .help-grid .desc {
             color: var(--text-muted);
-        }
-
-        body.light-theme .help-grid .cmd {
-            color: #b7791f;
-        }
-
-        body.light-theme .help-grid .desc {
-            color: #4a5568;
         }
 
         .input-row {
@@ -543,10 +414,6 @@
             user-select: none;
             min-width: 16px;
             font-weight: 500;
-        }
-
-        body.light-theme .input-row .prompt {
-            color: #2f855a;
         }
 
         .input-row .wrap {
@@ -573,10 +440,6 @@
             flex-shrink: 0;
             border-radius: 2px;
             opacity: 0.9;
-        }
-
-        body.light-theme .input-row .wrap .cursor {
-            background: #2d3748;
         }
 
         @keyframes blink {
@@ -631,17 +494,9 @@
             border-bottom-color: #e53e3e;
         }
 
-        body.light-theme .footer .links a:hover {
-            color: #1a202c;
-        }
-
         .footer .links .sep {
             color: #2a3344;
             font-weight: 300;
-        }
-
-        body.light-theme .footer .links .sep {
-            color: #a0aec0;
         }
 
         .footer .copy {
@@ -649,10 +504,6 @@
             font-size: 11px;
             font-weight: 400;
             letter-spacing: 0.2px;
-        }
-
-        body.light-theme .footer .copy {
-            color: #718096;
         }
 
         .footer .version-tag {
@@ -678,6 +529,7 @@
 
         .matrix-container.active {
             display: block;
+            pointer-events: auto;
         }
 
         .matrix-container canvas {
@@ -686,50 +538,35 @@
             display: block;
         }
 
-        .theme-toggle {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            color: #7e8b9f;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            cursor: pointer;
-            transition: all 0.2s ease;
+        .matrix-exit-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10000;
+            background: rgba(229, 62, 62, 0.9);
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 30px;
             font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: none;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 20px rgba(229, 62, 62, 0.4);
         }
 
-        .theme-toggle:hover {
-            color: #d4dcec;
-            border-color: rgba(255, 255, 255, 0.08);
+        .matrix-exit-btn:hover {
+            background: rgba(229, 62, 62, 1);
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 6px 30px rgba(229, 62, 62, 0.6);
         }
 
-        body.light-theme .theme-toggle {
-            background: rgba(0, 0, 0, 0.04);
-            color: #4a5568;
-            border-color: rgba(0, 0, 0, 0.06);
-        }
-
-        body.light-theme .theme-toggle:hover {
-            color: #1a202c;
-            border-color: rgba(0, 0, 0, 0.1);
-        }
-
-        .todo-item {
-            color: var(--text-primary);
-            padding: 2px 0;
-        }
-
-        .todo-item.done {
-            text-decoration: line-through;
-            color: var(--text-muted);
-        }
-
-        body.light-theme .todo-item {
-            color: #2d3748;
-        }
-
-        body.light-theme .todo-item.done {
-            color: #718096;
+        .matrix-exit-btn.visible {
+            display: block;
         }
 
         @media (max-width: 640px) {
@@ -780,6 +617,11 @@
                 gap: 1px 14px;
                 font-size: 11px;
             }
+            .matrix-exit-btn {
+                padding: 8px 20px;
+                font-size: 12px;
+                bottom: 20px;
+            }
         }
     </style>
 </head>
@@ -788,6 +630,8 @@
     <div class="matrix-container" id="matrixContainer">
         <canvas id="matrixCanvas"></canvas>
     </div>
+
+    <button class="matrix-exit-btn" id="matrixExitBtn">EXIT MATRIX</button>
 
     <div class="container glass">
 
@@ -809,12 +653,9 @@
                 </div>
                 <div class="logo">WATCH <span>TOWER</span></div>
             </div>
-            <div style="display:flex;align-items:center;gap:10px;">
-                <button class="theme-toggle" id="themeToggle">toggle theme</button>
-                <div class="badge-status">
-                    <span class="dot-pulse"></span>
-                    <span>system ready</span>
-                </div>
+            <div class="badge-status">
+                <span class="dot-pulse"></span>
+                <span>system ready</span>
             </div>
         </div>
 
@@ -878,14 +719,11 @@
             let history = [];
             let historyIdx = -1;
             let currentInput = '';
-            let todoList = [];
             let matrixRunning = false;
             let matrixInterval = null;
 
             const COMMANDS = [
-                'help', 'clear', 'status', 'version', 'whoami', 'date',
-                'github', 'docs', 'exit', 'history', 'echo', 'theme',
-                'calc', 'info', 'dashboard', 'ping', 'todo', 'matrix'
+                'help', 'clear', 'version', 'github', 'docs', 'exit', 'history', 'matrix'
             ];
 
             function focus() { hidden.focus(); }
@@ -940,21 +778,11 @@
                 const commands = {
                     'help': 'show available commands',
                     'clear': 'clear terminal screen',
-                    'status': 'display system status',
                     'version': 'show version information',
-                    'whoami': 'current user',
-                    'date': 'current date and time',
                     'github': 'repository URL',
                     'docs': 'documentation link',
-                    'echo': 'echo text back',
                     'exit': 'exit (just for fun)',
                     'history': 'show command history',
-                    'theme': 'toggle dark/light theme',
-                    'calc': 'calculate expression (e.g., calc 2+2)',
-                    'info': 'show system information',
-                    'dashboard': 'show system dashboard',
-                    'ping': 'ping a host (e.g., ping google.com)',
-                    'todo': 'manage todo list (add/remove/list)',
                     'matrix': 'show matrix rain effect'
                 };
                 print('+-----------------------------------------------------+', 'cyan');
@@ -964,118 +792,11 @@
                 print('+-----------------------------------------------------+', 'cyan');
             }
 
-            function showDashboard() {
-                print('+-----------------------------------------------------+', 'cyan');
-                print('|                  SYSTEM DASHBOARD                    |', 'cyan');
-                print('+-----------------------------------------------------+', 'cyan');
-                print('|  CPU Usage:     23%                                  |', '');
-                print('|  Memory:        1.2 GB / 8.0 GB                     |', '');
-                print('|  Disk:          45%                                 |', '');
-                print('|  Uptime:        12 days, 4 hours                    |', '');
-                print('|  Connections:   3                                   |', '');
-                print('|  Processes:     42                                  |', '');
-                print('|  Load Average:  0.23, 0.45, 0.67                   |', '');
-                print('+-----------------------------------------------------+', 'cyan');
-            }
-
-            function showInfo() {
-                print('+-----------------------------------------------------+', 'cyan');
-                print('|                  SYSTEM INFORMATION                  |', 'cyan');
-                print('+-----------------------------------------------------+', 'cyan');
-                print('|  OS:            Watch Tower OS v3.0.0               |', '');
-                print('|  Kernel:        6.8.0-watchtower                   |', '');
-                print('|  Architecture:  x86_64                              |', '');
-                print('|  Shell:         watch-sh 3.0                        |', '');
-                print('|  Terminal:      Web Terminal                        |', '');
-                print('|  CPU:           Intel Core i9-13900K               |', '');
-                print('|  GPU:           NVIDIA RTX 4090                     |', '');
-                print('+-----------------------------------------------------+', 'cyan');
-            }
-
-            function calculate(expr) {
-                try {
-                    const sanitized = expr.replace(/[^0-9+\-*/(). ]/g, '');
-                    const result = Function('"use strict"; return (' + sanitized + ')')();
-                    return result;
-                } catch (e) {
-                    return null;
-                }
-            }
-
-            function pingHost(host) {
-                if (!host) {
-                    print('usage: ping <host>', 'red');
-                    return;
-                }
-                print(`PING ${host} (simulated)...`, 'blue');
-                setTimeout(() => {
-                    const latency = Math.floor(Math.random() * 50) + 10;
-                    print(`64 bytes from ${host}: icmp_seq=1 ttl=64 time=${latency} ms`, 'green');
-                }, 300);
-                setTimeout(() => {
-                    const latency = Math.floor(Math.random() * 50) + 10;
-                    print(`64 bytes from ${host}: icmp_seq=2 ttl=64 time=${latency} ms`, 'green');
-                }, 600);
-                setTimeout(() => {
-                    const latency = Math.floor(Math.random() * 50) + 10;
-                    print(`64 bytes from ${host}: icmp_seq=3 ttl=64 time=${latency} ms`, 'green');
-                }, 900);
-                setTimeout(() => {
-                    print(`--- ${host} ping statistics ---`, '');
-                    print('3 packets transmitted, 3 received, 0% packet loss', '');
-                }, 1200);
-            }
-
-            function showTodo() {
-                if (todoList.length === 0) {
-                    print('todo list is empty', 'muted');
-                    return;
-                }
-                print('+-----------------------------------------------------+', 'cyan');
-                print('|                     TODO LIST                       |', 'cyan');
-                print('+-----------------------------------------------------+', 'cyan');
-                todoList.forEach((item, index) => {
-                    const status = item.done ? '[X]' : '[ ]';
-                    const className = item.done ? 'muted' : '';
-                    print(`  ${index + 1}. ${status} ${item.text}`, className);
-                });
-                print('+-----------------------------------------------------+', 'cyan');
-            }
-
-            function addTodo(text) {
-                if (!text) {
-                    print('usage: todo add <task>', 'red');
-                    return;
-                }
-                todoList.push({ text: text, done: false });
-                print(`added: "${text}"`, 'green');
-            }
-
-            function removeTodo(index) {
-                const idx = parseInt(index) - 1;
-                if (isNaN(idx) || idx < 0 || idx >= todoList.length) {
-                    print('invalid todo index', 'red');
-                    return;
-                }
-                const removed = todoList.splice(idx, 1);
-                print(`removed: "${removed[0].text}"`, 'green');
-            }
-
-            function toggleTodo(index) {
-                const idx = parseInt(index) - 1;
-                if (isNaN(idx) || idx < 0 || idx >= todoList.length) {
-                    print('invalid todo index', 'red');
-                    return;
-                }
-                todoList[idx].done = !todoList[idx].done;
-                const status = todoList[idx].done ? 'completed' : 'uncompleted';
-                print(`todo ${status}: "${todoList[idx].text}"`, 'green');
-            }
-
             function startMatrix() {
                 const container = document.getElementById('matrixContainer');
                 const canvas = document.getElementById('matrixCanvas');
                 const ctx = canvas.getContext('2d');
+                const exitBtn = document.getElementById('matrixExitBtn');
 
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
@@ -1089,6 +810,7 @@
                 const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+-=[]{}|;:,.<>?/';
 
                 container.classList.add('active');
+                exitBtn.classList.add('visible');
                 matrixRunning = true;
 
                 if (matrixInterval) {
@@ -1120,19 +842,15 @@
 
             function stopMatrix() {
                 const container = document.getElementById('matrixContainer');
+                const exitBtn = document.getElementById('matrixExitBtn');
                 container.classList.remove('active');
+                exitBtn.classList.remove('visible');
                 matrixRunning = false;
                 if (matrixInterval) {
                     clearInterval(matrixInterval);
                     matrixInterval = null;
                 }
                 print('matrix effect stopped', 'muted');
-            }
-
-            function toggleTheme() {
-                document.body.classList.toggle('light-theme');
-                const isLight = document.body.classList.contains('light-theme');
-                print(`theme switched to ${isLight ? 'light' : 'dark'} mode`, 'green');
             }
 
             function run(cmd) {
@@ -1153,30 +871,15 @@
                     case 'clear':
                         clearTerminal();
                         break;
-                    case 'status':
-                        print('system: operational', 'green');
-                        print('uptime: 99.9%', '');
-                        print('connections: 0', '');
-                        print('version: 3.0.0', '');
-                        break;
                     case 'version':
                         print('watch tower api v3.0.0', 'blue');
                         print('build: 2026-08-09', 'muted');
-                        break;
-                    case 'whoami':
-                        print('root@watch-tower', 'green');
-                        break;
-                    case 'date':
-                        print(new Date().toString(), '');
                         break;
                     case 'github':
                         print('https://github.com/AryaKhorasan/watch-tower', 'blue');
                         break;
                     case 'docs':
                         print('/api/documentation', 'blue');
-                        break;
-                    case 'echo':
-                        print(args.join(' ') || '', '');
                         break;
                     case 'exit':
                         print('exiting... just kidding, this is a web terminal.', 'muted');
@@ -1195,58 +898,16 @@
                             print('+-----------------------------------------------------+', 'cyan');
                         }
                         break;
-                    case 'theme':
-                        toggleTheme();
-                        break;
-                    case 'calc':
-                        if (args.length === 0) {
-                            print('usage: calc <expression> (e.g., calc 2+2)', 'red');
-                        } else {
-                            const result = calculate(args.join(''));
-                            if (result !== null && !isNaN(result)) {
-                                print(`${args.join('')} = ${result}`, 'green');
-                            } else {
-                                print('invalid expression', 'red');
-                            }
-                        }
-                        break;
-                    case 'info':
-                        showInfo();
-                        break;
-                    case 'dashboard':
-                        showDashboard();
-                        break;
-                    case 'ping':
-                        pingHost(args[0]);
-                        break;
-                    case 'todo':
-                        if (args.length === 0) {
-                            showTodo();
-                        } else if (args[0] === 'add') {
-                            addTodo(args.slice(1).join(' '));
-                        } else if (args[0] === 'remove' || args[0] === 'rm') {
-                            removeTodo(args[1]);
-                        } else if (args[0] === 'toggle' || args[0] === 'done') {
-                            toggleTodo(args[1]);
-                        } else if (args[0] === 'list') {
-                            showTodo();
-                        } else if (args[0] === 'clear') {
-                            todoList = [];
-                            print('todo list cleared', 'green');
-                        } else {
-                            print('usage: todo [add|remove|toggle|list|clear]', 'red');
-                        }
-                        break;
                     case 'matrix':
                         if (args[0] === 'stop') {
                             stopMatrix();
                         } else if (matrixRunning) {
                             print('matrix effect is already running', 'muted');
-                            print('use "matrix stop" to stop', 'muted');
+                            print('use "matrix stop" or click EXIT MATRIX button', 'muted');
                         } else {
                             startMatrix();
                             print('matrix effect started', 'green');
-                            print('use "matrix stop" to stop', 'muted');
+                            print('use "matrix stop" or click EXIT MATRIX button', 'muted');
                         }
                         break;
                     default:
@@ -1258,18 +919,9 @@
             hidden.addEventListener('input', function() {
                 currentInput = this.value;
                 cmdText.textContent = currentInput;
-
-                // Auto-complete suggestion
-                if (currentInput && !currentInput.includes(' ')) {
-                    const match = COMMANDS.find(cmd => cmd.startsWith(currentInput.toLowerCase()));
-                    if (match && match !== currentInput) {
-                        // Show suggestion but don't auto-complete
-                    }
-                }
             });
 
             hidden.addEventListener('keydown', function(e) {
-                // Tab completion
                 if (e.key === 'Tab') {
                     e.preventDefault();
                     const current = this.value.trim();
@@ -1350,95 +1002,24 @@
                 setTimeout(focus, 10);
             });
 
-            // Theme toggle button
-            document.getElementById('themeToggle').addEventListener('click', function() {
-                toggleTheme();
+            // Matrix exit button
+            document.getElementById('matrixExitBtn').addEventListener('click', function() {
+                stopMatrix();
+                focus();
             });
 
             // Matrix resize
             window.addEventListener('resize', function() {
                 const canvas = document.getElementById('matrixCanvas');
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+                if (matrixRunning) {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                }
             });
 
             console.log('%c WATCH TOWER ', 'background:#1a202c;color:#68d391;font-size:14px;font-weight:700;padding:6px 16px;');
             console.log('%c https://github.com/AryaKhorasan/watch-tower ', 'color:#718096;font-size:11px;');
 
-            // Load saved theme preference
-            if (localStorage.getItem('watchtower-theme') === 'light') {
-                document.body.classList.add('light-theme');
-            }
-
-            // Save theme preference
-            const origToggle = toggleTheme;
-            toggleTheme = function() {
-                origToggle();
-                const isLight = document.body.classList.contains('light-theme');
-                localStorage.setItem('watchtower-theme', isLight ? 'light' : 'dark');
-            };
-
-            // Restore theme toggle function
-            window.toggleTheme = toggleTheme;
-
-            // Load saved todo list
-            try {
-                const saved = localStorage.getItem('watchtower-todo');
-                if (saved) {
-                    todoList = JSON.parse(saved);
-                }
-            } catch (e) {}
-
-            // Save todo list on changes
-            const origAdd = addTodo;
-            const origRemove = removeTodo;
-            const origToggleTodo = toggleTodo;
-            const origClear = function() {};
-
-            function saveTodo() {
-                localStorage.setItem('watchtower-todo', JSON.stringify(todoList));
-            }
-
-            addTodo = function(text) {
-                origAdd(text);
-                saveTodo();
-            };
-
-            removeTodo = function(index) {
-                origRemove(index);
-                saveTodo();
-            };
-
-            toggleTodo = function(index) {
-                origToggleTodo(index);
-                saveTodo();
-            };
-
-            // Override todo clear
-            const todoClear = function() {
-                todoList = [];
-                print('todo list cleared', 'green');
-                saveTodo();
-            };
-
-            // Patch todo command
-            const origRun = run;
-            run = function(cmd) {
-                const c = cmd.trim();
-                if (!c) return;
-
-                const parts = c.split(' ');
-                const name = parts[0].toLowerCase();
-                const args = parts.slice(1);
-
-                if (name === 'todo' && args[0] === 'clear') {
-                    todoClear();
-                    return;
-                }
-                origRun(cmd);
-            };
-
-            console.log('Watch Tower v3.0.0 loaded successfully');
             print('system ready - type "help" for commands', 'muted');
 
         })();
