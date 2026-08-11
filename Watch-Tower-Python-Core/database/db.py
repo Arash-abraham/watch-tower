@@ -54,9 +54,11 @@ def check_and_create_database():
                 create = input(f"Do you want the database '{db_name}' to be created (y/n) : ")
                 
                 if create.lower() == 'y':
-                    conn.execute(text(f"CREATE DATABASE {db_name} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"))
-                    conn.commit()
-                    return 'Exist'
+                    # conn.execute(text(f"CREATE DATABASE {db_name} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"))
+                    # conn.commit()
+                    # return 'Exist'
+                    return 'NoExist'
+
                 else:
                     return 'NoExist'
                     
@@ -136,7 +138,14 @@ def upsert_program(program_name, scopes, outScopes, config):
             print(Fore.WHITE+'We have a problem! '+ Fore.RED +f'\n{db_status}')
             sys.exit(1)
     
-    Base.metadata.create_all(engine)
+    # ============================================================
+        # Changes made:
+        # The line below, which was responsible for creating the tables, has been commented out
+        # because the table structure is to be managed by Laravel
+        # Python is only responsible for inserting and updating data
+    # ============================================================
+
+    # Base.metadata.create_all(engine)
     
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -212,7 +221,14 @@ def insert_all_bugcrowd_programs(all_data):
             print(Fore.WHITE + 'We have a problem! ' + Fore.RED + f'\n{db_status}')
             sys.exit(1)
     
-    Base.metadata.create_all(engine)
+    # ============================================================
+        # Changes made:
+        # The line below, which was responsible for creating the tables, has been commented out
+        # because the table structure is to be managed by Laravel
+        # Python is only responsible for inserting and updating data
+    # ============================================================
+    
+    # Base.metadata.create_all(engine)
     
     Session = sessionmaker(bind=engine)
     session = Session()
