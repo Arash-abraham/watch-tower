@@ -1,21 +1,17 @@
-# MySql or Mongo ? I using MySql
-# Database -> watc-tower 
-# Tables : programs , subdoamin , live , etc ...
+# MySql or Mongo ? I using Mongo
+# Database -> watch-tower 
+# Collections : programs , subdomains , bugcrowd_programs , etc ...
 # Programs -> 
     # - program_name 
-    # - spcopes 
+    # - scopes 
     # - out-scope 
-    # - crated_at
+    # - created_at
     # - updated_at 
 
-from sqlalchemy import create_engine, Column, String, DateTime, Text , text , JSON , Integer
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from pymongo import MongoClient
 from datetime import datetime
 from dotenv import load_dotenv
 import os
-from datetime import datetime
-from sqlalchemy.orm import sessionmaker
 from colorama import *
 import sys
 
@@ -31,92 +27,42 @@ db_pass = config.DB_PASS
 db_name = config.DB_NAME
 db_port = config.DB_PORT
 
-DATABASE_URI = f"mysql+pymysql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}"
-
-engine = create_engine(DATABASE_URI)
-Base = declarative_base()
-
+# MongoDB connection URI
+MONGO_URI = f"mongodb://{db_user}:{db_pass}@{db_host}:{db_port}/"
+client = MongoClient(MONGO_URI)
+db = client[db_name]
 
 def check_and_create_database():
-
     try:
-        engine = create_engine(
-            f"mysql+pymysql://{db_user}:{db_pass}@{db_host}:{db_port}/"
-        )
+        # Check if database exists by listing databases
+        existing_dbs = client.list_database_names()
         
-        with engine.connect() as conn:
-            result = conn.execute(text(f"SHOW DATABASES LIKE '{db_name}'"))
-            if result.fetchone():
-                # print(f" Database '{db_name}' has exist !")
+        if db_name in existing_dbs:
+            return 'Exist'
+        else:
+            create = input(f"Do you want the database '{db_name}' to be created (y/n) : ")
+            
+            if create.lower() == 'y':
+                # In MongoDB, database is created automatically when you insert data
+                # Just create a temporary collection to force creation
+                db.create_collection("_temp")
+                db.drop_collection("_temp")
                 return 'Exist'
             else:
-                # print(f" Database '{db_name}' dose not exist !")
-                create = input(f"Do you want the database '{db_name}' to be created (y/n) : ")
-                
-                if create.lower() == 'y':
-                    # conn.execute(text(f"CREATE DATABASE {db_name} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"))
-                    # conn.commit()
-                    # return 'Exist'
-                    return 'NoExist'
-
-                else:
-                    return 'NoExist'
+                return 'NoExist'
                     
     except Exception as e:
         return e
     except KeyboardInterrupt:
         sys.exit(1)
 
-class Programs(Base):
-    __tablename__ = 'programs'
-
-    id = Column(Integer, primary_key=True, autoincrement=True) 
-    program_name = Column(String(255), unique=True, nullable=False)  
-    
-    config = Column(JSON, nullable=True) 
-    
-    scopes = Column(JSON, default=[])
-    outScopes = Column(JSON, default=[])
-    
-    created_date = Column(DateTime, default=datetime.now)
-    last_update = Column(DateTime, default=datetime.now, onupdate=datetime.now)
-
-class Subdomains(Base):
-    __tablename__ = 'subdomains'
-
-    program_name = Column(String(255), primary_key=True)
-    subdomain = Column(String(255), primary_key=True)
-    
-    scope = Column(String(255), nullable=False)
-    
-    providers = Column(Text, default="")
-    
-    created_date = Column(DateTime, default=datetime.now)
-    last_update = Column(DateTime, default=datetime.now, onupdate=datetime.now)
-
-class ProgramsInBugCrowd(Base):
-    __tablename__ = 'bugcrowd_programs'
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    program_name = Column(String(255), unique=True, nullable=False)
-    program_url = Column(String(500), nullable=True)
-    allows_disclosure = Column(String(50), nullable=True)
-    managed_by_bugcrowd = Column(String(50), nullable=True)
-    safe_harbor = Column(String(50), nullable=True)
-    max_payout = Column(Integer, nullable=True)
-    in_scope = Column(JSON, default=[])
-    out_of_scope = Column(JSON, default=[])
-    created_date = Column(DateTime, default=datetime.now)
-    last_update = Column(DateTime, default=datetime.now, onupdate=datetime.now)
-
-
-def upsert_program(program_name, scopes, outScopes, config):
+def upsert_program(program_name, scopes, outScopes, config_data):
     if scopes is None:
         scopes = []
     if outScopes is None:
         outScopes = []
-    if config is None:
-        config = {}
+    if config_data is None:
+        config_data = {}
     
     conflicts = set(scopes) & set(outScopes)
 
@@ -129,6 +75,7 @@ def upsert_program(program_name, scopes, outScopes, config):
         print(Fore.CYAN + f"  Solution: Remove from one of them" + Fore.RESET)
         print()
         return None
+    
     db_status = check_and_create_database()
     if db_status != 'Exist':
         if db_status == 'NoExist':
@@ -145,34 +92,38 @@ def upsert_program(program_name, scopes, outScopes, config):
         # Python is only responsible for inserting and updating data
     # ============================================================
 
-    # Base.metadata.create_all(engine)
-    
-    Session = sessionmaker(bind=engine)
-    session = Session()
+    # No need for metadata.create_all in MongoDB
     
     try:
-        program = session.query(Programs).filter_by(program_name=program_name).first()
+        programs_collection = db['programs']
+        
+        # Find existing program
+        program = programs_collection.find_one({'program_name': program_name})
         
         if program:
-
-            old_scopes = set(program.scopes)
-            old_outScopes = set(program.outScopes)
-
+            old_scopes = set(program.get('scopes', []))
+            old_outScopes = set(program.get('outScopes', []))
+            
             new_scopes = set(scopes)
             new_outScopes = set(outScopes)
             
-            program.scopes = scopes
-            program.outScopes = outScopes
-            program.config = config
-            
-            session.commit()
+            # Update the document
+            programs_collection.update_one(
+                {'program_name': program_name},
+                {'$set': {
+                    'scopes': scopes,
+                    'outScopes': outScopes,
+                    'config': config_data,
+                    'last_update': datetime.now()
+                }}
+            )
             
             added_scopes = new_scopes - old_scopes
             removed_scopes = old_scopes - new_scopes
             added_outScopes = new_outScopes - old_outScopes
             removed_outScopes = old_outScopes - new_outScopes
             
-            print(f"[{current_time()}] Updated program: {program.program_name}")
+            print(f"[{current_time()}] Updated program: {program_name}")
             
             if added_scopes:
                 print(f"  + Added scopes ({len(added_scopes)}): {list(added_scopes)}")
@@ -186,30 +137,21 @@ def upsert_program(program_name, scopes, outScopes, config):
             if not added_scopes and not removed_scopes and not added_outScopes and not removed_outScopes:
                 print("  No changes detected.")
         else:
-            new_program = Programs(
-                program_name=program_name,
-                created_date=datetime.now(),
-                config=config,
-                scopes=scopes, 
-                outScopes=outScopes
-            )
-            session.add(new_program) 
-            session.commit()
-            print(f"[{current_time()}] Inserted new program: {new_program.program_name}")
-            print(f"  Scopes: {new_program.scopes}") 
+            new_program = {
+                'program_name': program_name,
+                'created_date': datetime.now(),
+                'last_update': datetime.now(),
+                'config': config_data,
+                'scopes': scopes,
+                'outScopes': outScopes
+            }
+            programs_collection.insert_one(new_program)
+            print(f"[{current_time()}] Inserted new program: {program_name}")
+            print(f"  Scopes: {scopes}")
+            
     except Exception as e:
-        session.rollback()
         print(f"Error: {e}")
         return None
-    finally:
-        session.close()
-        
-def current_time():
-    now = datetime.now()
-
-    return now.strftime("%Y-%m-%d %H:%M:%S")
-
-
 
 def insert_all_bugcrowd_programs(all_data):
     db_status = check_and_create_database()
@@ -228,10 +170,9 @@ def insert_all_bugcrowd_programs(all_data):
         # Python is only responsible for inserting and updating data
     # ============================================================
     
-    # Base.metadata.create_all(engine)
+    # No need for metadata.create_all in MongoDB
     
-    Session = sessionmaker(bind=engine)
-    session = Session()
+    bugcrowd_collection = db['bugcrowd_programs']
     
     inserted_count = 0
     updated_count = 0
@@ -246,34 +187,39 @@ def insert_all_bugcrowd_programs(all_data):
             in_scope_list = program_data.get('targets', {}).get('in_scope', [])
             out_of_scope_list = program_data.get('targets', {}).get('out_of_scope', [])
             
-            existing = session.query(ProgramsInBugCrowd).filter_by(program_name=program_name).first()
+            existing = bugcrowd_collection.find_one({'program_name': program_name})
             
             if existing:
-                existing.program_url = program_data.get('url')
-                existing.allows_disclosure = str(program_data.get('allows_disclosure', False))
-                existing.managed_by_bugcrowd = str(program_data.get('managed_by_bugcrowd', False))
-                existing.safe_harbor = program_data.get('safe_harbor')
-                existing.max_payout = program_data.get('max_payout')
-                existing.in_scope = in_scope_list
-                existing.out_of_scope = out_of_scope_list
-                existing.last_update = datetime.now()
+                bugcrowd_collection.update_one(
+                    {'program_name': program_name},
+                    {'$set': {
+                        'program_url': program_data.get('url'),
+                        'allows_disclosure': str(program_data.get('allows_disclosure', False)),
+                        'managed_by_bugcrowd': str(program_data.get('managed_by_bugcrowd', False)),
+                        'safe_harbor': program_data.get('safe_harbor'),
+                        'max_payout': program_data.get('max_payout'),
+                        'in_scope': in_scope_list,
+                        'out_of_scope': out_of_scope_list,
+                        'last_update': datetime.now()
+                    }}
+                )
                 updated_count += 1
             else:
-                new_program = ProgramsInBugCrowd(
-                    program_name=program_name,
-                    program_url=program_data.get('url'),
-                    allows_disclosure=str(program_data.get('allows_disclosure', False)),
-                    managed_by_bugcrowd=str(program_data.get('managed_by_bugcrowd', False)),
-                    safe_harbor=program_data.get('safe_harbor'),
-                    max_payout=program_data.get('max_payout'),
-                    in_scope=in_scope_list,
-                    out_of_scope=out_of_scope_list,
-                    created_date=datetime.now()
-                )
-                session.add(new_program)
+                new_program = {
+                    'program_name': program_name,
+                    'program_url': program_data.get('url'),
+                    'allows_disclosure': str(program_data.get('allows_disclosure', False)),
+                    'managed_by_bugcrowd': str(program_data.get('managed_by_bugcrowd', False)),
+                    'safe_harbor': program_data.get('safe_harbor'),
+                    'max_payout': program_data.get('max_payout'),
+                    'in_scope': in_scope_list,
+                    'out_of_scope': out_of_scope_list,
+                    'created_date': datetime.now(),
+                    'last_update': datetime.now()
+                }
+                bugcrowd_collection.insert_one(new_program)
                 inserted_count += 1
         
-        session.commit()
         print(f"\n[{current_time()}] Bugcrowd programs saved successfully!")
         print(f"  + Inserted: {inserted_count} new programs")
         print(f"  ~ Updated: {updated_count} existing programs")
@@ -282,8 +228,9 @@ def insert_all_bugcrowd_programs(all_data):
         return True
         
     except Exception as e:
-        session.rollback()
         print(Fore.RED + f"Error inserting bugcrowd programs: {e}" + Fore.RESET)
         return None
-    finally:
-        session.close()
+
+def current_time():
+    now = datetime.now()
+    return now.strftime("%Y-%m-%d %H:%M:%S")

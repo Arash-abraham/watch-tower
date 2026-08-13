@@ -1,0 +1,16 @@
+services:
+  mongo:
+    image: registry.docker.ir/library/mongo:latest
+    container_name: watch-tower-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: secret
+      MONGO_INITDB_DATABASE: watch-tower
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

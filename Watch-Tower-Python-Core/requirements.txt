@@ -1,4 +1,6 @@
-pip install flask
-pip install pymysql
-pip install flask-sqlalchemy
-pip install python-dotenv
+pymongo==4.6.1
+python-dotenv==1.0.0
+colorama==0.4.6
+flask
+pymysql
+flask-sqlalchemy
