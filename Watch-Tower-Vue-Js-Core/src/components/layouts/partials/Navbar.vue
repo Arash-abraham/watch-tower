@@ -28,9 +28,10 @@
             :class="isActive(item.route) ? 'text-cyan-400' : 'text-gray-400 hover:text-white'"
           >
             {{ item.label }}
-            <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-300 group-hover:w-full"
-              :class="isActive(item.route) ? 'w-full' : ''">
-            </span>
+           <span
+               class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px
+               bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-300 group-hover:w-3/5"
+               :class="isActive(item.route) ? 'w-3/5' : ''"></span>
           </button>
         </div>
 
@@ -92,7 +93,8 @@ const navItems = [
   { label: 'Apps', route: '/apps' },
   { label: 'Targets', route: '/targets' },
   { label: 'Monitors', route: '/monitors' },
-  { label: 'Alerts', route: '/alerts' }
+  { label: 'Alerts', route: '/alerts' },
+  { label: 'Setting', route: '/setting' },
 ]
 
 // بررسی فعال بودن مسیر - استفاده از computed به جای تابع

@@ -5,6 +5,7 @@ import AppsPage from '../components/Content/AppsPage.vue'
 import DashboardPage from '../components/Content/DashboardPage.vue'
 import MonitorsPage from '../components/Content/MonitorsPage.vue'
 import AlertsPage from '../components/Content/AlertsPage.vue'
+import setting from '../components/Content/setting.vue'
 
 const routes = [
   { 
@@ -36,6 +37,11 @@ const routes = [
     path: '/alerts',
     name: 'alerts',
     component: AlertsPage
+  },
+  {
+    path: '/setting',
+    name: 'setting',
+    component: setting
   },
   {
     path: '/:pathMatch(.*)*',

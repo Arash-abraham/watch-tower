@@ -3,7 +3,7 @@
   <div class="min-h-screen bg-black relative overflow-hidden">
     <!-- Cyberpunk Background Effects -->
     <div class="absolute inset-0 opacity-30">
-      <div class="absolute top-0 left-0 w-full h-full bg-[linear-gradient(rgba(0,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+      <div class="absolute top-2 left-0 w-full h-full bg-[linear-gradient(rgba(0,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
     </div>
 
     <div class="absolute inset-0 pointer-events-none">
@@ -24,7 +24,7 @@
       
       <!-- Header -->
       <div class="mb-8">
-        <div class="inline-flex items-center gap-3 px-4 py-2 border border-cyan-500/20 bg-cyan-500/5 backdrop-blur-sm rounded-full mb-6">
+        <div class="inline-flex items-center gap-3 px-4 py-2 border border-cyan-500/20 bg-cyan-500/5 backdrop-blur-sm rounded-full mt-10 mb-6">
           <span class="relative flex h-2 w-2">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
             <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
