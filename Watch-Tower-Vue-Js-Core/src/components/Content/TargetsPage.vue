@@ -7,7 +7,7 @@
     </div>
 
     <div class="absolute inset-0 pointer-events-none">
-      <div class="absolute top-[20%] left-[15%] w-1 h-1 bg-cyan-400/40 rounded-full animate-float1">s</div>
+      <div class="absolute top-[20%] left-[15%] w-1 h-1 bg-cyan-400/40 rounded-full animate-float1"></div>
       <div class="absolute top-[60%] left-[85%] w-1.5 h-1.5 bg-blue-400/30 rounded-full animate-float2"></div>
       <div class="absolute top-[80%] left-[25%] w-1 h-1 bg-cyan-300/40 rounded-full animate-float3"></div>
       <div class="absolute top-[40%] left-[75%] w-0.5 h-0.5 bg-white/30 rounded-full animate-float4"></div>
