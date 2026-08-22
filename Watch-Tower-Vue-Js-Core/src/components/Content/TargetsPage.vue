@@ -1,4 +1,5 @@
 <!-- components/TargetsPage.vue -->
+
 <template>
   <div class="min-h-screen bg-black relative overflow-hidden">
     <!-- Cyberpunk Background Effects -->
