@@ -8,6 +8,7 @@
     # - created_at
     # - updated_at 
 
+
 from pymongo import MongoClient
 from datetime import datetime
 from dotenv import load_dotenv
