@@ -10,4 +10,5 @@ Route::get('/user', function (Request $request) {
 
 Route::prefix('v2.1')->group(function () {
     Route::apiResource('programs', ProgramsController::class);
+    Route::apiResource('subdomains', SubdomainsController::class);
 });
