@@ -1,35 +1,51 @@
-/.phpunit.cache
-<<<<<<< HEAD
-=======
-/bootstrap/ssr
->>>>>>> ee061b6750e2b23acc033af57bd6b9f0573a7266
-/node_modules
-/public/build
-/public/hot
-/public/storage
-/storage/*.key
-/storage/pail
-<<<<<<< HEAD
-/vendor
-=======
-/resources/js/actions
-/resources/js/routes
-/resources/js/wayfinder
-/vendor
-.DS_Store
->>>>>>> ee061b6750e2b23acc033af57bd6b9f0573a7266
+# --- environment -----------------------------------------------------------
 .env
-.env.backup
-.env.production
-.phpactor.json
+.env.*
+!.env.example
+!**/.env.example
+.envrc
+
+# --- dependencies ----------------------------------------------------------
+vendor/
+node_modules/
+.venv/
+venv/
+
+# --- python ----------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# --- build output ----------------------------------------------------------
+dist/
+public/build/
+public/hot/
+public/storage/
+storage/*.key
+storage/pail
+
+# --- laravel runtime -------------------------------------------------------
+storage/logs/*.log
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*
+bootstrap/cache/*.php
+.phpunit.cache
 .phpunit.result.cache
-Homestead.json
-Homestead.yaml
-npm-debug.log
-yarn-error.log
-/auth.json
-/.fleet
-/.idea
-/.nova
-/.vscode
-/.zed
+
+# --- editors / os ----------------------------------------------------------
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+.nova/
+.fleet/
+.zed/
+
+# --- misc ------------------------------------------------------------------
+*.log
+npm-debug.log*
+yarn-error.log*
