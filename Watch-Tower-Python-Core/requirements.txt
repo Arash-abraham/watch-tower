@@ -1,6 +1,4 @@
-pymongo==4.6.1
-python-dotenv==1.0.0
-colorama==0.4.6
-flask
-pymysql
-flask-sqlalchemy
+flask>=3.0,<4.0
+pymongo>=4.6,<5.0
+python-dotenv>=1.0,<2.0
+requests>=2.31,<3.0

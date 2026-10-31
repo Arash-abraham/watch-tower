@@ -1,16 +1,100 @@
+name: watch-tower
+
 services:
   mongo:
-    image: registry.docker.ir/library/mongo:latest
+    image: mongo:7
     container_name: watch-tower-mongo
-    restart: always
-    ports:
-      - "27017:27017"
+    restart: unless-stopped
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: secret
-      MONGO_INITDB_DATABASE: watch-tower
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER:-root}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-secret}
+      MONGO_INITDB_DATABASE: ${DB_NAME:-watch-tower}
+    ports:
+      - "${MONGO_PORT:-27017}:27017"
     volumes:
       - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  api:
+    build:
+      context: ./Watch-Tower-Laravel-Core
+    container_name: watch-tower-api
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      APP_NAME: Watch Tower
+      APP_ENV: ${APP_ENV:-local}
+      APP_DEBUG: ${APP_DEBUG:-true}
+      APP_KEY: ${APP_KEY:-}
+      APP_URL: http://localhost:${API_PORT:-8000}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:5173}
+      LOG_CHANNEL: stderr
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      DB_CONNECTION: mongodb
+      DB_URI: mongodb://${MONGO_ROOT_USER:-root}:${MONGO_ROOT_PASSWORD:-secret}@mongo:27017/?authSource=admin
+      DB_DATABASE: ${DB_NAME:-watch-tower}
+      SESSION_DRIVER: file
+      CACHE_STORE: file
+      QUEUE_CONNECTION: sync
+      WATCHTOWER_SOURCES: ${WATCHTOWER_SOURCES:-bugcrowd,hackerone,yeswehack,intigriti,local}
+      WATCHTOWER_SCAN_INTERVAL: ${WATCHTOWER_SCAN_INTERVAL:-1800}
+      WATCHTOWER_TELEGRAM_ENABLED: ${WATCHTOWER_TELEGRAM_ENABLED:-false}
+      WATCHTOWER_DISCORD_ENABLED: ${WATCHTOWER_DISCORD_ENABLED:-false}
+    ports:
+      - "${API_PORT:-8000}:8000"
+    healthcheck:
+      test: ["CMD", "php", "-r", "exit(@file_get_contents('http://127.0.0.1:8000/api/health') ? 0 : 1);"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+
+  collector:
+    build:
+      context: ./Watch-Tower-Python-Core
+    container_name: watch-tower-collector
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      MONGO_URI: mongodb://${MONGO_ROOT_USER:-root}:${MONGO_ROOT_PASSWORD:-secret}@mongo:27017/?authSource=admin
+      DB_NAME: ${DB_NAME:-watch-tower}
+      DB_AUTH_SOURCE: admin
+      SOURCES: ${WATCHTOWER_SOURCES:-bugcrowd,hackerone,yeswehack,intigriti}
+      SCAN_INTERVAL_SECONDS: ${WATCHTOWER_SCAN_INTERVAL:-1800}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+      DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL:-}
+      # run the health endpoint next to the scheduler
+    command: ["sh", "-c", "python app.py & exec python monitor.py --watch"]
+    ports:
+      - "${COLLECTOR_PORT:-8080}:8080"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8080/health').status == 200 else 1)"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+
+  web:
+    build:
+      context: ./Watch-Tower-Vue-Js-Core
+    container_name: watch-tower-web
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_started
+    ports:
+      - "${WEB_PORT:-5173}:80"
 
 volumes:
   mongo-data:

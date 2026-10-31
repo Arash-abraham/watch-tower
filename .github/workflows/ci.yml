@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  collector:
+    name: Collector (Python)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Watch-Tower-Python-Core
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: Watch-Tower-Python-Core/requirements-dev.txt
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+      - name: Run tests
+        run: python -m unittest discover -s tests -v
+
+  dashboard:
+    name: Dashboard (Vue)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Watch-Tower-Vue-Js-Core
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: Watch-Tower-Vue-Js-Core/package-lock.json
+      - run: npm ci
+      - run: npm run build
+
+  api:
+    name: API (Laravel)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Watch-Tower-Laravel-Core
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mongodb, mbstring, openssl, ctype, json, tokenizer, xml, curl, fileinfo
+          coverage: none
+      - name: Validate composer files
+        run: composer validate --no-check-publish
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+      - name: Lint PHP
+        run: find app config database routes -name '*.php' -print0 | xargs -0 -n1 php -l

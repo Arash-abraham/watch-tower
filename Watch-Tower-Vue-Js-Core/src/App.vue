@@ -75,18 +75,25 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import Navbar from './components/layouts/partials/Navbar.vue' 
 
 const showModal = ref(false)
+
+const openModal = () => {
+  showModal.value = true
+}
 
 const closeModal = () => {
   showModal.value = false
 }
 
-window.showDevelopmentModal = () => {
-  showModal.value = true
-}
+// Both a global helper and a DOM event are supported so any page can open
+// the "under development" dialog.
+window.showDevelopmentModal = openModal
+
+onMounted(() => window.addEventListener('show-modal', openModal))
+onUnmounted(() => window.removeEventListener('show-modal', openModal))
 </script>
 
 <style scoped>
