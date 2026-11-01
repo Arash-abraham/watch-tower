@@ -23,14 +23,9 @@ Telegram/Discord.
 
 It never scans or touches a target. It only reads public scope definitions.
 
-```
-arkadiyt/bounty-targets-data (public JSON)
-              │
-              ▼
-   Python collector  ──►  MongoDB  ◄──  Laravel API  ◄──  Vue dashboard
-   (normalise, diff,                    (read-only          (live data,
-    notify, schedule)                    JSON API)          60s polling)
-```
+<p align="center">
+  <img src="img/architecture.png" alt="Watch Tower architecture — datasets → Python collector → MongoDB → Laravel API → Vue dashboard, with Telegram/Discord notifications" width="860" />
+</p>
 
 ---
 
@@ -47,6 +42,14 @@ arkadiyt/bounty-targets-data (public JSON)
 | Dashboard: live stats, program browser, alert feed, sources, monitors | ✅ |
 | Subdomain / asset discovery monitors | 🚧 planned (collection + API exist, no enumerator yet) |
 | Authentication / multi-tenant workspaces | 🚧 planned |
+
+---
+
+## Dashboard preview
+
+<p align="center">
+  <img src="img/dashboard.png" alt="Watch Tower dashboard — live stats, changes chart and alert feed" width="860" />
+</p>
 
 ---
 
