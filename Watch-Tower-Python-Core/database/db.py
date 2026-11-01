@@ -66,7 +66,8 @@ def ping(timeout_ms: int = 2000) -> bool:
 
 
 def ensure_indexes(db=None) -> None:
-    db = db or get_db()
+    if db is None:
+        db = get_db()
     try:
         # Index names are left to MongoDB so that the Laravel migrations
         # (which use the same key patterns) stay idempotent.

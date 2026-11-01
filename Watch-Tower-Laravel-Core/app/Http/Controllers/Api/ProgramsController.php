@@ -23,9 +23,16 @@ class ProgramsController extends Controller
         $sort = self::SORTABLE[$request->query('sort', 'name')] ?? 'program_name';
         $direction = $request->query('direction') === 'desc' ? 'desc' : 'asc';
 
-        $query = Program::query()
-            ->search($request->query('q'))
-            ->fromSource($request->query('source'));
+        $query = Program::query()->fromSource($request->query('source'));
+        
+        $search = trim((string) $request->query('q', ''));
+        
+        if ($search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('program_name', 'like', '%' . $search . '%')
+                ->orWhere('slug', 'like', '%' . $search . '%');
+            });
+        }
 
         if ($request->has('active') && $request->query('active') !== '') {
             $query->where('active', $request->boolean('active'));
