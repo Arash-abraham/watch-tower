@@ -24,7 +24,7 @@ Telegram/Discord.
 It never scans or touches a target. It only reads public scope definitions.
 
 <p align="center">
-  <img src="img/architecture.png" alt="Watch Tower architecture — datasets → Python collector → MongoDB → Laravel API → Vue dashboard, with Telegram/Discord notifications" width="860" />
+  <img src="img/Neon Watch Tower Monitoring Cycle.png" alt="Watch Tower architecture — datasets → Python collector → MongoDB → Laravel API → Vue dashboard, with Telegram/Discord notifications" width="860" />
 </p>
 
 ---
@@ -48,7 +48,7 @@ It never scans or touches a target. It only reads public scope definitions.
 ## Dashboard preview
 
 <p align="center">
-  <img src="img/dashboard.png" alt="Watch Tower dashboard — live stats, changes chart and alert feed" width="860" />
+  <img src="img/architecture.png" alt="Watch Tower dashboard — live stats, changes chart and alert feed" width="860" />
 </p>
 
 ---
