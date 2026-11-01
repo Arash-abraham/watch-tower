@@ -4,10 +4,12 @@ ENV COMPOSER_ALLOW_SUPERUSER=1 \
     COMPOSER_NO_INTERACTION=1 \
     COMPOSER_MEMORY_LIMIT=-1
 
+COPY mongodb-1.21.0.tgz /tmp/mongodb-1.21.0.tgz
+
 # mongodb extension + the tools composer needs
 RUN apt-get update \
     && apt-get install -y --no-install-recommends git unzip libssl-dev pkg-config $PHPIZE_DEPS \
-    && pecl install mongodb \
+    && pecl install /tmp/mongodb-1.21.0.tgz \
     && docker-php-ext-enable mongodb \
     && apt-get purge -y --auto-remove $PHPIZE_DEPS \
     && rm -rf /var/lib/apt/lists/*

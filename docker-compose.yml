@@ -2,7 +2,7 @@ name: watch-tower
 
 services:
   mongo:
-    image: mongo:7
+    image: mongo:8.2
     container_name: watch-tower-mongo
     restart: unless-stopped
     environment:
@@ -44,7 +44,6 @@ services:
       CACHE_STORE: file
       QUEUE_CONNECTION: sync
       WATCHTOWER_SOURCES: ${WATCHTOWER_SOURCES:-bugcrowd,hackerone,yeswehack,intigriti,local}
-      WATCHTOWER_SCAN_INTERVAL: ${WATCHTOWER_SCAN_INTERVAL:-1800}
       WATCHTOWER_TELEGRAM_ENABLED: ${WATCHTOWER_TELEGRAM_ENABLED:-false}
       WATCHTOWER_DISCORD_ENABLED: ${WATCHTOWER_DISCORD_ENABLED:-false}
     ports:
@@ -57,10 +56,12 @@ services:
       start_period: 40s
 
   collector:
+    profiles:
+      - manual
     build:
       context: ./Watch-Tower-Python-Core
     container_name: watch-tower-collector
-    restart: unless-stopped
+    restart: "no"
     depends_on:
       mongo:
         condition: service_healthy
@@ -69,21 +70,12 @@ services:
       DB_NAME: ${DB_NAME:-watch-tower}
       DB_AUTH_SOURCE: admin
       SOURCES: ${WATCHTOWER_SOURCES:-bugcrowd,hackerone,yeswehack,intigriti}
-      SCAN_INTERVAL_SECONDS: ${WATCHTOWER_SCAN_INTERVAL:-1800}
       LOG_LEVEL: ${LOG_LEVEL:-INFO}
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
       TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
       DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL:-}
-      # run the health endpoint next to the scheduler
-    command: ["sh", "-c", "python app.py & exec python monitor.py --watch"]
     ports:
       - "${COLLECTOR_PORT:-8080}:8080"
-    healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8080/health').status == 200 else 1)"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 20s
 
   web:
     build:
