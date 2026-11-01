@@ -1,24 +1,24 @@
-import requests, os, sys
+"""Backwards-compatible entry point.
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'database')))
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+Historically this script downloaded ``bugcrowd_data.json`` and wrote it to
+MongoDB directly.  The logic now lives in ``monitor.py`` so that every source
+goes through the same normalise → diff → notify pipeline.
+"""
 
-from db import insert_all_bugcrowd_programs
+from __future__ import annotations
 
-URL = "https://raw.githubusercontent.com/arkadiyt/bounty-targets-data/refs/heads/main/data/bugcrowd_data.json"
+import os
+import sys
 
-def RunCode():
-    try:
-        response = requests.get(URL, timeout=30)
-        response.raise_for_status()
-        
-        data = response.json()
-        insert_all_bugcrowd_programs(data)
-        
-        return data
-    except requests.RequestException as e:
-        print("error:", e)
-        return None
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
 
-if __name__ == '__main__':
-    RunCode()
+from monitor import main  # noqa: E402
+
+
+def RunCode(argv: list[str] | None = None) -> int:
+    return main(["--sources", "bugcrowd", *(argv or [])])
+
+
+if __name__ == "__main__":
+    raise SystemExit(RunCode())

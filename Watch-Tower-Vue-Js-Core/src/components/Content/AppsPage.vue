@@ -1,91 +1,89 @@
 <template>
-    <div class="min-h-screen text-white pt-20 px-6">
-      <div class="max-w-7xl mx-auto">
-        <!-- Header -->
-        <div class="mb-8">
-          <div class="inline-flex items-center gap-3 px-4 py-2 border border-cyan-500/20 bg-cyan-500/5 backdrop-blur-sm rounded-full">
-            <span class="relative flex h-2 w-2">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-            </span>
-            <span class="text-cyan-400/70 text-[10px] tracking-[0.2em] font-mono">APPLICATIONS</span>
-          </div>
+  <div class="min-h-screen text-white pt-20 px-6">
+    <div class="max-w-7xl mx-auto">
+      <PageHeader
+        badge="SOURCES"
+        title="Applications"
+        subtitle="Where the monitored data comes from and how fresh it is"
+      />
+
+      <AsyncState :loading="loading" :error="error" @retry="load">
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          <article
+            v-for="source in sources"
+            :key="source.source"
+            class="bg-gray-900/40 border border-gray-800 rounded-xl p-6 hover:border-cyan-500/30 transition-colors"
+          >
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center font-mono text-cyan-400 text-sm">
+                  {{ initials(source.source) }}
+                </div>
+                <div>
+                  <h3 class="text-base font-semibold text-white">{{ sourceLabel(source.source) }}</h3>
+                  <p class="text-[11px] font-mono text-gray-600">{{ source.source }}</p>
+                </div>
+              </div>
+              <span
+                class="text-[10px] font-mono px-2 py-0.5 rounded border"
+                :class="source.last_run ? 'border-green-500/30 text-green-400/80 bg-green-500/5' : 'border-gray-700 text-gray-500'"
+              >
+                {{ source.last_run ? 'SYNCED' : 'IDLE' }}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3 mb-5">
+              <div>
+                <div class="text-xl font-bold text-white tabular-nums">{{ formatNumber(source.active_programs) }}</div>
+                <div class="text-[10px] font-mono text-gray-600">ACTIVE</div>
+              </div>
+              <div>
+                <div class="text-xl font-bold text-white tabular-nums">{{ formatNumber(source.programs) }}</div>
+                <div class="text-[10px] font-mono text-gray-600">TOTAL</div>
+              </div>
+              <div>
+                <div class="text-xl font-bold tabular-nums" :class="source.changes_24h ? 'text-cyan-400' : 'text-gray-500'">
+                  {{ formatNumber(source.changes_24h) }}
+                </div>
+                <div class="text-[10px] font-mono text-gray-600">24H</div>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-gray-800/70 text-[11px] font-mono text-gray-600 flex items-center justify-between">
+              <span>{{ source.last_run ? timeAgo(source.last_run.started_at) : 'never synced' }}</span>
+              <RouterLink to="/targets" class="text-cyan-400/60 hover:text-cyan-400">browse →</RouterLink>
+            </div>
+          </article>
         </div>
-  
-        <!-- Title -->
-        <div class="mb-10">
-          <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-2">
-            <span class="text-white">Applications</span>
-          </h1>
-          <p class="text-gray-500 text-sm">Manage and monitor your applications</p>
+
+        <div class="mt-8 bg-gray-900/30 border border-gray-800 rounded-xl p-6">
+          <h2 class="text-sm font-semibold tracking-wide text-gray-300 mb-2">HOW SOURCES WORK</h2>
+          <p class="text-sm text-gray-500 leading-relaxed">
+            The Python collector downloads the public datasets published by
+            <span class="text-gray-300">arkadiyt/bounty-targets-data</span> — Bugcrowd, HackerOne, YesWeHack and Intigriti —
+            normalises them into a single schema and stores them in MongoDB. The
+            <span class="text-gray-300"> local</span> source contains programs you maintain yourself
+            (either through the API or as JSON files in the collector's <code class="text-cyan-400/80">programs/</code> directory).
+          </p>
         </div>
-  
-        <!-- Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-          <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-4">
-            <div class="text-gray-500 text-sm">Total Apps</div>
-            <div class="text-2xl font-bold text-white mt-1">18</div>
-          </div>
-          <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-4">
-            <div class="text-gray-500 text-sm">Active</div>
-            <div class="text-2xl font-bold text-green-500 mt-1">14</div>
-          </div>
-          <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-4">
-            <div class="text-gray-500 text-sm">Maintenance</div>
-            <div class="text-2xl font-bold text-yellow-500 mt-1">4</div>
-          </div>
-        </div>
-  
-        <!-- App List -->
-        <div class="bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden">
-          <div class="overflow-x-auto">
-            <table class="w-full">
-              <thead class="border-b border-gray-800">
-                <tr>
-                  <th class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-4">Application</th>
-                  <th class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-4">Status</th>
-                  <th class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-4">Type</th>
-                  <th class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-4">Last Check</th>
-                  <th class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-4">Response</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-800">
-                <tr v-for="app in apps" :key="app.name" class="hover:bg-gray-800/30 transition-colors">
-                  <td class="px-6 py-4">
-                    <div>
-                      <div class="text-sm font-medium text-white">{{ app.name }}</div>
-                      <div class="text-xs text-gray-500">{{ app.url }}</div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <span class="inline-flex items-center gap-2 text-xs font-medium" :class="app.status === 'online' ? 'text-green-500' : 'text-yellow-500'">
-                      <span class="w-1.5 h-1.5 rounded-full" :class="app.status === 'online' ? 'bg-green-500' : 'bg-yellow-500'"></span>
-                      {{ app.status === 'online' ? 'Online' : 'Degraded' }}
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-sm text-gray-400">{{ app.type }}</td>
-                  <td class="px-6 py-4 text-sm text-gray-500">{{ app.lastCheck }}</td>
-                  <td class="px-6 py-4">
-                    <span class="text-sm font-mono" :class="app.response < 200 ? 'text-green-400' : 'text-yellow-400'">
-                      {{ app.response }}ms
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      </AsyncState>
     </div>
-  </template>
-  
-  <script setup>
-  const apps = [
-    { name: 'API Gateway', url: 'api.example.com', status: 'online', type: 'REST API', lastCheck: '2 min ago', response: 45 },
-    { name: 'Web Dashboard', url: 'dashboard.example.com', status: 'online', type: 'Web App', lastCheck: '5 min ago', response: 120 },
-    { name: 'Database', url: 'db.example.com', status: 'degraded', type: 'Database', lastCheck: '10 min ago', response: 350 },
-    { name: 'Cache Service', url: 'cache.example.com', status: 'online', type: 'Redis', lastCheck: '15 min ago', response: 12 },
-    { name: 'Queue Worker', url: 'queue.example.com', status: 'online', type: 'RabbitMQ', lastCheck: '20 min ago', response: 28 },
-    { name: 'File Storage', url: 'storage.example.com', status: 'online', type: 'S3', lastCheck: '25 min ago', response: 89 },
-  ]
-  </script>
+  </div>
+</template>
+
+<script setup>
+import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
+import { api } from '../../services/api'
+import { useApi } from '../../composables/useApi'
+import { formatNumber, sourceLabel, timeAgo } from '../../utils/format'
+import PageHeader from '../ui/PageHeader.vue'
+import AsyncState from '../ui/AsyncState.vue'
+
+const { data, error, loading, load } = useApi(() => api.sources())
+const sources = computed(() => data.value?.data || [])
+
+function initials(source) {
+  return (source || '?').slice(0, 2).toUpperCase()
+}
+</script>

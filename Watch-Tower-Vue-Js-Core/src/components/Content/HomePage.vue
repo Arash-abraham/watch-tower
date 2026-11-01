@@ -31,8 +31,8 @@
       </div>
 
       <p class="text-center text-gray-400 text-sm md:text-base max-w-2xl mx-auto mb-12 font-light leading-relaxed">
-        <span class="inline-block">Enterprise-grade real-time asset monitoring platform</span><br>
-        <span class="inline-block">Built for security researchers and DevSecOps teams</span>
+        <span class="inline-block">Continuous asset monitoring platform</span><br>
+        <span class="inline-block">Built for bug hunters and DevSecOps teams</span>
       </p>
 
       <div class="grid grid-cols-3 gap-6 md:gap-12 max-w-2xl mx-auto mb-16">
@@ -42,8 +42,8 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
           </div>
-          <div class="text-white/80 text-2xl md:text-3xl font-bold mb-1">24/7</div>
-          <div class="text-cyan-400/40 text-[10px] md:text-xs uppercase tracking-wider">Continuous Monitoring</div>
+          <div class="text-white/80 text-2xl md:text-3xl font-bold mb-1 tabular-nums">{{ live.programs }}</div>
+          <div class="text-cyan-400/40 text-[10px] md:text-xs uppercase tracking-wider">Programs Monitored</div>
         </div>
         
         <div class="text-center group">
@@ -52,8 +52,8 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
             </svg>
           </div>
-          <div class="text-white/80 text-2xl md:text-3xl font-bold mb-1">99.99%</div>
-          <div class="text-cyan-400/40 text-[10px] md:text-xs uppercase tracking-wider">Uptime SLA</div>
+          <div class="text-white/80 text-2xl md:text-3xl font-bold mb-1 tabular-nums">{{ live.changes }}</div>
+          <div class="text-cyan-400/40 text-[10px] md:text-xs uppercase tracking-wider">Changes (24h)</div>
         </div>
         
         <div class="text-center group">
@@ -62,8 +62,8 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
             </svg>
           </div>
-          <div class="text-white/80 text-2xl md:text-3xl font-bold mb-1">Real-time</div>
-          <div class="text-cyan-400/40 text-[10px] md:text-xs uppercase tracking-wider">WebSocket Alerts</div>
+          <div class="text-white/80 text-2xl md:text-3xl font-bold mb-1 tabular-nums">{{ live.sources }}</div>
+          <div class="text-cyan-400/40 text-[10px] md:text-xs uppercase tracking-wider">Sources Tracked</div>
         </div>
       </div>
 
@@ -78,13 +78,13 @@
           <svg class="w-3 h-3 text-cyan-500/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
           </svg>
-          <span>Laravel Echo</span>
+          <span>MongoDB + Laravel API</span>
         </div>
         <div class="flex items-center gap-2 text-xs text-gray-500">
           <svg class="w-3 h-3 text-cyan-500/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
           </svg>
-          <span>SaaS Ready</span>
+          <span>Self-Hosted</span>
         </div>
       </div>
 
@@ -138,13 +138,31 @@
 </template>
 
 <script setup>
+import { onMounted, ref } from 'vue'
+import { api } from '../../services/api'
+
+const live = ref({ programs: '—', changes: '—', sources: '—' })
+
 const openGitHub = () => {
-  window.open('https://github.com/AryaKhorasan/watch-tower', '_blank')
+  window.open('https://github.com/Arash-abraham/watch-tower', '_blank')
 }
 
 const showDevelopmentModal = () => {
+  if (typeof window.showDevelopmentModal === 'function') window.showDevelopmentModal()
   window.dispatchEvent(new CustomEvent('show-modal'))
 }
+
+onMounted(async () => {
+  const response = await api.stats().catch(() => null)
+  const data = response?.data
+  if (!data) return
+
+  live.value = {
+    programs: data.active_programs ?? 0,
+    changes: data.changes_24h ?? 0,
+    sources: (data.sources || []).filter((source) => source.active_programs > 0).length,
+  }
+})
 </script>
 
 <style scoped>

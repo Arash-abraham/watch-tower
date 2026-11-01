@@ -9,10 +9,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::connection('mongodb')->create('programs', function (Blueprint $collection) {
-            $collection->index('program_name');
+            $collection->unique(['source', 'slug']);
             $collection->index('scopes');
-            $collection->index('outScopes');
-            $collection->timestamps();
+            $collection->index('last_synced_at');
         });
     }
 

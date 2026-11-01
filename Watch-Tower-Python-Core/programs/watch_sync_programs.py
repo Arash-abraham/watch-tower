@@ -1,32 +1,22 @@
-#!/usr/bin/env python3
+"""Sync the hand-written program files in this directory into MongoDB.
 
-import os, json, sys
+Kept for backwards compatibility; ``python monitor.py --local`` does the same.
+"""
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'database')))
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from __future__ import annotations
 
-from db import upsert_program
-from config import config
+import os
+import sys
 
-def scan_directory_for_json_files(directory):
-    for filename in os.listdir(directory):
-        if filename.endswith('.json'):
-            file_path = os.path.join(directory, filename)
-            # print(f'Processing file : {file_path}')
-            
-            with open(file_path, 'r') as file:
-                try:
-                    data = json.load(file)
-                    
-                    program_name = data.get('program_name')
-                    scopes = data.get('scope') or data.get('scopes') or []
-                    outScopes = data.get('out-scope') or data.get('outScopes') or []
-                    config = data.get('config') or {}
-                    
-                    upsert_program(program_name, scopes, outScopes, config)   
-                except json.JSONDecodeError as e:
-                    print(f'{file_path} : {e}')
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
+
+from monitor import main  # noqa: E402
+
+
+def RunCode(argv: list[str] | None = None) -> int:
+    return main(["--sources", "local", "--no-notify", *(argv or [])])
+
 
 if __name__ == "__main__":
-    directory_to_scan = f'{config.WATCH_DIR}/programs/'
-    scan_directory_for_json_files(directory_to_scan)
+    raise SystemExit(RunCode())

@@ -1,175 +1,193 @@
 <template>
-    <div class="min-h-screen text-white pt-20 px-6">
-      <div class="max-w-7xl mx-auto">
-        <!-- Header -->
-        <div class="mb-8">
-          <div class="inline-flex items-center gap-3 px-4 py-2 border border-cyan-500/20 bg-cyan-500/5 backdrop-blur-sm rounded-full">
-            <span class="relative flex h-2 w-2">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+  <div class="min-h-screen text-white pt-20 px-6">
+    <div class="max-w-7xl mx-auto">
+      <PageHeader
+        badge="DASHBOARD OVERVIEW"
+        title="Dashboard"
+        subtitle="Live state of the monitored bounty landscape"
+      >
+        <template #actions>
+          <div class="flex items-center gap-3 text-[11px] font-mono text-gray-600">
+            <span class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full" :class="health.ok ? 'bg-green-500' : 'bg-red-500'"></span>
+              {{ health.ok ? 'API ONLINE' : 'API OFFLINE' }}
             </span>
-            <span class="text-cyan-400/70 text-[10px] tracking-[0.2em] font-mono">DASHBOARD OVERVIEW</span>
-            <span class="text-cyan-400/30 text-[10px]">v2.0.1</span>
+            <span>·</span>
+            <span>updated {{ lastUpdated ? timeAgo(lastUpdated) : '—' }}</span>
+            <button
+              class="px-2 py-1 border border-gray-800 rounded hover:border-cyan-500/40 hover:text-cyan-400 transition-colors"
+              @click="load"
+            >
+              refresh
+            </button>
           </div>
-        </div>
-  
-        <!-- Title -->
-        <div class="mb-10">
-          <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-2">
-            <span class="text-white">Dashboard</span>
-          </h1>
-          <p class="text-gray-500 text-sm">Real-time monitoring and system status overview</p>
-        </div>
-  
-        <!-- Stats Grid -->
+        </template>
+      </PageHeader>
+
+      <AsyncState :loading="loading && !stats" :error="error" @retry="load">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-          <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6 hover:border-cyan-500/30 transition-all">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-gray-500 text-sm font-medium">Total Monitors</span>
-              <svg class="w-5 h-5 text-cyan-500/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"></path>
-              </svg>
-            </div>
-            <div class="text-3xl font-bold text-white">24</div>
-            <div class="text-xs text-green-500 mt-1">+12% from last month</div>
-          </div>
-  
-          <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6 hover:border-cyan-500/30 transition-all">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-gray-500 text-sm font-medium">Active Targets</span>
-              <svg class="w-5 h-5 text-blue-500/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-              </svg>
-            </div>
-            <div class="text-3xl font-bold text-white">156</div>
-            <div class="text-xs text-green-500 mt-1">+8% from last month</div>
-          </div>
-  
-          <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6 hover:border-cyan-500/30 transition-all">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-gray-500 text-sm font-medium">Active Alerts</span>
-              <svg class="w-5 h-5 text-yellow-500/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
-              </svg>
-            </div>
-            <div class="text-3xl font-bold text-white">8</div>
-            <div class="text-xs text-red-500 mt-1">+3 critical</div>
-          </div>
-  
-          <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6 hover:border-cyan-500/30 transition-all">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-gray-500 text-sm font-medium">Uptime SLA</span>
-              <svg class="w-5 h-5 text-green-500/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
-              </svg>
-            </div>
-            <div class="text-3xl font-bold text-green-500">99.99%</div>
-            <div class="text-xs text-gray-500 mt-1">Last 30 days</div>
-          </div>
+          <StatCard label="Active Programs" :value="stats.active_programs" accent="cyan" :hint="`${formatNumber(stats.programs)} total · ${formatNumber(stats.programs - stats.active_programs)} closed`" />
+          <StatCard label="Assets In Scope" :value="stats.scopes" accent="blue" hint="unique in-scope assets" />
+          <StatCard label="Changes · 24h" :value="stats.changes_24h" accent="green" :hint="`${formatNumber(stats.changes_7d)} in the last 7 days`" />
+          <StatCard label="Scope Conflicts" :value="stats.conflicts" accent="red" hint="assets in both scope lists" />
         </div>
-  
-        <!-- Charts Section -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- sources -->
+          <div class="lg:col-span-2 bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-800 flex items-center justify-between">
+              <h2 class="text-sm font-semibold tracking-wide text-gray-300">SOURCES</h2>
+              <span class="text-[10px] font-mono text-gray-600">
+                every {{ formatNumber(scheduleSeconds / 60) }} min
+              </span>
+            </div>
+
+            <div class="divide-y divide-gray-800/70">
+              <div
+                v-for="source in stats.sources"
+                :key="source.source"
+                class="px-6 py-4 flex items-center justify-between gap-4 hover:bg-cyan-500/[0.02] transition-colors"
+              >
+                <div class="flex items-center gap-3 min-w-0">
+                  <span
+                    class="w-1.5 h-1.5 rounded-full shrink-0"
+                    :class="statusDot(source.last_run)"
+                  ></span>
+                  <div class="min-w-0">
+                    <div class="text-sm text-white truncate">{{ sourceLabel(source.source) }}</div>
+                    <div class="text-[11px] font-mono text-gray-600">
+                      {{ source.last_run ? `last run ${timeAgo(source.last_run.started_at)}` : 'never synced' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-6 text-right shrink-0">
+                  <div>
+                    <div class="text-sm text-white tabular-nums">{{ formatNumber(source.active_programs) }}</div>
+                    <div class="text-[10px] text-gray-600 font-mono">PROGRAMS</div>
+                  </div>
+                  <div>
+                    <div class="text-sm tabular-nums" :class="source.changes_24h ? 'text-cyan-400' : 'text-gray-500'">
+                      {{ formatNumber(source.changes_24h) }}
+                    </div>
+                    <div class="text-[10px] text-gray-600 font-mono">24H</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- last run -->
           <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
-            <div class="flex items-center justify-between mb-6">
-              <h3 class="text-sm font-medium text-gray-300">System Performance</h3>
-              <span class="text-xs text-cyan-500/70 font-mono">LIVE</span>
-            </div>
-            <div class="h-48 flex items-end justify-between gap-2">
-              <div class="w-full flex items-end gap-1 h-40">
-                <div v-for="i in 12" :key="i" 
-                     class="flex-1 bg-gradient-to-t from-cyan-500/20 to-cyan-500/60 rounded-t"
-                     :style="{ height: `${20 + Math.random() * 80}%` }">
-                </div>
+            <h2 class="text-sm font-semibold tracking-wide text-gray-300 mb-4">LAST COLLECTOR RUN</h2>
+
+            <template v-if="stats.last_run">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="w-2 h-2 rounded-full" :class="stats.last_run.status === 'success' ? 'bg-green-500' : 'bg-red-500'"></span>
+                <span class="text-sm" :class="stats.last_run.status === 'success' ? 'text-green-400' : 'text-red-400'">
+                  {{ stats.last_run.status }}
+                </span>
+                <span class="text-[11px] font-mono text-gray-600">· {{ timeAgo(stats.last_run.started_at) }}</span>
               </div>
-            </div>
-            <div class="flex justify-between mt-3 text-xs text-gray-600">
-              <span>00:00</span>
-              <span>06:00</span>
-              <span>12:00</span>
-              <span>18:00</span>
-              <span>23:59</span>
-            </div>
-          </div>
-  
-          <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
-            <div class="flex items-center justify-between mb-6">
-              <h3 class="text-sm font-medium text-gray-300">Alert Distribution</h3>
-              <span class="text-xs text-gray-600 font-mono">REAL-TIME</span>
-            </div>
-            <div class="space-y-4">
-              <div>
-                <div class="flex justify-between text-sm mb-1">
-                  <span class="text-gray-400">Critical</span>
-                  <span class="text-red-400 font-medium">3</span>
-                </div>
-                <div class="w-full bg-gray-800 rounded-full h-2">
-                  <div class="bg-red-500 h-2 rounded-full" style="width: 37%"></div>
-                </div>
-              </div>
-              <div>
-                <div class="flex justify-between text-sm mb-1">
-                  <span class="text-gray-400">Warning</span>
-                  <span class="text-yellow-400 font-medium">5</span>
-                </div>
-                <div class="w-full bg-gray-800 rounded-full h-2">
-                  <div class="bg-yellow-500 h-2 rounded-full" style="width: 63%"></div>
-                </div>
-              </div>
-              <div>
-                <div class="flex justify-between text-sm mb-1">
-                  <span class="text-gray-400">Info</span>
-                  <span class="text-blue-400 font-medium">12</span>
-                </div>
-                <div class="w-full bg-gray-800 rounded-full h-2">
-                  <div class="bg-blue-500 h-2 rounded-full" style="width: 100%"></div>
-                </div>
-              </div>
-            </div>
+
+              <dl class="space-y-2 text-sm">
+                <div class="flex justify-between"><dt class="text-gray-500">Source</dt><dd class="text-gray-300">{{ sourceLabel(stats.last_run.source) }}</dd></div>
+                <div class="flex justify-between"><dt class="text-gray-500">Duration</dt><dd class="text-gray-300 tabular-nums">{{ formatNumber(stats.last_run.duration_ms) }} ms</dd></div>
+                <div class="flex justify-between"><dt class="text-gray-500">Changes</dt><dd class="text-cyan-400 tabular-nums">{{ formatNumber(stats.last_run.stats?.changes) }}</dd></div>
+                <div class="flex justify-between"><dt class="text-gray-500">New programs</dt><dd class="text-gray-300 tabular-nums">{{ formatNumber(stats.last_run.stats?.inserted) }}</dd></div>
+              </dl>
+            </template>
+
+            <p v-else class="text-sm text-gray-500">
+              The collector has not run yet. Start it with
+              <code class="text-cyan-400/80 text-xs">python monitor.py --once</code>.
+            </p>
           </div>
         </div>
-  
-        <!-- Recent Activity -->
-        <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
-          <div class="flex items-center justify-between mb-6">
-            <h3 class="text-sm font-medium text-gray-300">Recent Activity</h3>
-            <button class="text-xs text-cyan-500 hover:text-cyan-400 transition-colors">View All</button>
+
+        <!-- recent changes -->
+        <div class="mt-6 bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden">
+          <div class="px-6 py-4 border-b border-gray-800 flex items-center justify-between">
+            <h2 class="text-sm font-semibold tracking-wide text-gray-300">LATEST CHANGES</h2>
+            <RouterLink to="/alerts" class="text-[11px] font-mono text-cyan-400/70 hover:text-cyan-400">
+              view all →
+            </RouterLink>
           </div>
-          <div class="space-y-3">
-            <div class="flex items-center gap-4 p-3 border-b border-gray-800 hover:bg-gray-800/30 transition-colors rounded-lg">
-              <div class="w-2 h-2 rounded-full bg-green-500"></div>
-              <div class="flex-1">
-                <p class="text-sm text-gray-300">Target <span class="text-cyan-400">api.example.com</span> is now online</p>
-                <span class="text-xs text-gray-600">2 minutes ago</span>
-              </div>
-              <span class="text-xs text-green-500/70 font-mono">RECOVERED</span>
+
+          <div v-if="changes.length" class="divide-y divide-gray-800/70">
+            <div v-for="change in changes" :key="change.id" class="px-6 py-3 flex items-center gap-4">
+              <span class="text-[10px] font-mono px-2 py-1 rounded border shrink-0" :class="badgeClass(change.type)">
+                {{ CHANGE_LABELS[change.type] || change.type }}
+              </span>
+              <span class="text-sm text-gray-300 truncate flex-1 font-mono">{{ change.target || change.program.name }}</span>
+              <span class="text-[11px] text-gray-600 shrink-0">{{ sourceLabel(change.source) }}</span>
+              <span class="text-[11px] text-gray-600 shrink-0 w-20 text-right">{{ timeAgo(change.detected_at) }}</span>
             </div>
-            <div class="flex items-center gap-4 p-3 border-b border-gray-800 hover:bg-gray-800/30 transition-colors rounded-lg">
-              <div class="w-2 h-2 rounded-full bg-red-500"></div>
-              <div class="flex-1">
-                <p class="text-sm text-gray-300">Critical alert: <span class="text-red-400">Database connection failed</span></p>
-                <span class="text-xs text-gray-600">15 minutes ago</span>
-              </div>
-              <span class="text-xs text-red-500/70 font-mono">CRITICAL</span>
-            </div>
-            <div class="flex items-center gap-4 p-3 border-b border-gray-800 hover:bg-gray-800/30 transition-colors rounded-lg">
-              <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
-              <div class="flex-1">
-                <p class="text-sm text-gray-300">Monitor <span class="text-cyan-400">Ping Monitor #3</span> has high latency</p>
-                <span class="text-xs text-gray-600">1 hour ago</span>
-              </div>
-              <span class="text-xs text-yellow-500/70 font-mono">WARNING</span>
-            </div>
-            <div class="flex items-center gap-4 p-3 hover:bg-gray-800/30 transition-colors rounded-lg">
-              <div class="w-2 h-2 rounded-full bg-blue-500"></div>
-              <div class="flex-1">
-                <p class="text-sm text-gray-300">New target <span class="text-cyan-400">service.internal</span> added</p>
-                <span class="text-xs text-gray-600">3 hours ago</span>
-              </div>
-              <span class="text-xs text-blue-500/70 font-mono">INFO</span>
-            </div>
+          </div>
+          <div v-else class="px-6 py-8 text-center text-sm text-gray-600">
+            No changes recorded yet.
           </div>
         </div>
-      </div>
+      </AsyncState>
     </div>
+  </div>
 </template>
+
+<script setup>
+import { computed, ref } from 'vue'
+import { RouterLink } from 'vue-router'
+import { api } from '../../services/api'
+import { useApi } from '../../composables/useApi'
+import { CHANGE_LABELS, formatNumber, sourceLabel, timeAgo } from '../../utils/format'
+import PageHeader from '../ui/PageHeader.vue'
+import AsyncState from '../ui/AsyncState.vue'
+import StatCard from '../ui/StatCard.vue'
+
+const health = ref({ ok: false })
+
+const { data, error, loading, lastUpdated, load } = useApi(
+  async () => {
+    const [stats, changes, healthResult] = await Promise.all([
+      api.stats(),
+      api.changes({ per_page: 8 }),
+      api.health(),
+    ])
+    health.value = healthResult
+    return { stats: stats.data, changes: changes.data }
+  },
+  { refreshInterval: 60000 },
+)
+
+const stats = computed(() => data.value?.stats || {
+  programs: 0, active_programs: 0, scopes: 0, changes_24h: 0, changes_7d: 0,
+  conflicts: 0, sources: [], last_run: null,
+})
+const changes = computed(() => data.value?.changes || [])
+
+const scheduleSeconds = computed(() => {
+  const value = Number(stats.value.schedule_interval || 1800)
+  return Number.isFinite(value) ? value : 1800
+})
+
+const perDay = computed(() => {
+  const values = stats.value.changes_per_day
+  if (!Array.isArray(values) || !values.length) return []
+  const max = Math.max(...values, 1)
+  return values.map((value, i) => ({
+    value,
+    pct: Math.max(6, Math.round((value / max) * 100)),
+    label: new Date(Date.now() - (values.length - 1 - i) * 86400000)
+      .toLocaleDateString('en-US', { weekday: 'short' }),
+  }))
+})
+
+function statusDot(run) {
+  if (!run) return 'bg-gray-600'
+  return run.status === 'success' ? 'bg-green-500' : 'bg-red-500'
+}
+
+function badgeClass(type) {
+  if (type.endsWith('_removed') || type === 'program_removed') return 'border-red-500/30 text-red-400/90 bg-red-500/5'
+  if (type === 'conflict') return 'border-yellow-500/30 text-yellow-400/90 bg-yellow-500/5'
+  return 'border-cyan-500/30 text-cyan-400/90 bg-cyan-500/5'
+}
+</script>

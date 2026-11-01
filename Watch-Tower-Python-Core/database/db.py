@@ -1,237 +1,314 @@
-# MySql or Mongo ? I using Mongo
-# Database -> watch-tower 
-# Collections : programs , subdomains , bugcrowd_programs , etc ...
-# Programs -> 
-    # - program_name 
-    # - scopes 
-    # - out-scope 
-    # - created_at
-    # - updated_at 
+"""MongoDB persistence layer.
 
+Python owns writes (collector + notifier state), Laravel owns reads (public
+API).  The document shape written here is the contract consumed by
+``Watch-Tower-Laravel-Core``.
 
-from pymongo import MongoClient
-from datetime import datetime
-from dotenv import load_dotenv
-import os
-from colorama import *
-import sys
+Collections
+-----------
+``programs``     one document per program/source, with ``scopes`` and ``outScopes``
+``changes``      one document per detected scope change (the alert feed)
+``sync_runs``    one document per collector execution (observability)
+``subdomains``   reserved for the upcoming asset-discovery monitors
+"""
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from __future__ import annotations
+
+import logging
+from datetime import datetime, timedelta
+from typing import Iterable
+
+from pymongo import ASCENDING, DESCENDING, MongoClient
+from pymongo.errors import PyMongoError
 
 from config import config
+from core.diff import build_changes, find_conflicts, utcnow
+from core.normalizer import normalize_many, slugify
 
-load_dotenv()
+log = logging.getLogger(__name__)
 
-db_host = config.DB_HOST
-db_user = config.DB_USER
-db_pass = config.DB_PASS
-db_name = config.DB_NAME
-db_port = config.DB_PORT
+PROGRAMS = "programs"
+CHANGES = "changes"
+SYNC_RUNS = "sync_runs"
+SUBDOMAINS = "subdomains"
 
-# MongoDB connection URI
-MONGO_URI = f"mongodb://{db_user}:{db_pass}@{db_host}:{db_port}/"
-client = MongoClient(MONGO_URI)
-db = client[db_name]
+_client: MongoClient | None = None
 
-def check_and_create_database():
+
+def get_client() -> MongoClient:
+    global _client
+    if _client is None:
+        _client = MongoClient(
+            config.MONGO_URI,
+            serverSelectionTimeoutMS=config.MONGO_TIMEOUT_MS or 8000,
+            tz_aware=True,
+        )
+    return _client
+
+
+def set_client(client) -> None:
+    """Used by tests to inject ``mongomock``."""
+    global _client
+    _client = client
+
+
+def get_db():
+    return get_client()[config.DB_NAME]
+
+
+def ping(timeout_ms: int = 2000) -> bool:
     try:
-        # Check if database exists by listing databases
-        existing_dbs = client.list_database_names()
-        
-        if db_name in existing_dbs:
-            return 'Exist'
-        else:
-            create = input(f"Do you want the database '{db_name}' to be created (y/n) : ")
-            
-            if create.lower() == 'y':
-                # In MongoDB, database is created automatically when you insert data
-                # Just create a temporary collection to force creation
-                db.create_collection("_temp")
-                db.drop_collection("_temp")
-                return 'Exist'
-            else:
-                return 'NoExist'
-                    
-    except Exception as e:
-        return e
-    except KeyboardInterrupt:
-        sys.exit(1)
-
-def upsert_program(program_name, scopes, outScopes, config_data):
-    if scopes is None:
-        scopes = []
-    if outScopes is None:
-        outScopes = []
-    if config_data is None:
-        config_data = {}
-    
-    conflicts = set(scopes) & set(outScopes)
-
-    if conflicts:
-        print(Fore.RED + "\n" + "="*50)
-        print(f"  CONFLICT: {program_name}")
-        print("="*50)
-        print(Fore.YELLOW + f"  Domain(s): {', '.join(conflicts)}")
-        print(Fore.WHITE + f"  Problem: Appears in both 'scope' and 'out-scope'")
-        print(Fore.CYAN + f"  Solution: Remove from one of them" + Fore.RESET)
-        print()
-        return None
-    
-    db_status = check_and_create_database()
-    if db_status != 'Exist':
-        if db_status == 'NoExist':
-            print('To use the program with a specified name in env, create a database for the database.')
-            sys.exit(1)
-        else:
-            print(Fore.WHITE+'We have a problem! '+ Fore.RED +f'\n{db_status}')
-            sys.exit(1)
-    
-    # ============================================================
-        # Changes made:
-        # The line below, which was responsible for creating the tables, has been commented out
-        # because the table structure is to be managed by Laravel
-        # Python is only responsible for inserting and updating data
-    # ============================================================
-
-    # No need for metadata.create_all in MongoDB
-    
-    try:
-        programs_collection = db['programs']
-        
-        # Find existing program
-        program = programs_collection.find_one({'program_name': program_name})
-        
-        if program:
-            old_scopes = set(program.get('scopes', []))
-            old_outScopes = set(program.get('outScopes', []))
-            
-            new_scopes = set(scopes)
-            new_outScopes = set(outScopes)
-            
-            # Update the document
-            programs_collection.update_one(
-                {'program_name': program_name},
-                {'$set': {
-                    'scopes': scopes,
-                    'outScopes': outScopes,
-                    'config': config_data,
-                    'last_update': datetime.now()
-                }}
-            )
-            
-            added_scopes = new_scopes - old_scopes
-            removed_scopes = old_scopes - new_scopes
-            added_outScopes = new_outScopes - old_outScopes
-            removed_outScopes = old_outScopes - new_outScopes
-            
-            print(f"[{current_time()}] Updated program: {program_name}")
-            
-            if added_scopes:
-                print(f"  + Added scopes ({len(added_scopes)}): {list(added_scopes)}")
-            if removed_scopes:
-                print(f"  - Removed scopes ({len(removed_scopes)}): {list(removed_scopes)}")
-            if added_outScopes:
-                print(f"  + Added out-scopes ({len(added_outScopes)}): {list(added_outScopes)}")
-            if removed_outScopes:
-                print(f"  - Removed out-scopes ({len(removed_outScopes)}): {list(removed_outScopes)}")
-            
-            if not added_scopes and not removed_scopes and not added_outScopes and not removed_outScopes:
-                print("  No changes detected.")
-        else:
-            new_program = {
-                'program_name': program_name,
-                'created_date': datetime.now(),
-                'last_update': datetime.now(),
-                'config': config_data,
-                'scopes': scopes,
-                'outScopes': outScopes
-            }
-            programs_collection.insert_one(new_program)
-            print(f"[{current_time()}] Inserted new program: {program_name}")
-            print(f"  Scopes: {scopes}")
-            
-    except Exception as e:
-        print(f"Error: {e}")
-        return None
-
-def insert_all_bugcrowd_programs(all_data):
-    db_status = check_and_create_database()
-    if db_status != 'Exist':
-        if db_status == 'NoExist':
-            print('To use the program with a specified name in env, create a database for the database.')
-            sys.exit(1)
-        else:
-            print(Fore.WHITE + 'We have a problem! ' + Fore.RED + f'\n{db_status}')
-            sys.exit(1)
-    
-    # ============================================================
-        # Changes made:
-        # The line below, which was responsible for creating the tables, has been commented out
-        # because the table structure is to be managed by Laravel
-        # Python is only responsible for inserting and updating data
-    # ============================================================
-    
-    # No need for metadata.create_all in MongoDB
-    
-    bugcrowd_collection = db['bugcrowd_programs']
-    
-    inserted_count = 0
-    updated_count = 0
-    
-    try:
-        for program_data in all_data:
-            program_name = program_data.get('name')
-            if not program_name:
-                print(Fore.RED + f"Warning: Program without name, skipping..." + Fore.RESET)
-                continue
-
-            in_scope_list = program_data.get('targets', {}).get('in_scope', [])
-            out_of_scope_list = program_data.get('targets', {}).get('out_of_scope', [])
-            
-            existing = bugcrowd_collection.find_one({'program_name': program_name})
-            
-            if existing:
-                bugcrowd_collection.update_one(
-                    {'program_name': program_name},
-                    {'$set': {
-                        'program_url': program_data.get('url'),
-                        'allows_disclosure': str(program_data.get('allows_disclosure', False)),
-                        'managed_by_bugcrowd': str(program_data.get('managed_by_bugcrowd', False)),
-                        'safe_harbor': program_data.get('safe_harbor'),
-                        'max_payout': program_data.get('max_payout'),
-                        'in_scope': in_scope_list,
-                        'out_of_scope': out_of_scope_list,
-                        'last_update': datetime.now()
-                    }}
-                )
-                updated_count += 1
-            else:
-                new_program = {
-                    'program_name': program_name,
-                    'program_url': program_data.get('url'),
-                    'allows_disclosure': str(program_data.get('allows_disclosure', False)),
-                    'managed_by_bugcrowd': str(program_data.get('managed_by_bugcrowd', False)),
-                    'safe_harbor': program_data.get('safe_harbor'),
-                    'max_payout': program_data.get('max_payout'),
-                    'in_scope': in_scope_list,
-                    'out_of_scope': out_of_scope_list,
-                    'created_date': datetime.now(),
-                    'last_update': datetime.now()
-                }
-                bugcrowd_collection.insert_one(new_program)
-                inserted_count += 1
-        
-        print(f"\n[{current_time()}] Bugcrowd programs saved successfully!")
-        print(f"  + Inserted: {inserted_count} new programs")
-        print(f"  ~ Updated: {updated_count} existing programs")
-        print(f"  ★ Total: {inserted_count + updated_count} programs")
-        
+        get_client().admin.command("ping")
         return True
-        
-    except Exception as e:
-        print(Fore.RED + f"Error inserting bugcrowd programs: {e}" + Fore.RESET)
-        return None
+    except Exception as exc:  # noqa: BLE001 - health endpoint must never raise
+        log.warning("mongo ping failed: %s", exc)
+        return False
 
-def current_time():
-    now = datetime.now()
-    return now.strftime("%Y-%m-%d %H:%M:%S")
+
+def ensure_indexes(db=None) -> None:
+    if db is None:
+        db = get_db()
+    try:
+        # Index names are left to MongoDB so that the Laravel migrations
+        # (which use the same key patterns) stay idempotent.
+        db[PROGRAMS].create_index([("source", ASCENDING), ("slug", ASCENDING)], unique=True)
+        db[PROGRAMS].create_index([("scopes", ASCENDING)])
+        db[PROGRAMS].create_index([("last_synced_at", DESCENDING)])
+        db[CHANGES].create_index([("detected_at", DESCENDING)])
+        db[CHANGES].create_index([("source", ASCENDING), ("detected_at", DESCENDING)])
+        db[SYNC_RUNS].create_index([("started_at", DESCENDING)])
+        db[SUBDOMAINS].create_index([("host", ASCENDING)], unique=True)
+    except PyMongoError as exc:  # index creation is best effort
+        log.warning("could not create indexes: %s", exc)
+
+
+def _program_document(program: dict, now: datetime) -> dict:
+    return {
+        "source": program["source"],
+        "slug": program["slug"],
+        "program_name": program["program_name"],
+        "program_url": program.get("program_url"),
+        "scopes": program.get("scopes") or [],
+        "outScopes": program.get("outScopes") or [],
+        "scope_details": program.get("scope_details") or {"in": [], "out": []},
+        "meta": program.get("meta") or {},
+        "conflicts": find_conflicts(program.get("scopes"), program.get("outScopes")),
+        "active": bool(program.get("active", True)),
+        "last_update": now,
+        "last_synced_at": now,
+    }
+
+
+def sync_programs(
+    source: str,
+    programs: Iterable[dict],
+    *,
+    deactivate_missing: bool | None = None,
+    record_run: bool = True,
+    now: datetime | None = None,
+) -> dict:
+    """Upsert a full snapshot for ``source`` and record every change.
+
+    Returns a summary dict::
+
+        {"source": ..., "inserted": 0, "updated": 0, "unchanged": 0,
+         "deactivated": 0, "programs_total": 0, "changes": [...], "run_id": ...}
+    """
+    db = get_db()
+    ensure_indexes(db)
+
+    started_at = now or utcnow()
+    programs_coll = db[PROGRAMS]
+    changes_coll = db[CHANGES]
+
+    if deactivate_missing is None:
+        deactivate_missing = config.DEACTIVATE_MISSING
+
+    inserted = updated = unchanged = 0
+    pending_changes: list[dict] = []
+    seen_slugs: list[str] = []
+
+    for program in programs:
+        slug = program["slug"]
+        seen_slugs.append(slug)
+
+        previous = programs_coll.find_one({"source": source, "slug": slug})
+        document = _program_document(program, started_at)
+
+        if previous is None:
+            document["first_seen_at"] = started_at
+            programs_coll.insert_one(document)
+            inserted += 1
+        else:
+            document["first_seen_at"] = previous.get("first_seen_at") or started_at
+            programs_coll.update_one({"_id": previous["_id"]}, {"$set": document})
+            if (
+                previous.get("scopes") != document["scopes"]
+                or previous.get("outScopes") != document["outScopes"]
+            ):
+                updated += 1
+            else:
+                unchanged += 1
+
+        pending_changes.extend(build_changes(program, previous, detected_at=started_at))
+
+    deactivated = 0
+    if deactivate_missing:
+        stale_filter = {"source": source, "slug": {"$nin": seen_slugs}, "active": True}
+        stale_programs = list(programs_coll.find(stale_filter))
+        if stale_programs:
+            programs_coll.update_many(
+                stale_filter, {"$set": {"active": False, "last_update": started_at}}
+            )
+            deactivated = len(stale_programs)
+            for stale in stale_programs:
+                pending_changes.append(
+                    {
+                        "source": source,
+                        "slug": stale["slug"],
+                        "program_name": stale["program_name"],
+                        "type": "program_removed",
+                        "scope": None,
+                        "target": stale.get("program_url"),
+                        "asset_type": None,
+                        "detected_at": started_at,
+                        "notified": False,
+                    }
+                )
+
+    if pending_changes:
+        changes_coll.insert_many(pending_changes)
+
+    summary = {
+        "source": source,
+        "inserted": inserted,
+        "updated": updated,
+        "unchanged": unchanged,
+        "deactivated": deactivated,
+        "programs_total": inserted + updated + unchanged,
+        "changes": pending_changes,
+        "started_at": started_at,
+        "finished_at": utcnow(),
+    }
+
+    if record_run:
+        summary["run_id"] = record_run_document(
+            source=source,
+            started_at=started_at,
+            finished_at=summary["finished_at"],
+            status="success",
+            stats={
+                "inserted": inserted,
+                "updated": updated,
+                "unchanged": unchanged,
+                "deactivated": deactivated,
+                "changes": len(pending_changes),
+            },
+        )
+
+    log.info(
+        "sync %s: +%s new, ~%s updated, %s unchanged, %s deactivated, %s change(s)",
+        source,
+        inserted,
+        updated,
+        unchanged,
+        deactivated,
+        len(pending_changes),
+    )
+    return summary
+
+
+def record_run_document(
+    source: str,
+    started_at: datetime,
+    finished_at: datetime,
+    status: str = "success",
+    stats: dict | None = None,
+    error: str | None = None,
+):
+    db = get_db()
+    document = {
+        "source": source,
+        "started_at": started_at,
+        "finished_at": finished_at,
+        "duration_ms": int((finished_at - started_at).total_seconds() * 1000),
+        "status": status,
+        "error": error,
+        "stats": stats or {},
+    }
+    result = db[SYNC_RUNS].insert_one(document)
+    return result.inserted_id
+
+
+def record_failed_run(source: str, started_at: datetime, error: str):
+    return record_run_document(
+        source=source,
+        started_at=started_at,
+        finished_at=utcnow(),
+        status="failed",
+        error=error[:500],
+    )
+
+
+def mark_notified(change_ids: Iterable) -> int:
+    ids = list(change_ids or [])
+    if not ids:
+        return 0
+    result = get_db()[CHANGES].update_many(
+        {"_id": {"$in": ids}}, {"$set": {"notified": True, "notified_at": utcnow()}}
+    )
+    return result.modified_count
+
+
+def recent_changes(limit: int = 20) -> list[dict]:
+    return list(get_db()[CHANGES].find().sort("detected_at", DESCENDING).limit(limit))
+
+
+def stats() -> dict:
+    """Small aggregate used by the Python health service."""
+    db = get_db()
+    day_ago = utcnow() - timedelta(days=1)
+    return {
+        "programs": db[PROGRAMS].count_documents({}),
+        "active_programs": db[PROGRAMS].count_documents({"active": True}),
+        "changes_24h": db[CHANGES].count_documents({"detected_at": {"$gte": day_ago}}),
+        "changes": db[CHANGES].count_documents({}),
+        "last_run": db[SYNC_RUNS].find_one(sort=[("started_at", DESCENDING)]),
+    }
+
+
+# ---------------------------------------------------------------------------
+# Backwards-compatible helpers (old scripts imported these names)
+# ---------------------------------------------------------------------------
+
+def check_and_create_database() -> str:
+    """Kept for compatibility. Mongo creates databases lazily, no prompt."""
+    ensure_indexes()
+    return "Exist"
+
+
+def upsert_program(
+    program_name: str,
+    scopes: list[str] | None,
+    outScopes: list[str] | None,
+    config_data: dict | None = None,
+    source: str = "local",
+) -> dict:
+    program = {
+        "source": source,
+        "slug": slugify(program_name),
+        "program_name": program_name,
+        "program_url": None,
+        "scopes": scopes or [],
+        "outScopes": outScopes or [],
+        "scope_details": {"in": [], "out": []},
+        "meta": config_data or {},
+        "active": True,
+    }
+    return sync_programs(source, [program], deactivate_missing=False)
+
+
+def insert_all_bugcrowd_programs(all_data: list[dict]) -> dict:
+    """Deprecated: normalise + sync instead. Kept so old entry-points work."""
+    programs = normalize_many("bugcrowd", all_data)
+    return sync_programs("bugcrowd", programs)
