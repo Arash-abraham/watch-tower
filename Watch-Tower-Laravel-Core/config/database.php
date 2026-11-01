@@ -17,7 +17,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlite'),
+    'default' => env('DB_CONNECTION', 'mongodb'),
 
     /*
     |--------------------------------------------------------------------------
@@ -115,12 +115,14 @@ return [
         ],
         'mongodb' => [
             'driver' => 'mongodb',
-            'dsn' => env('DB_URI', 'mongodb://127.0.0.1:27017'),
+            // Full connection string, e.g. mongodb://user:pass@mongo:27017/?authSource=admin
+            'dsn' => env('DB_URI', env('MONGO_URI', 'mongodb://127.0.0.1:27017')),
             'database' => env('DB_DATABASE', 'watch-tower'),
-            'username' => env('DB_USERNAME', 'root'),
-            'password' => env('DB_PASSWORD', 'secret'),
+            // Only needed when the credentials are not part of the DSN
+            'username' => env('DB_USERNAME'),
+            'password' => env('DB_PASSWORD'),
             'options' => [
-                'database' => 'admin',
+                'authSource' => env('DB_AUTH_SOURCE', 'admin'),
             ],
         ],
 

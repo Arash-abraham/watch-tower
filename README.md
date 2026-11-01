@@ -11,107 +11,248 @@
 <h1 align="center">Watch Tower</h1>
 
 <p align="center">
-  Real-Time Asset Monitoring Platform
+  Continuous bounty scope monitoring
   <br>
-  Built with Python · Laravel · Vue.js
+  Python collector · Laravel API · Vue dashboard
 </p>
+
+Watch Tower continuously watches the public bug-bounty datasets (Bugcrowd, HackerOne, YesWeHack,
+Intigriti), stores every program's in-scope and out-of-scope assets, detects what
+changed since the previous run and tells you about it — on a dashboard and on
+Telegram/Discord.
+
+It never scans or touches a target. It only reads public scope definitions.
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Status-Active-success?style=flat-square" />
-  <img src="https://img.shields.io/badge/Architecture-Reactive-black?style=flat-square" />
-  <img src="https://img.shields.io/badge/Focus-RealTime-blue?style=flat-square" />
+  <img src="img/architecture.png" alt="Watch Tower architecture — datasets → Python collector → MongoDB → Laravel API → Vue dashboard, with Telegram/Discord notifications" width="860" />
 </p>
-
-Watch Tower is a real-time monitoring platform designed to detect newly added assets across defined targets and instantly notify users through multiple channels.
-
-Originally started as a lightweight Python monitoring script for HackerOne scope tracking, the project gradually evolved into a scalable monitoring infrastructure focused on reactive synchronization, real-time broadcasting, and multi-user workflows.
-
-> monitoring should be proactive, not passive.
 
 ---
 
-## Product Evolution
+## What it actually does
 
-### Early Prototype
+| Capability | Status |
+|---|---|
+| Fetch + normalise Bugcrowd / HackerOne / YesWeHack / Intigriti | ✅ |
+| Store programs, in-scope and out-of-scope assets in MongoDB | ✅ |
+| Diff against the previous snapshot, one alert per change | ✅ |
+| Telegram + Discord notifications (per-run summary, chunked) | ✅ |
+| Scheduler (`--watch`) and one-shot runs (`--once`) | ✅ |
+| REST API: programs, changes, stats, sources, subdomains, health | ✅ |
+| Dashboard: live stats, program browser, alert feed, sources, monitors | ✅ |
+| Subdomain / asset discovery monitors | 🚧 planned (collection + API exist, no enumerator yet) |
+| Authentication / multi-tenant workspaces | 🚧 planned |
+
+---
+
+## Dashboard preview
 
 <p align="center">
-  <img 
-    src="img/old-version.jpg"
-    width="88%"
-  />
+  <img src="img/dashboard.png" alt="Watch Tower dashboard — live stats, changes chart and alert feed" width="860" />
 </p>
 
-The first version of Watch Tower was intentionally simple:
+---
 
-* local Python monitoring script
-* instant Discord notifications
-* terminal-based output
-* no dashboard or frontend
-* lightweight trigger-based detection
+## Quick start (Docker)
 
-That prototype proved the concept worked — and became the foundation for the current generation.
+Requirements: Docker with the Compose plugin.
 
-### Current Generation
+```bash
+git clone https://github.com/Arash-abraham/watch-tower.git
+cd watch-tower
+cp .env.example .env          # edit MONGO_ROOT_PASSWORD / notification tokens if you want
+docker compose up --build
+```
 
-| Layer             | Technology      |
-| ----------------- | --------------- |
-| Backend Core      | Python 3        |
-| Application Layer | Laravel 13      |
-| Frontend          | Vue.js          |
-| Real-Time Sync    | Laravel Echo    |
-| Architecture      | WebSocket-based |
+| Service | URL |
+|---|---|
+| Dashboard | http://localhost:5173 |
+| API | http://localhost:8000/api/v2.1/stats |
+| API health | http://localhost:8000/api/health |
+| Collector health | http://localhost:8080/health |
+| MongoDB | `mongodb://root:secret@localhost:27017/?authSource=admin` |
 
-The current generation focuses on scalable backend architecture, reactive synchronization, infrastructure-focused workflows, and real-time event broadcasting.
+The collector starts syncing immediately and then every 30 minutes
+(`WATCHTOWER_SCAN_INTERVAL`). The first run only records `program_added`
+events, so the alert feed is not flooded on a fresh install.
+
+Stop with `docker compose down` (add `-v` to drop the database volume).
+
+### Enabling notifications
+
+Put either of these in `.env` and restart the collector:
+
+```dotenv
+TELEGRAM_BOT_TOKEN=123456:ABC...
+TELEGRAM_CHAT_ID=-1001234567890
+# and/or
+DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/...
+```
+
+Every detected change is sent once; the `notified` flag is then set in
+MongoDB, and the dashboard shows which alerts are still pending.
 
 ---
 
-## Core Features
+## Local development (no Docker)
 
-* Real-time asset detection
-* Multi-channel notifications
-* Reactive dashboard
-* Live synchronization
-* Multi-user support
-* Infrastructure-focused design
-* Scalable backend structure
+You need: PHP 8.3 with the `mongodb` extension, Composer, Node 22, Python 3.12
+and a running MongoDB (the compose file's `mongo` service is enough:
+`docker compose up -d mongo`).
 
-### Notification Channels
+### 1. Collector
 
-Discord · Telegram · In-App Dashboard · SMS (planned)
+```bash
+cd Watch-Tower-Python-Core
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env          # DB_PORT defaults to 27017
+
+python monitor.py --once                  # sync everything once
+python monitor.py --watch --interval 900  # keep running
+python monitor.py --once --sources bugcrowd --no-notify
+python monitor.py --once --dry-run        # fetch + normalise, no DB writes
+```
+
+### 2. API
+
+```bash
+cd Watch-Tower-Laravel-Core
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve --host=0.0.0.0 --port=8000
+```
+
+`DB_URI` must point at the same MongoDB the collector writes to. The API has no
+SQL dependency: migrations only create Mongo collections and indexes.
+
+### 3. Dashboard
+
+```bash
+cd Watch-Tower-Vue-Js-Core
+npm ci
+npm run dev        # http://localhost:5173, /api is proxied to :8000
+```
+
+Set `VITE_PROXY_TARGET` if the API is not on `http://127.0.0.1:8000`.
 
 ---
 
-## Development Status
+## API
 
-Development recently resumed after a long interruption caused by internet instability and infrastructure limitations.
+Base path: `/api/v2.1` (throttled to 120 requests/minute).
 
-The project is now actively being rebuilt again, with the current generation expected to reach a stable release within the next 2–3 months.
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/stats` | Counters, per-source breakdown, last collector run, schedule |
+| `GET` | `/sources` | Programs and 24h changes per source |
+| `GET` | `/programs` | Paginated programs — filters: `q`, `source`, `active`, `bounty_only`, `conflicts_only`, `sort`, `direction`, `page`, `per_page` |
+| `GET` | `/programs/{id}` | One program |
+| `POST` | `/programs` | Create a `local` program |
+| `PUT` | `/programs/{id}` | Update a program |
+| `DELETE` | `/programs/{id}` | Delete a program |
+| `GET` | `/changes` | Alert feed — filters: `q`, `source`, `type`, `program`, `since`, `notified`, `page`, `per_page` |
+| `GET` | `/changes/count` | Totals (all / 24h / 7d / unnotified) |
+| `GET` | `/subdomains` | Reserved for asset discovery (read-only) |
+| `GET` | `/api/health` | API + MongoDB health |
 
-The delay slowed development — not the vision behind it.
+Full request/response reference: [`docs/API.md`](docs/API.md).
 
 ---
 
-## Future Direction
+## Data model
 
-* SaaS deployment
-* Team collaboration
-* Shared workspaces
-* Enterprise integrations
-* API ecosystem
-* Analytics & automation workflows
+| Collection | Written by | Contents |
+|---|---|---|
+| `programs` | collector + API (local programs) | `source`, `slug`, `program_name`, `program_url`, `scopes[]`, `outScopes[]`, `meta`, `conflicts[]`, `active`, `first_seen_at`, `last_synced_at` |
+| `changes` | collector | `type` (`program_added`, `scope_added`, `scope_removed`, `out_scope_added`, `out_scope_removed`, `program_removed`, `conflict`), `target`, `source`, `detected_at`, `notified` |
+| `sync_runs` | collector | one document per run with status, duration and counters |
+| `subdomains` | future | reserved for asset discovery |
 
-Watch Tower is being built as a scalable monitoring infrastructure platform — not just another monitoring script.
+The Python core and the Laravel models share this schema — it is the contract
+between the two services.
 
 ---
 
-## Contact
+## Configuration
 
-* Telegram: [@Octawian](https://t.me/Octawian)
-* Email: [arashebi777@gmail.com](mailto:arashebi777@gmail.com)
+### Collector (`Watch-Tower-Python-Core/.env`)
 
-<p align="center">
-  <img 
-    src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHpkajdlMzgwb2VlMzQ2Mm91cW10ZHpqcDd0cnQxM2Z0NnYyemV4MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0DcbpggSvE5I0BK14f/giphy.gif"
-    width="68%"
-  />
-</p>
+| Variable | Default | Purpose |
+|---|---|---|
+| `MONGO_URI` / `DB_URI` | `mongodb://localhost:27017/` (built from `DB_*`) | MongoDB connection |
+| `DB_NAME` | `watch-tower` | Database name |
+| `SOURCES` | `bugcrowd,hackerone,yeswehack,intigriti` | Sources to sync |
+| `SCAN_INTERVAL_SECONDS` | `1800` | Delay between runs in `--watch` mode |
+| `BOUNTY_DATA_BASE_URL` | arkadiyt raw URL | Dataset location |
+| `DEACTIVATE_MISSING` | `true` | Mark programs missing from the latest snapshot as inactive |
+| `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | — | Telegram channel |
+| `DISCORD_WEBHOOK_URL` | — | Discord channel |
+| `NOTIFY_MAX_ITEMS` | `40` | Lines per notification message |
+| `WATCH_DIR` | project dir | Folder that contains the local `programs/*.json` files |
+| `API_PORT` | `8080` | Health service port |
+
+### API (`Watch-Tower-Laravel-Core/.env`)
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `DB_CONNECTION` | `mongodb` | Must stay `mongodb` |
+| `DB_URI` | `mongodb://127.0.0.1:27017` | Mongo connection string |
+| `DB_DATABASE` | `watch-tower` | Database name |
+| `FRONTEND_URL` | `*` | Allowed CORS origin |
+| `WATCHTOWER_SOURCES` | all sources + `local` | Sources displayed by the dashboard |
+| `WATCHTOWER_SCAN_INTERVAL` | `1800` | Shown on the dashboard |
+
+### Dashboard (`Watch-Tower-Vue-Js-Core/.env`)
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `VITE_API_BASE_URL` | `/api/v2.1` | API base as seen by the browser |
+| `VITE_PROXY_TARGET` | `http://127.0.0.1:8000` | Dev-server proxy target |
+| `VITE_PORT` | `5173` | Dev-server port |
+
+---
+
+## Tests
+
+```bash
+cd Watch-Tower-Python-Core
+pip install -r requirements-dev.txt
+python -m unittest discover -s tests -v     # diff, normaliser, sync (mongomock)
+
+cd ../Watch-Tower-Vue-Js-Core
+npm ci && npm run build                     # production build check
+
+cd ../Watch-Tower-Laravel-Core
+composer install && php artisan migrate
+```
+
+CI runs all three (`.github/workflows/ci.yml`).
+
+---
+
+## Project layout
+
+```
+Watch-Tower-Python-Core/    collector: sources, normaliser, diff, notifier, Mongo layer
+Watch-Tower-Laravel-Core/   REST API: models, resources, controllers, migrations
+Watch-Tower-Vue-Js-Core/    dashboard: Vue 3 + Vite + Tailwind
+docs/                       API reference and reviews
+docker-compose.yml          full stack (mongo + api + collector + web)
+```
+
+---
+
+## Status
+
+This is an early but working build: the full loop
+*fetch → normalise → diff → store → notify → display* runs end to end.
+Next steps are asset discovery (subdomains), authentication, and team
+workspaces. See [`docs/PROJECT-REVIEW-FA.md`](docs/PROJECT-REVIEW-FA.md) for a
+detailed audit of the current state.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
