@@ -1,6 +1,6 @@
 <template>
-  <div class="relative min-h-screen flex items-center justify-center">
-    <div class="relative z-10 max-w-6xl mx-auto px-6 py-20">
+  <div class="relative flex min-h-[calc(100vh-4rem)] items-center justify-center overflow-hidden">
+    <div class="relative z-10 mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
         <div class="inline-flex items-center gap-3 px-4 py-2 border border-cyan-500/20 bg-cyan-500/5 backdrop-blur-sm rounded-full">
           <span class="relative flex h-2 w-2">
@@ -91,7 +91,7 @@
       <div class="flex flex-col sm:flex-row gap-5 justify-center">
         <button 
           @click="openGitHub"
-          class="group relative px-10 py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-black text-sm uppercase tracking-wider font-bold overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/50 hover:scale-105"
+          class="group relative overflow-hidden rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 px-10 py-3.5 text-sm font-bold uppercase tracking-wider text-slate-950 shadow-glow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-glow"
         >
           <span class="relative z-10 flex items-center justify-center gap-2">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -104,7 +104,7 @@
         
         <button 
           @click="showDevelopmentModal"
-          class="group relative px-10 py-3.5 bg-transparent border border-cyan-500/40 text-cyan-400 text-sm uppercase tracking-wider font-medium overflow-hidden transition-all duration-300 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-500/20 hover:scale-105"
+          class="group relative overflow-hidden rounded-xl border border-cyan-400/40 px-10 py-3.5 text-sm font-medium uppercase tracking-wider text-cyan-300 transition-all duration-300 hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-cyan-400/5 hover:shadow-glow-sm"
         >
           <span class="relative z-10">Documentation</span>
           <div class="absolute inset-0 bg-cyan-500/10 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
@@ -112,11 +112,11 @@
       </div>
 
       <div class="flex flex-wrap justify-center gap-3 mt-12">
-        <span class="text-[10px] text-gray-600 px-2 py-1 border border-gray-800 rounded">Python 3</span>
-        <span class="text-[10px] text-gray-600 px-2 py-1 border border-gray-800 rounded">Laravel 13</span>
-        <span class="text-[10px] text-gray-600 px-2 py-1 border border-gray-800 rounded">Vue 3</span>
-        <span class="text-[10px] text-gray-600 px-2 py-1 border border-gray-800 rounded">WebSocket</span>
-        <span class="text-[10px] text-gray-600 px-2 py-1 border border-gray-800 rounded">TailwindCSS</span>
+        <span class="rounded-md border border-white/10 bg-white/[0.03] px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-gray-500">Python 3</span>
+        <span class="rounded-md border border-white/10 bg-white/[0.03] px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-gray-500">Laravel 13</span>
+        <span class="rounded-md border border-white/10 bg-white/[0.03] px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-gray-500">Vue 3</span>
+        <span class="rounded-md border border-white/10 bg-white/[0.03] px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-gray-500">WebSocket</span>
+        <span class="rounded-md border border-white/10 bg-white/[0.03] px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-gray-500">TailwindCSS</span>
       </div>
 
       <div class="absolute bottom-8 left-8">
@@ -148,7 +148,6 @@ const openGitHub = () => {
 }
 
 const showDevelopmentModal = () => {
-  if (typeof window.showDevelopmentModal === 'function') window.showDevelopmentModal()
   window.dispatchEvent(new CustomEvent('show-modal'))
 }
 

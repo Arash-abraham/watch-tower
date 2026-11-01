@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen text-white pt-20 px-6">
-    <div class="max-w-7xl mx-auto">
+  <div class="pt-24 pb-16 text-white">
+    <div class="container-page">
       <PageHeader
         badge="TARGET INTELLIGENCE"
         title="Attack Surface"
@@ -171,23 +171,7 @@
         </div>
 
         <!-- pagination -->
-        <div v-if="(meta.last_page || 1) > 1" class="flex items-center justify-center gap-2 mt-8">
-          <button
-            class="px-3 py-1.5 text-xs font-mono border border-gray-800 rounded-lg text-gray-400 hover:text-cyan-400 hover:border-cyan-500/40 disabled:opacity-30 disabled:hover:text-gray-400 transition-colors"
-            :disabled="page <= 1"
-            @click="page--"
-          >
-            ← prev
-          </button>
-          <span class="text-xs font-mono text-gray-500 px-3">{{ meta.current_page }} / {{ meta.last_page }}</span>
-          <button
-            class="px-3 py-1.5 text-xs font-mono border border-gray-800 rounded-lg text-gray-400 hover:text-cyan-400 hover:border-cyan-500/40 disabled:opacity-30 disabled:hover:text-gray-400 transition-colors"
-            :disabled="page >= (meta.last_page || 1)"
-            @click="page++"
-          >
-            next →
-          </button>
-        </div>
+        <Pagination v-model:page="page" :last-page="meta.last_page || 1" :total="meta.total ?? null" />
       </AsyncState>
     </div>
   </div>
@@ -200,6 +184,7 @@ import { useApi } from '../../composables/useApi'
 import { formatMoney, formatNumber, sourceLabel, timeAgo } from '../../utils/format'
 import PageHeader from '../ui/PageHeader.vue'
 import AsyncState from '../ui/AsyncState.vue'
+import Pagination from '../ui/Pagination.vue'
 
 const availableSources = ['bugcrowd', 'hackerone', 'yeswehack', 'intigriti', 'local']
 

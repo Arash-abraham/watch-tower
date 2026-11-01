@@ -1,16 +1,16 @@
 <template>
   <div
-    class="bg-gray-900/50 border rounded-xl p-6 transition-colors"
+    class="group relative overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5 backdrop-blur-sm transition-all duration-300 hover:bg-white/[0.035]"
     :class="borderClass"
   >
     <div class="flex items-center justify-between mb-2">
-      <span class="text-gray-500 text-sm font-medium">{{ label }}</span>
-      <span class="w-2 h-2 rounded-full" :class="dotClass"></span>
+      <span class="text-[11px] font-mono uppercase tracking-[0.14em] text-gray-500">{{ label }}</span>
+      <span class="h-1.5 w-1.5 rounded-full" :class="dotClass"></span>
     </div>
-    <div class="text-3xl font-bold text-white tabular-nums">
+    <div class="mt-3 text-3xl font-bold text-white tabular-nums">
       {{ displayValue }}
     </div>
-    <div class="text-xs mt-1" :class="hintClass">
+    <div class="mt-1 text-[11px] leading-snug" :class="hintClass">
       <slot name="hint">{{ hint }}</slot>
     </div>
   </div>
@@ -35,11 +35,11 @@ const displayValue = computed(() => {
 })
 
 const accents = {
-  cyan: { border: 'border-gray-800 hover:border-cyan-500/30', dot: 'bg-cyan-500', hint: 'text-gray-600' },
-  green: { border: 'border-gray-800 hover:border-green-500/30', dot: 'bg-green-500', hint: 'text-green-500/80' },
-  red: { border: 'border-gray-800 hover:border-red-500/30', dot: 'bg-red-500', hint: 'text-red-500/80' },
-  yellow: { border: 'border-gray-800 hover:border-yellow-500/30', dot: 'bg-yellow-500', hint: 'text-yellow-500/80' },
-  blue: { border: 'border-gray-800 hover:border-blue-500/30', dot: 'bg-blue-500', hint: 'text-gray-600' },
+  cyan: { border: 'hover:border-cyan-400/30', dot: 'bg-cyan-400', hint: 'text-gray-600' },
+  green: { border: 'hover:border-emerald-400/30', dot: 'bg-emerald-400', hint: 'text-emerald-400/80' },
+  red: { border: 'hover:border-red-400/30', dot: 'bg-red-400', hint: 'text-red-400/80' },
+  yellow: { border: 'hover:border-amber-400/30', dot: 'bg-amber-400', hint: 'text-amber-400/80' },
+  blue: { border: 'hover:border-blue-400/30', dot: 'bg-blue-400', hint: 'text-gray-600' },
 }
 
 const borderClass = computed(() => (accents[props.accent] || accents.cyan).border)

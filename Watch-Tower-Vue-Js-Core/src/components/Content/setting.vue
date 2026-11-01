@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen text-white pt-20 px-6">
-    <div class="max-w-4xl mx-auto">
+  <div class="pt-24 pb-16 text-white">
+    <div class="container-narrow">
       <PageHeader
         badge="SETTINGS"
         title="Settings"
