@@ -20,22 +20,22 @@
         <StatCard label="Not Notified" :value="counts.unnotified" accent="yellow" hint="pending delivery to Telegram/Discord" />
       </div>
 
-      <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-4 mb-6 flex flex-col lg:flex-row gap-3">
+      <div class="panel mb-6 flex flex-col gap-3 p-3 lg:flex-row">
         <div class="relative flex-1">
           <input
             v-model="filters.q"
             type="text"
             placeholder="Search target or program…"
-            class="w-full bg-black/40 border border-gray-800 rounded-lg px-3 py-2 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-cyan-500/40 font-mono"
+            class="field font-mono"
           />
         </div>
 
-        <select v-model="filters.type" class="bg-black/40 border border-gray-800 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-cyan-500/40">
+        <select v-model="filters.type" class="field w-auto min-w-[9rem] cursor-pointer">
           <option value="">All types</option>
           <option v-for="(label, value) in CHANGE_LABELS" :key="value" :value="value">{{ label }}</option>
         </select>
 
-        <select v-model="filters.source" class="bg-black/40 border border-gray-800 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-cyan-500/40">
+        <select v-model="filters.source" class="field w-auto min-w-[9rem] cursor-pointer">
           <option value="">All sources</option>
           <option v-for="source in availableSources" :key="source" :value="source">{{ sourceLabel(source) }}</option>
         </select>
@@ -49,12 +49,12 @@
         empty-hint="Alerts appear as soon as the collector detects a scope change."
         @retry="load"
       >
-        <div class="bg-gray-900/40 border border-gray-800 rounded-xl overflow-hidden">
-          <div class="divide-y divide-gray-800/70">
+        <div class="panel overflow-hidden">
+          <div class="divide-y divide-white/[0.06]">
             <div
               v-for="change in changes"
               :key="change.id"
-              class="px-5 py-4 flex items-start gap-4 hover:bg-cyan-500/[0.02] transition-colors"
+              class="px-5 py-4 flex items-start gap-4 row-hover transition-colors"
             >
               <span class="mt-1 w-1.5 h-1.5 rounded-full shrink-0" :class="dotClass(change.type)"></span>
 

@@ -1,16 +1,25 @@
 <template>
-  <div
-    class="group relative overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5 backdrop-blur-sm transition-all duration-300 hover:bg-white/[0.035]"
-    :class="borderClass"
-  >
-    <div class="flex items-center justify-between mb-2">
-      <span class="text-[11px] font-mono uppercase tracking-[0.14em] text-gray-500">{{ label }}</span>
-      <span class="h-1.5 w-1.5 rounded-full" :class="dotClass"></span>
+  <div class="panel panel-hover group overflow-hidden p-5">
+    <!-- accent wash -->
+    <div
+      class="pointer-events-none absolute -right-8 -top-10 h-24 w-24 rounded-full opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+      :class="glowClass"
+    ></div>
+    <div class="pointer-events-none absolute inset-x-0 top-0 h-px" :class="topLineClass"></div>
+
+    <div class="relative flex items-start justify-between gap-3">
+      <span class="font-mono text-[10px] uppercase leading-tight tracking-[0.14em] text-gray-500">{{ label }}</span>
+      <span class="relative mt-1 flex h-1.5 w-1.5 shrink-0">
+        <span class="absolute inline-flex h-full w-full rounded-full opacity-60" :class="[dotClass, 'animate-ping']"></span>
+        <span class="relative inline-flex h-1.5 w-1.5 rounded-full" :class="dotClass"></span>
+      </span>
     </div>
-    <div class="mt-3 text-3xl font-bold text-white tabular-nums">
-      {{ displayValue }}
+
+    <div class="relative mt-3 flex items-end gap-2">
+      <span class="kpi">{{ displayValue }}</span>
     </div>
-    <div class="mt-1 text-[11px] leading-snug" :class="hintClass">
+
+    <div class="relative mt-1 text-[11px] leading-snug" :class="hintClass">
       <slot name="hint">{{ hint }}</slot>
     </div>
   </div>
@@ -35,14 +44,22 @@ const displayValue = computed(() => {
 })
 
 const accents = {
-  cyan: { border: 'hover:border-cyan-400/30', dot: 'bg-cyan-400', hint: 'text-gray-600' },
-  green: { border: 'hover:border-emerald-400/30', dot: 'bg-emerald-400', hint: 'text-emerald-400/80' },
-  red: { border: 'hover:border-red-400/30', dot: 'bg-red-400', hint: 'text-red-400/80' },
-  yellow: { border: 'hover:border-amber-400/30', dot: 'bg-amber-400', hint: 'text-amber-400/80' },
-  blue: { border: 'hover:border-blue-400/30', dot: 'bg-blue-400', hint: 'text-gray-600' },
+  cyan: { dot: 'bg-cyan-400', hint: 'text-gray-600', glow: 'bg-cyan-400/20', line: 'bg-gradient-to-r from-cyan-400/70 to-transparent' },
+  green: { dot: 'bg-emerald-400', hint: 'text-emerald-400/80', glow: 'bg-emerald-400/20', line: 'bg-gradient-to-r from-emerald-400/70 to-transparent' },
+  red: { dot: 'bg-red-400', hint: 'text-red-400/80', glow: 'bg-red-400/20', line: 'bg-gradient-to-r from-red-400/70 to-transparent' },
+  yellow: { dot: 'bg-amber-400', hint: 'text-amber-400/80', glow: 'bg-amber-400/20', line: 'bg-gradient-to-r from-amber-400/70 to-transparent' },
+  blue: { dot: 'bg-blue-400', hint: 'text-gray-600', glow: 'bg-blue-400/20', line: 'bg-gradient-to-r from-blue-400/70 to-transparent' },
 }
 
-const borderClass = computed(() => (accents[props.accent] || accents.cyan).border)
-const dotClass = computed(() => (accents[props.accent] || accents.cyan).dot)
-const hintClass = computed(() => (accents[props.accent] || accents.cyan).hint)
+const current = computed(() => accents[props.accent] || accents.cyan)
+const dotClass = computed(() => current.value.dot)
+const hintClass = computed(() => current.value.hint)
+const glowClass = computed(() => current.value.glow)
+const topLineClass = computed(() => current.value.line)
 </script>
+
+<style scoped>
+.kpi {
+  font-variant-numeric: tabular-nums;
+}
+</style>

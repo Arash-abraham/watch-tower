@@ -61,6 +61,25 @@ export default {
           '0%': { width: '0%' },
           '100%': { width: '65%' },
         },
+        radar: {
+          to: { transform: 'rotate(360deg)' },
+        },
+        blip: {
+          '0%': { opacity: '0', transform: 'scale(0.4)' },
+          '30%': { opacity: '1', transform: 'scale(1)' },
+          '100%': { opacity: '0', transform: 'scale(1.6)' },
+        },
+        marquee: {
+          '0%, 12%': { transform: 'translateY(0)' },
+          '25%, 37%': { transform: 'translateY(-100%)' },
+          '50%, 62%': { transform: 'translateY(-200%)' },
+          '75%, 87%': { transform: 'translateY(-300%)' },
+          '100%': { transform: 'translateY(-300%)' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
         gradientShift: {
           '0%, 100%': { backgroundPosition: '0% 50%' },
           '50%': { backgroundPosition: '100% 50%' },
@@ -75,6 +94,10 @@ export default {
         'modal-in': 'modalIn 0.25s ease-out',
         'progress-bar': 'progressBar 1.5s ease-out forwards',
         gradient: 'gradientShift 6s ease infinite',
+        radar: 'radar 6s linear infinite',
+        blip: 'blip 3s ease-out infinite',
+        marquee: 'marquee 12s ease-in-out infinite',
+        shimmer: 'shimmer 3.5s linear infinite',
       },
     },
   },

@@ -2,6 +2,9 @@
   <div class="relative flex min-h-screen flex-col">
     <!-- ══════════════ Global backdrop (never intercepts clicks) ══════════════ -->
     <div class="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
+      <!-- film grain -->
+      <div class="absolute inset-0 bg-noise"></div>
+
       <!-- vertical gradient wash -->
       <div class="absolute inset-0 bg-gradient-to-b from-cyan-500/[0.05] via-transparent to-blue-600/[0.06]"></div>
 
