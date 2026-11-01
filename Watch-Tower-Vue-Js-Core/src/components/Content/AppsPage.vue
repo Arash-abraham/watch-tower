@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen text-white pt-20 px-6">
-    <div class="max-w-7xl mx-auto">
+  <div class="pt-24 pb-16 text-white">
+    <div class="container-page">
       <PageHeader
         badge="SOURCES"
         title="Applications"
@@ -12,11 +12,11 @@
           <article
             v-for="source in sources"
             :key="source.source"
-            class="bg-gray-900/40 border border-gray-800 rounded-xl p-6 hover:border-cyan-500/30 transition-colors"
+            class="panel panel-hover p-6"
           >
             <div class="flex items-start justify-between mb-4">
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center font-mono text-cyan-400 text-sm">
+                <div class="tile font-mono text-[13px]">
                   {{ initials(source.source) }}
                 </div>
                 <div>
@@ -25,8 +25,8 @@
                 </div>
               </div>
               <span
-                class="text-[10px] font-mono px-2 py-0.5 rounded border"
-                :class="source.last_run ? 'border-green-500/30 text-green-400/80 bg-green-500/5' : 'border-gray-700 text-gray-500'"
+                class="rounded border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider"
+                :class="source.last_run ? 'border-emerald-400/25 bg-emerald-400/[0.06] text-emerald-300/80' : 'border-white/10 text-gray-500'"
               >
                 {{ source.last_run ? 'SYNCED' : 'IDLE' }}
               </span>
@@ -34,30 +34,30 @@
 
             <div class="grid grid-cols-3 gap-3 mb-5">
               <div>
-                <div class="text-xl font-bold text-white tabular-nums">{{ formatNumber(source.active_programs) }}</div>
+                <div class="text-2xl font-bold tracking-tight text-white tabular-nums">{{ formatNumber(source.active_programs) }}</div>
                 <div class="text-[10px] font-mono text-gray-600">ACTIVE</div>
               </div>
               <div>
-                <div class="text-xl font-bold text-white tabular-nums">{{ formatNumber(source.programs) }}</div>
+                <div class="text-2xl font-bold tracking-tight text-white tabular-nums">{{ formatNumber(source.programs) }}</div>
                 <div class="text-[10px] font-mono text-gray-600">TOTAL</div>
               </div>
               <div>
-                <div class="text-xl font-bold tabular-nums" :class="source.changes_24h ? 'text-cyan-400' : 'text-gray-500'">
+                <div class="text-2xl font-bold tracking-tight tabular-nums" :class="source.changes_24h ? 'text-cyan-300' : 'text-gray-600'">
                   {{ formatNumber(source.changes_24h) }}
                 </div>
                 <div class="text-[10px] font-mono text-gray-600">24H</div>
               </div>
             </div>
 
-            <div class="pt-4 border-t border-gray-800/70 text-[11px] font-mono text-gray-600 flex items-center justify-between">
+            <div class="flex items-center justify-between border-t border-white/[0.06] pt-4 font-mono text-[11px] text-gray-600">
               <span>{{ source.last_run ? timeAgo(source.last_run.started_at) : 'never synced' }}</span>
-              <RouterLink to="/targets" class="text-cyan-400/60 hover:text-cyan-400">browse →</RouterLink>
+              <RouterLink to="/targets" class="text-cyan-300/70 transition-colors hover:text-cyan-300">browse →</RouterLink>
             </div>
           </article>
         </div>
 
-        <div class="mt-8 bg-gray-900/30 border border-gray-800 rounded-xl p-6">
-          <h2 class="text-sm font-semibold tracking-wide text-gray-300 mb-2">HOW SOURCES WORK</h2>
+        <div class="panel p-6">
+          <h2 class="panel-title mb-2">How sources work</h2>
           <p class="text-sm text-gray-500 leading-relaxed">
             The Python collector downloads the public datasets published by
             <span class="text-gray-300">arkadiyt/bounty-targets-data</span> — Bugcrowd, HackerOne, YesWeHack and Intigriti —

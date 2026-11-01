@@ -1,233 +1,147 @@
 <template>
-  <div class="min-h-screen bg-black relative overflow-hidden">
+  <div class="relative flex min-h-screen flex-col">
+    <!-- ══════════════ Global backdrop (never intercepts clicks) ══════════════ -->
+    <div class="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
+      <!-- vertical gradient wash -->
+      <div class="absolute inset-0 bg-gradient-to-b from-cyan-500/[0.05] via-transparent to-blue-600/[0.06]"></div>
+
+      <!-- blueprint grid (correct arbitrary background-size syntax) -->
+      <div class="absolute inset-0 bg-grid opacity-60"></div>
+
+      <!-- soft ambient glows -->
+      <div class="absolute -left-40 top-10 h-96 w-96 rounded-full bg-cyan-500/10 blur-[120px] animate-glow-pulse"></div>
+      <div class="absolute -right-32 top-1/3 h-96 w-96 rounded-full bg-blue-600/10 blur-[130px] animate-glow-pulse [animation-delay:2s]"></div>
+      <div class="absolute bottom-0 left-1/3 h-80 w-80 rounded-full bg-teal-500/[0.07] blur-[120px]"></div>
+
+      <!-- scan sweeps -->
+      <div class="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent animate-scan-x"></div>
+      <div class="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-transparent via-cyan-400/25 to-transparent animate-scan-y"></div>
+
+      <!-- floating dust -->
+      <div class="absolute left-[12%] top-[22%] h-1 w-1 rounded-full bg-cyan-300/60 animate-float-y"></div>
+      <div class="absolute left-[82%] top-[58%] h-1.5 w-1.5 rounded-full bg-blue-300/40 animate-float-y [animation-delay:1.5s]"></div>
+      <div class="absolute left-[26%] top-[78%] h-1 w-1 rounded-full bg-cyan-300/50 animate-float-y [animation-delay:3s]"></div>
+      <div class="absolute left-[68%] top-[36%] h-1 w-1 rounded-full bg-white/30 animate-float-y [animation-delay:4.5s]"></div>
+
+      <!-- vignette -->
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(2,4,7,0.75)_100%)]"></div>
+    </div>
+
     <Navbar />
-    <router-view />
-    
-    <div class="absolute inset-0 opacity-30">
-      <div class="absolute top-0 left-0 w-full h-full bg-[linear-gradient(rgba(0,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
-    </div>
 
-    <div class="absolute inset-0 pointer-events-none overflow-hidden">
-      <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent animate-scanX"></div>
-      <div class="absolute top-0 left-0 w-[2px] h-full bg-gradient-to-b from-transparent via-cyan-500/30 to-transparent animate-scanY"></div>
-    </div>
+    <!-- ══════════════ Page content (above the backdrop) ══════════════ -->
+    <main class="relative z-10 flex-1">
+      <router-view v-slot="{ Component }">
+        <transition name="page" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </main>
 
-    <div class="absolute inset-0 pointer-events-none">
-      <div class="absolute top-[20%] left-[15%] w-1 h-1 bg-cyan-400/40 rounded-full animate-float1"></div>
-      <div class="absolute top-[60%] left-[85%] w-1.5 h-1.5 bg-blue-400/30 rounded-full animate-float2"></div>
-      <div class="absolute top-[80%] left-[25%] w-1 h-1 bg-cyan-300/40 rounded-full animate-float3"></div>
-      <div class="absolute top-[40%] left-[75%] w-0.5 h-0.5 bg-white/30 rounded-full animate-float4"></div>
-      <div class="absolute top-[30%] left-[45%] w-1 h-1 bg-cyan-500/30 rounded-full animate-float5"></div>
-    </div>
+    <Footer class="relative z-10" />
 
-    <div class="fixed top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent z-20 shadow-[0_0_10px_rgba(0,255,255,0.3)]"></div>
-  </div>
+    <!-- ══════════════ "Under development" dialog ══════════════ -->
+    <Teleport to="body">
+      <transition name="modal">
+        <div
+          v-if="showModal"
+          class="fixed inset-0 z-[100] flex items-center justify-center px-4 py-10"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="dev-modal-title"
+          @click.self="closeModal"
+        >
+          <div class="absolute inset-0 bg-black/80 backdrop-blur-md"></div>
 
-  <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center px-4" @click.self="closeModal">
-    <div class="absolute inset-0 bg-black/80 backdrop-blur-md"></div>
-    
-    <div class="relative bg-gradient-to-br from-gray-900 to-black border border-cyan-500/30 rounded-2xl max-w-md w-full p-8 shadow-2xl shadow-cyan-500/20 animate-modalIn">
-      <div class="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl blur opacity-30"></div>
-      
-      <div class="relative">
-        <button @click="closeModal" class="absolute -top-2 -right-2 text-gray-500 hover:text-gray-300 transition-colors">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
+          <div class="relative w-full max-w-md animate-modal-in">
+            <div class="absolute -inset-px rounded-2xl bg-gradient-to-br from-cyan-400/60 via-blue-500/20 to-transparent blur-[2px]"></div>
 
-        <div class="flex justify-center mb-6">
-          <div class="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-500/20 to-blue-600/20 flex items-center justify-center border border-cyan-500/30">
-            <svg class="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-            </svg>
+            <div class="relative rounded-2xl border border-white/10 bg-gradient-to-br from-[#0a1219] to-[#04070a] p-8 shadow-glow">
+              <button
+                class="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-lg text-gray-500 transition-colors hover:bg-white/5 hover:text-gray-200"
+                aria-label="Close dialog"
+                @click="closeModal"
+              >
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              <div class="mb-6 flex justify-center">
+                <div class="grid h-16 w-16 place-items-center rounded-full border border-cyan-400/30 bg-gradient-to-br from-cyan-400/20 to-blue-600/20">
+                  <svg class="h-8 w-8 text-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+              </div>
+
+              <h3 id="dev-modal-title" class="mb-3 text-center text-2xl font-bold text-white">Under Development</h3>
+              <div class="divider mx-auto mb-4 w-24"></div>
+
+              <p class="mb-6 text-center text-sm leading-relaxed text-gray-400">
+                This feature is currently in active development.<br />
+                Our team is working hard to deliver an exceptional experience.
+              </p>
+
+              <div class="mb-6 flex justify-center">
+                <span class="chip">Coming soon</span>
+              </div>
+
+              <div class="mb-6 h-1 w-full overflow-hidden rounded-full bg-white/10">
+                <div class="h-1 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 animate-progress-bar"></div>
+              </div>
+
+              <button class="btn-ghost w-full" @click="closeModal">Got it</button>
+            </div>
           </div>
         </div>
-
-        <h3 class="text-2xl font-bold text-center text-white mb-3">Under Development</h3>
-        
-        <div class="w-12 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent mx-auto mb-4"></div>
-        
-        <p class="text-gray-400 text-center leading-relaxed mb-6">
-          This feature is currently in active development.<br>
-          Our team is working hard to deliver an exceptional experience.
-        </p>
-
-        <div class="flex justify-center mb-6">
-          <span class="px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 rounded-full text-xs text-cyan-400 tracking-wider">
-            COMING SOON
-          </span>
-        </div>
-
-        <div class="w-full bg-gray-800 rounded-full h-1 mb-6 overflow-hidden">
-          <div class="bg-gradient-to-r from-cyan-500 to-blue-500 h-1 rounded-full animate-progress" style="width: 65%"></div>
-        </div>
-
-        <button 
-          @click="closeModal"
-          class="w-full py-2.5 bg-transparent border border-cyan-500/40 text-cyan-400 text-sm uppercase tracking-wider rounded-lg hover:bg-cyan-500/10 transition-all duration-300"
-        >
-          Got it
-        </button>
-      </div>
-    </div>
+      </transition>
+    </Teleport>
   </div>
 </template>
 
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue'
-import Navbar from './components/layouts/partials/Navbar.vue' 
+import Navbar from './components/layouts/partials/Navbar.vue'
+import Footer from './components/layouts/partials/Footer.vue'
 
 const showModal = ref(false)
 
-const openModal = () => {
+function openModal() {
   showModal.value = true
 }
 
-const closeModal = () => {
+function closeModal() {
   showModal.value = false
+}
+
+function onKeydown(event) {
+  if (event.key === 'Escape' && showModal.value) closeModal()
 }
 
 // Both a global helper and a DOM event are supported so any page can open
 // the "under development" dialog.
-window.showDevelopmentModal = openModal
+onMounted(() => {
+  window.showDevelopmentModal = openModal
+  window.addEventListener('show-modal', openModal)
+  window.addEventListener('keydown', onKeydown)
+})
 
-onMounted(() => window.addEventListener('show-modal', openModal))
-onUnmounted(() => window.removeEventListener('show-modal', openModal))
+onUnmounted(() => {
+  window.removeEventListener('show-modal', openModal)
+  window.removeEventListener('keydown', onKeydown)
+  delete window.showDevelopmentModal
+})
 </script>
 
-<style scoped>
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+<style>
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.2s ease;
 }
 
-@keyframes gradient {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-@keyframes rotateSlow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes rotateReverse {
-  from { transform: rotate(360deg); }
-  to { transform: rotate(0deg); }
-}
-
-@keyframes pulseRing {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 0.1; transform: scale(1.05); }
-}
-
-@keyframes scanX {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-@keyframes scanY {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
-}
-
-@keyframes float1 {
-  0%, 100% { transform: translate(0, 0); opacity: 0.3; }
-  50% { transform: translate(20px, -20px); opacity: 0.8; }
-}
-
-@keyframes float2 {
-  0%, 100% { transform: translate(0, 0); opacity: 0.2; }
-  50% { transform: translate(-15px, -25px); opacity: 0.7; }
-}
-
-@keyframes float3 {
-  0%, 100% { transform: translate(0, 0); opacity: 0.4; }
-  50% { transform: translate(10px, 20px); opacity: 0.9; }
-}
-
-@keyframes float4 {
-  0%, 100% { transform: translate(0, 0); opacity: 0.3; }
-  50% { transform: translate(-20px, 15px); opacity: 0.8; }
-}
-
-@keyframes float5 {
-  0%, 100% { transform: translate(0, 0); opacity: 0.2; }
-  50% { transform: translate(15px, -15px); opacity: 0.7; }
-}
-
-@keyframes modalIn {
-  from { opacity: 0; transform: scale(0.95) translateY(-20px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-@keyframes progressBar {
-  from { width: 0%; }
-  to { width: 65%; }
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.8s ease-out forwards;
+.modal-enter-from,
+.modal-leave-to {
   opacity: 0;
-}
-
-.animate-gradient {
-  background-size: 200% auto;
-  animation: gradient 3s ease infinite;
-}
-
-.animate-rotateSlow {
-  animation: rotateSlow 30s linear infinite;
-}
-
-.animate-rotateReverse {
-  animation: rotateReverse 25s linear infinite;
-}
-
-.animate-pulseRing {
-  animation: pulseRing 4s ease-in-out infinite;
-}
-
-.animate-scanX {
-  animation: scanX 6s linear infinite;
-}
-
-.animate-scanY {
-  animation: scanY 8s linear infinite;
-}
-
-.animate-float1 { animation: float1 8s ease-in-out infinite; }
-.animate-float2 { animation: float2 10s ease-in-out infinite; }
-.animate-float3 { animation: float3 7s ease-in-out infinite; }
-.animate-float4 { animation: float4 9s ease-in-out infinite; }
-.animate-float5 { animation: float5 11s ease-in-out infinite; }
-
-.animate-modalIn {
-  animation: modalIn 0.3s ease-out;
-}
-
-.animate-progress {
-  animation: progressBar 1.5s ease-out forwards;
-}
-
-.delay-100 { animation-delay: 0.1s; }
-.delay-300 { animation-delay: 0.3s; }
-
-.group-hover\:scale-x-100 {
-  transform: scaleX(1);
-}
-
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #1a1a1a;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #0ea5e9;
-  border-radius: 3px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen text-white pt-20 px-6">
-    <div class="max-w-7xl mx-auto">
+  <div class="pt-24 pb-16 text-white">
+    <div class="container-page">
       <PageHeader
         badge="MONITORS"
         title="Monitors"
@@ -8,7 +8,7 @@
       >
         <template #actions>
           <button
-            class="px-3 py-1.5 text-[11px] font-mono uppercase tracking-wider border border-gray-800 rounded-lg text-gray-400 hover:text-cyan-400 hover:border-cyan-500/40 transition-colors"
+            class="px-3 py-1.5 text-[11px] font-mono uppercase tracking-wider border border-white/10 rounded-lg text-gray-400 hover:text-cyan-400 hover:border-cyan-500/40 transition-colors"
             @click="refresh"
           >
             re-check
@@ -19,12 +19,12 @@
       <AsyncState :loading="loading && !stats" :error="error" @retry="refresh">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <!-- collector -->
-          <div class="bg-gray-900/40 border border-gray-800 rounded-xl p-6">
+          <div class="panel p-6">
             <div class="flex items-center justify-between mb-4">
-              <h3 class="text-sm font-semibold tracking-wide text-gray-300">COLLECTOR</h3>
-              <span class="w-2 h-2 rounded-full" :class="health.ok ? 'bg-green-500' : 'bg-red-500'"></span>
+              <h3 class="panel-title">COLLECTOR</h3>
+              <span class="w-2 h-2 rounded-full" :class="health.ok ? 'bg-emerald-400' : 'bg-red-400'"></span>
             </div>
-            <div class="text-2xl font-bold mb-1" :class="health.ok ? 'text-green-400' : 'text-red-400'">
+            <div class="text-2xl font-bold mb-1" :class="health.ok ? 'text-emerald-300' : 'text-red-300'">
               {{ health.ok ? 'Healthy' : 'Unreachable' }}
             </div>
             <p class="text-[11px] font-mono text-gray-600">
@@ -36,22 +36,22 @@
           </div>
 
           <!-- schedule -->
-          <div class="bg-gray-900/40 border border-gray-800 rounded-xl p-6">
-            <h3 class="text-sm font-semibold tracking-wide text-gray-300 mb-4">SCHEDULE</h3>
-            <div class="text-2xl font-bold text-white mb-1 tabular-nums">
+          <div class="panel p-6">
+            <h3 class="panel-title mb-4">SCHEDULE</h3>
+            <div class="text-2xl font-bold tracking-tight text-white tabular-nums">
               {{ scheduleLabel }}
             </div>
             <p class="text-[11px] font-mono text-gray-600">between collector runs</p>
 
-            <div class="mt-4 pt-4 border-t border-gray-800/70 space-y-2 text-xs">
+            <div class="mt-4 pt-4 border-t border-white/[0.06] space-y-2 text-xs">
               <div class="flex justify-between"><span class="text-gray-500">Last run</span><span class="text-gray-300">{{ stats.last_run ? timeAgo(stats.last_run.started_at) : 'never' }}</span></div>
               <div class="flex justify-between"><span class="text-gray-500">Duration</span><span class="text-gray-300 tabular-nums">{{ stats.last_run ? `${formatNumber(stats.last_run.duration_ms)} ms` : '—' }}</span></div>
             </div>
           </div>
 
           <!-- volume -->
-          <div class="bg-gray-900/40 border border-gray-800 rounded-xl p-6">
-            <h3 class="text-sm font-semibold tracking-wide text-gray-300 mb-4">VOLUME</h3>
+          <div class="panel p-6">
+            <h3 class="panel-title mb-4">VOLUME</h3>
             <div class="space-y-3 text-sm">
               <div class="flex justify-between"><span class="text-gray-500">Programs</span><span class="text-white tabular-nums">{{ formatNumber(stats.programs) }}</span></div>
               <div class="flex justify-between"><span class="text-gray-500">In-scope assets</span><span class="text-white tabular-nums">{{ formatNumber(stats.scopes) }}</span></div>
@@ -63,15 +63,15 @@
 
         <!-- what is monitored -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div class="bg-gray-900/40 border border-gray-800 rounded-xl overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-800">
-              <h3 class="text-sm font-semibold tracking-wide text-gray-300">ACTIVE MONITORS</h3>
+          <div class="panel overflow-hidden">
+            <div class="px-5 py-4 border-b border-white/[0.06]">
+              <h3 class="panel-title">ACTIVE MONITORS</h3>
             </div>
-            <div class="divide-y divide-gray-800/70">
-              <div v-for="monitor in monitors" :key="monitor.name" class="px-6 py-4">
+            <div class="divide-y divide-white/[0.06]">
+              <div v-for="monitor in monitors" :key="monitor.name" class="px-5 py-4">
                 <div class="flex items-center justify-between mb-1">
                   <span class="text-sm text-white">{{ monitor.name }}</span>
-                  <span class="text-[10px] font-mono px-2 py-0.5 rounded border" :class="monitor.enabled ? 'border-green-500/30 text-green-400/80 bg-green-500/5' : 'border-gray-700 text-gray-500'">
+                  <span class="rounded border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider" :class="monitor.enabled ? 'border-emerald-400/25 bg-emerald-400/[0.06] text-emerald-300/80' : 'border-white/10 text-gray-500'">
                     {{ monitor.enabled ? 'ACTIVE' : 'PLANNED' }}
                   </span>
                 </div>
@@ -80,11 +80,11 @@
             </div>
           </div>
 
-          <div class="bg-gray-900/40 border border-gray-800 rounded-xl overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-800">
-              <h3 class="text-sm font-semibold tracking-wide text-gray-300">SOURCE FRESHNESS</h3>
+          <div class="panel overflow-hidden">
+            <div class="px-5 py-4 border-b border-white/[0.06]">
+              <h3 class="panel-title">SOURCE FRESHNESS</h3>
             </div>
-            <div class="divide-y divide-gray-800/70">
+            <div class="divide-y divide-white/[0.06]">
               <div v-for="source in stats.sources" :key="source.source" class="px-6 py-3 flex items-center justify-between">
                 <div class="flex items-center gap-3">
                   <span class="w-1.5 h-1.5 rounded-full" :class="source.last_run?.status === 'success' ? 'bg-green-500' : source.last_run ? 'bg-red-500' : 'bg-gray-600'"></span>

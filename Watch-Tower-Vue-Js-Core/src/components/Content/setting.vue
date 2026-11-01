@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen text-white pt-20 px-6">
-    <div class="max-w-4xl mx-auto">
+  <div class="pt-24 pb-16 text-white">
+    <div class="container-narrow">
       <PageHeader
         badge="SETTINGS"
         title="Settings"
@@ -9,10 +9,10 @@
 
       <div class="space-y-6">
         <!-- connection -->
-        <section class="bg-gray-900/40 border border-gray-800 rounded-xl overflow-hidden">
-          <div class="px-6 py-4 border-b border-gray-800 flex items-center justify-between">
-            <h2 class="text-sm font-semibold tracking-wide text-gray-300">API CONNECTION</h2>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded border" :class="health.ok ? 'border-green-500/30 text-green-400/80 bg-green-500/5' : 'border-red-500/30 text-red-400/80 bg-red-500/5'">
+        <section class="panel overflow-hidden">
+          <div class="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between">
+            <h2 class="panel-title">API CONNECTION</h2>
+            <span class="rounded border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider" :class="health.ok ? 'border-emerald-400/25 bg-emerald-400/[0.06] text-emerald-300/80' : 'border-red-400/25 bg-red-400/[0.06] text-red-300/80'">
               {{ health.ok ? 'ONLINE' : 'OFFLINE' }}
             </span>
           </div>
@@ -27,7 +27,7 @@
             </div>
             <div class="flex items-center justify-between gap-4">
               <span class="text-gray-500">MongoDB</span>
-              <span class="text-xs font-mono" :class="health.mongo ? 'text-green-400' : 'text-red-400'">
+              <span class="text-xs font-mono" :class="health.mongo ? 'text-emerald-300' : 'text-red-300'">
                 {{ health.mongo ? 'connected' : health.error || 'unavailable' }}
               </span>
             </div>
@@ -41,22 +41,22 @@
         </section>
 
         <!-- notifications -->
-        <section class="bg-gray-900/40 border border-gray-800 rounded-xl overflow-hidden">
-          <div class="px-6 py-4 border-b border-gray-800">
-            <h2 class="text-sm font-semibold tracking-wide text-gray-300">NOTIFICATION CHANNELS</h2>
+        <section class="panel overflow-hidden">
+          <div class="px-5 py-4 border-b border-white/[0.06]">
+            <h2 class="panel-title">NOTIFICATION CHANNELS</h2>
           </div>
-          <div class="divide-y divide-gray-800/70">
-            <div v-for="channel in channels" :key="channel.key" class="px-6 py-4 flex items-center justify-between">
+          <div class="divide-y divide-white/[0.06]">
+            <div v-for="channel in channels" :key="channel.key" class="px-5 py-4 flex items-center justify-between">
               <div>
                 <div class="text-sm text-white">{{ channel.label }}</div>
                 <div class="text-[11px] font-mono text-gray-600">{{ channel.env }}</div>
               </div>
-              <span class="text-[10px] font-mono px-2 py-0.5 rounded border" :class="channel.enabled ? 'border-green-500/30 text-green-400/80 bg-green-500/5' : 'border-gray-700 text-gray-500'">
+              <span class="rounded border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider" :class="channel.enabled ? 'border-emerald-400/25 bg-emerald-400/[0.06] text-emerald-300/80' : 'border-white/10 text-gray-500'">
                 {{ channel.enabled ? 'ENABLED' : 'DISABLED' }}
               </span>
             </div>
           </div>
-          <div class="px-6 py-4 border-t border-gray-800/70">
+          <div class="px-5 py-4 border-t border-white/[0.06]">
             <p class="text-[11px] text-gray-600">
               Channels are configured in the collector's environment
               (<code class="text-gray-400">Watch-Tower-Python-Core/.env</code>). The API only reports their state.
@@ -65,9 +65,9 @@
         </section>
 
         <!-- env -->
-        <section class="bg-gray-900/40 border border-gray-800 rounded-xl overflow-hidden">
-          <div class="px-6 py-4 border-b border-gray-800">
-            <h2 class="text-sm font-semibold tracking-wide text-gray-300">FRONTEND ENVIRONMENT</h2>
+        <section class="panel overflow-hidden">
+          <div class="px-5 py-4 border-b border-white/[0.06]">
+            <h2 class="panel-title">FRONTEND ENVIRONMENT</h2>
           </div>
           <div class="p-6 space-y-3 text-sm">
             <div class="flex items-center justify-between gap-4">

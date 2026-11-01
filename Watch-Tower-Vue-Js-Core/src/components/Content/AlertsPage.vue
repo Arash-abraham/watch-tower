@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen text-white pt-20 px-6">
-    <div class="max-w-7xl mx-auto">
+  <div class="pt-24 pb-16 text-white">
+    <div class="container-page">
       <PageHeader
         badge="ALERTS"
         title="Alerts"
@@ -20,22 +20,22 @@
         <StatCard label="Not Notified" :value="counts.unnotified" accent="yellow" hint="pending delivery to Telegram/Discord" />
       </div>
 
-      <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-4 mb-6 flex flex-col lg:flex-row gap-3">
+      <div class="panel mb-6 flex flex-col gap-3 p-3 lg:flex-row">
         <div class="relative flex-1">
           <input
             v-model="filters.q"
             type="text"
             placeholder="Search target or program…"
-            class="w-full bg-black/40 border border-gray-800 rounded-lg px-3 py-2 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-cyan-500/40 font-mono"
+            class="field font-mono"
           />
         </div>
 
-        <select v-model="filters.type" class="bg-black/40 border border-gray-800 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-cyan-500/40">
+        <select v-model="filters.type" class="field w-auto min-w-[9rem] cursor-pointer">
           <option value="">All types</option>
           <option v-for="(label, value) in CHANGE_LABELS" :key="value" :value="value">{{ label }}</option>
         </select>
 
-        <select v-model="filters.source" class="bg-black/40 border border-gray-800 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-cyan-500/40">
+        <select v-model="filters.source" class="field w-auto min-w-[9rem] cursor-pointer">
           <option value="">All sources</option>
           <option v-for="source in availableSources" :key="source" :value="source">{{ sourceLabel(source) }}</option>
         </select>
@@ -49,12 +49,12 @@
         empty-hint="Alerts appear as soon as the collector detects a scope change."
         @retry="load"
       >
-        <div class="bg-gray-900/40 border border-gray-800 rounded-xl overflow-hidden">
-          <div class="divide-y divide-gray-800/70">
+        <div class="panel overflow-hidden">
+          <div class="divide-y divide-white/[0.06]">
             <div
               v-for="change in changes"
               :key="change.id"
-              class="px-5 py-4 flex items-start gap-4 hover:bg-cyan-500/[0.02] transition-colors"
+              class="px-5 py-4 flex items-start gap-4 row-hover transition-colors"
             >
               <span class="mt-1 w-1.5 h-1.5 rounded-full shrink-0" :class="dotClass(change.type)"></span>
 
@@ -86,23 +86,7 @@
           </div>
         </div>
 
-        <div v-if="(meta.last_page || 1) > 1" class="flex items-center justify-center gap-2 mt-8">
-          <button
-            class="px-3 py-1.5 text-xs font-mono border border-gray-800 rounded-lg text-gray-400 hover:text-cyan-400 hover:border-cyan-500/40 disabled:opacity-30 transition-colors"
-            :disabled="page <= 1"
-            @click="page--"
-          >
-            ← prev
-          </button>
-          <span class="text-xs font-mono text-gray-500 px-3">{{ meta.current_page }} / {{ meta.last_page }}</span>
-          <button
-            class="px-3 py-1.5 text-xs font-mono border border-gray-800 rounded-lg text-gray-400 hover:text-cyan-400 hover:border-cyan-500/40 disabled:opacity-30 transition-colors"
-            :disabled="page >= (meta.last_page || 1)"
-            @click="page++"
-          >
-            next →
-          </button>
-        </div>
+        <Pagination v-model:page="page" :last-page="meta.last_page || 1" :total="meta.total ?? null" />
       </AsyncState>
     </div>
   </div>
@@ -116,6 +100,7 @@ import { CHANGE_LABELS, sourceLabel, timeAgo } from '../../utils/format'
 import PageHeader from '../ui/PageHeader.vue'
 import AsyncState from '../ui/AsyncState.vue'
 import StatCard from '../ui/StatCard.vue'
+import Pagination from '../ui/Pagination.vue'
 
 const availableSources = ['bugcrowd', 'hackerone', 'yeswehack', 'intigriti', 'local']
 

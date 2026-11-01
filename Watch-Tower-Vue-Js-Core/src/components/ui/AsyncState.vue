@@ -6,12 +6,12 @@
 
   <div
     v-else-if="error"
-    class="border border-red-500/30 bg-red-500/5 rounded-xl p-6 text-center"
+    class="rounded-2xl border border-red-400/25 bg-red-500/5 p-8 text-center backdrop-blur-sm"
   >
     <p class="text-red-400 text-sm font-medium mb-1">Could not load data</p>
     <p class="text-red-400/70 text-xs font-mono mb-4">{{ error }}</p>
     <button
-      class="px-4 py-2 text-xs uppercase tracking-wider border border-red-500/40 text-red-300 rounded-lg hover:bg-red-500/10 transition-colors"
+      class="rounded-lg border border-red-400/40 px-4 py-2 text-xs uppercase tracking-wider text-red-300 transition-colors hover:bg-red-500/10"
       @click="$emit('retry')"
     >
       Retry
@@ -20,9 +20,9 @@
 
   <div
     v-else-if="empty"
-    class="border border-gray-800 bg-gray-900/30 rounded-xl p-12 text-center"
+    class="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-12 text-center backdrop-blur-sm"
   >
-    <div class="w-12 h-12 mx-auto mb-4 rounded-full border border-cyan-500/20 bg-cyan-500/5 flex items-center justify-center">
+    <div class="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-full border border-cyan-400/20 bg-cyan-400/5">
       <span class="w-2 h-2 rounded-full bg-cyan-500/60"></span>
     </div>
     <p class="text-gray-400 text-sm">{{ emptyText }}</p>
