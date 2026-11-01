@@ -168,6 +168,18 @@ const scheduleSeconds = computed(() => {
   return Number.isFinite(value) ? value : 1800
 })
 
+const perDay = computed(() => {
+  const values = stats.value.changes_per_day
+  if (!Array.isArray(values) || !values.length) return []
+  const max = Math.max(...values, 1)
+  return values.map((value, i) => ({
+    value,
+    pct: Math.max(6, Math.round((value / max) * 100)),
+    label: new Date(Date.now() - (values.length - 1 - i) * 86400000)
+      .toLocaleDateString('en-US', { weekday: 'short' }),
+  }))
+})
+
 function statusDot(run) {
   if (!run) return 'bg-gray-600'
   return run.status === 'success' ? 'bg-green-500' : 'bg-red-500'
