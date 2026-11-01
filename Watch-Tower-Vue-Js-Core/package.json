@@ -17,8 +17,7 @@
     "autoprefixer": "^10.5.0",
     "postcss": "^8.5.14",
     "tailwindcss": "^3.4.19",
-    "vite": "^8.0.8",
-    "vite-plugin-vue-devtools": "^8.1.1"
+    "vite": "^8.0.8"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
