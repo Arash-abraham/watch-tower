@@ -1,3 +1,4 @@
+
 name: CI
 
 'on':
@@ -69,17 +70,12 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.3'
-          extensions: mbstring, openssl, ctype, json, tokenizer, xml, curl, fileinfo
+          extensions: mongodb-1.21.5, mbstring, openssl, ctype, json, tokenizer, xml, curl, fileinfo
           coverage: none
-
-      - name: Install MongoDB extension
-        run: |
-          sudo pecl install mongodb-1.21.3
-          echo "extension=mongodb.so" | sudo tee /etc/php/8.3/cli/conf.d/20-mongodb.ini
-          php -r "echo 'MongoDB extension: ', phpversion('mongodb'), PHP_EOL;"
 
       - name: Verify MongoDB extension version
         run: |
+          php -r "echo 'MongoDB extension: ', phpversion('mongodb'), PHP_EOL;"
           php -r "if (!version_compare(phpversion('mongodb'), '1.21.0', '>=' ) || version_compare(phpversion('mongodb'), '2.0.0', '>=')) { exit(1); }"
 
       - name: Validate composer files
