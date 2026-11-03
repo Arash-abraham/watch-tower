@@ -100,8 +100,20 @@ def _collect_programs(source: str, args) -> list[dict]:
         raw = fetch_source(source, base_url=args.base_url)
 
     programs = normalize_many(source, raw)
-    if args.max_programs:
-        programs = programs[: args.max_programs]
+
+    # Use the source-specific count when available; otherwise, fall back to max_programs.
+    # Reject negative limits before slicing the program list.
+    
+    source_count = getattr(args, f"{source}_count", None)
+
+    if source_count is None:
+        source_count = args.max_programs
+
+    if source_count is not None:
+        if source_count < 0:
+            raise ValueError("Program count cannot be negative")
+
+        programs = programs[:source_count]
     return programs
 
 
@@ -196,6 +208,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--no-notify", action="store_true", help="never send notifications")
     parser.add_argument("--dry-run", action="store_true", help="fetch + normalise only, no database writes")
     parser.add_argument("--log-level", default=None)
+    
+    # Define source-specific program count limits for each platform.
+    parser.add_argument("--bugcrowd-count", type=int, default=None)
+    parser.add_argument("--hackerone-count", type=int, default=None)
+    parser.add_argument("--yeswehack-count", type=int, default=None)
+    parser.add_argument("--intigriti-count", type=int, default=None)
+
     args = parser.parse_args(argv)
 
     setup_logging(args.log_level)
