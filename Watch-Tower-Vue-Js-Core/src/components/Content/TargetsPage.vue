@@ -84,7 +84,15 @@
                   <span class="text-[10px] font-mono uppercase tracking-wider text-cyan-400/70">{{ sourceLabel(program.source) }}</span>
                   <span v-if="program.conflicts?.length" class="text-[10px] font-mono text-yellow-500/80">conflict</span>
                 </div>
-                <h3 class="text-base font-semibold text-white truncate">{{ program.name }}</h3>
+                <h3 class="text-base font-semibold text-white break-words">
+                  <RouterLink
+                    :to="{ name: 'program-detail', params: { id: program.id } }"
+                    class="transition-colors hover:text-cyan-300"
+                    title="View the full program dossier"
+                  >
+                    {{ program.name }}
+                  </RouterLink>
+                </h3>
               </div>
               <a
                 v-if="program.url"
@@ -98,12 +106,20 @@
             </div>
 
             <div class="flex flex-wrap gap-2 mb-4">
-              <span class="rounded border border-cyan-400/20 bg-cyan-400/[0.06] px-2 py-0.5 font-mono text-[10px] text-cyan-300/80">
+              <RouterLink
+                :to="{ name: 'program-detail', params: { id: program.id }, hash: '#in-scope' }"
+                class="rounded border border-cyan-400/20 bg-cyan-400/[0.06] px-2 py-0.5 font-mono text-[10px] text-cyan-300/80 transition-colors hover:border-cyan-400/50 hover:text-cyan-300"
+                title="View every in-scope asset"
+              >
                 {{ program.scopes.length }} in scope
-              </span>
-              <span class="rounded border border-white/10 px-2 py-0.5 font-mono text-[10px] text-gray-500">
+              </RouterLink>
+              <RouterLink
+                :to="{ name: 'program-detail', params: { id: program.id }, hash: '#out-of-scope' }"
+                class="rounded border border-white/10 px-2 py-0.5 font-mono text-[10px] text-gray-500 transition-colors hover:border-cyan-400/40 hover:text-cyan-300"
+                title="View every out-of-scope asset"
+              >
                 {{ program.out_of_scope.length }} out
-              </span>
+              </RouterLink>
               <span v-if="payout(program)" class="rounded border border-emerald-400/20 bg-emerald-400/[0.06] px-2 py-0.5 font-mono text-[10px] text-emerald-300/80">
                 max {{ payout(program) }}
               </span>
@@ -112,37 +128,41 @@
               </span>
             </div>
 
+            <!-- short preview only — the complete lists live on the detail page -->
             <ul class="space-y-1 mb-3">
               <li
                 v-for="asset in visibleScopes(program)"
                 :key="asset.target || asset"
-                class="text-xs font-mono text-gray-400 truncate flex items-center gap-2"
+                class="text-xs font-mono text-gray-400 flex items-start gap-2"
               >
                 <span class="text-cyan-500/50">›</span>
-                <span class="truncate">{{ asset.target || asset }}</span>
+                <span class="min-w-0 break-all">{{ asset.target || asset }}</span>
                 <span v-if="asset.type" class="text-[10px] text-gray-600 shrink-0">{{ asset.type }}</span>
               </li>
               <li v-if="program.scopes.length === 0" class="text-xs text-gray-600">no in-scope assets</li>
-            </ul>
-
-            <button
-              v-if="program.out_of_scope.length"
-              class="text-[11px] font-mono text-gray-500 hover:text-gray-300 transition-colors"
-              @click="toggle(program.id)"
-            >
-              {{ expanded[program.id] ? '− hide' : '+' }} out-of-scope ({{ program.out_of_scope.length }})
-            </button>
-
-            <ul v-if="expanded[program.id]" class="mt-2 space-y-1 pl-4 border-l border-white/10">
-              <li v-for="asset in program.out_of_scope" :key="asset" class="text-[11px] font-mono text-gray-600 truncate">
-                {{ typeof asset === 'string' ? asset : asset.target }}
+              <li v-if="program.scopes.length > 4">
+                <RouterLink
+                  :to="{ name: 'program-detail', params: { id: program.id }, hash: '#in-scope' }"
+                  class="text-[11px] font-mono text-cyan-300/70 transition-colors hover:text-cyan-300"
+                >
+                  + {{ program.scopes.length - 4 }} more in scope →
+                </RouterLink>
               </li>
             </ul>
 
-            <div class="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between text-[10px] font-mono text-gray-600">
-              <span>{{ program.slug }}</span>
-              <span>{{ program.last_synced_at ? timeAgo(program.last_synced_at) : 'never synced' }}</span>
+            <div class="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between gap-3 text-[10px] font-mono text-gray-600">
+              <span class="min-w-0 break-all">{{ program.slug }}</span>
+              <span class="shrink-0">{{ program.last_synced_at ? timeAgo(program.last_synced_at) : 'never synced' }}</span>
             </div>
+
+            <!-- opens the full dossier (all scopes, paginated) in a new tab -->
+            <RouterLink
+              :to="{ name: 'program-detail', params: { id: program.id } }"
+              target="_blank"
+              class="mt-3 flex items-center justify-center gap-2 rounded-lg border border-cyan-400/20 bg-cyan-400/[0.05] px-3 py-2 font-mono text-[11px] uppercase tracking-wider text-cyan-300/80 transition-colors hover:border-cyan-400/50 hover:bg-cyan-400/10 hover:text-cyan-300"
+            >
+              view full program ↗
+            </RouterLink>
           </article>
         </div>
 
@@ -156,15 +176,34 @@
                 <th class="text-right px-4 py-3 font-normal">In scope</th>
                 <th class="text-right px-4 py-3 font-normal">Out</th>
                 <th class="text-right px-4 py-3 font-normal">Updated</th>
+                <th class="text-right px-4 py-3 font-normal">Details</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-white/[0.06]">
               <tr v-for="program in programs" :key="program.id" class="row-hover">
-                <td class="px-4 py-3 text-gray-200 truncate max-w-[220px]">{{ program.name }}</td>
+                <td class="px-4 py-3 text-gray-200 break-words">
+                  <RouterLink
+                    :to="{ name: 'program-detail', params: { id: program.id } }"
+                    class="transition-colors hover:text-cyan-300"
+                    title="View the full program dossier"
+                  >
+                    {{ program.name }}
+                  </RouterLink>
+                </td>
                 <td class="px-4 py-3 text-[11px] font-mono text-cyan-400/70">{{ sourceLabel(program.source) }}</td>
                 <td class="px-4 py-3 text-right tabular-nums text-gray-300">{{ program.scopes.length }}</td>
                 <td class="px-4 py-3 text-right tabular-nums text-gray-500">{{ program.out_of_scope.length }}</td>
                 <td class="px-4 py-3 text-right text-[11px] text-gray-600">{{ timeAgo(program.last_synced_at) }}</td>
+                <td class="px-4 py-3 text-right">
+                  <RouterLink
+                    :to="{ name: 'program-detail', params: { id: program.id } }"
+                    target="_blank"
+                    class="font-mono text-[11px] text-cyan-300/70 transition-colors hover:text-cyan-300"
+                    title="Open the full dossier in a new tab"
+                  >
+                    open ↗
+                  </RouterLink>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -179,6 +218,7 @@
 
 <script setup>
 import { computed, reactive, ref, watch } from 'vue'
+import { RouterLink } from 'vue-router'
 import { api } from '../../services/api'
 import { useApi } from '../../composables/useApi'
 import { formatMoney, formatNumber, sourceLabel, timeAgo } from '../../utils/format'
@@ -191,7 +231,6 @@ const availableSources = ['bugcrowd', 'hackerone', 'yeswehack', 'intigriti', 'lo
 const filters = reactive({ q: '', source: '', active: '', sort: 'name' })
 const page = ref(1)
 const viewMode = ref('grid')
-const expanded = reactive({})
 
 const { data, error, loading, load } = useApi(() =>
   api.programs({
@@ -221,10 +260,6 @@ watch(
 )
 
 watch(page, load)
-
-function toggle(id) {
-  expanded[id] = !expanded[id]
-}
 
 function visibleScopes(program) {
   const details = program.scope_details?.in

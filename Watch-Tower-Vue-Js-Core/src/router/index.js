@@ -29,6 +29,14 @@ const routes = [
     component: TargetsPage
   },
   {
+    // Full dossier for a single program: complete in-scope and
+    // out-of-scope lists with client-side pagination (no truncation).
+    path: '/programs/:id',
+    name: 'program-detail',
+    component: () => import('../components/Content/ProgramDetailPage.vue'),
+    props: true
+  },
+  {
     path: '/monitors',
     name: 'monitors',
     component: MonitorsPage
@@ -54,6 +62,7 @@ const router = createRouter({
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) return savedPosition
+    if (to.hash) return { el: to.hash, top: 96, behavior: 'smooth' }
     return { top: 0 }
   }
 })
