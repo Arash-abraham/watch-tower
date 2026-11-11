@@ -21,7 +21,7 @@ Intigriti), stores every program's in-scope and out-of-scope assets, detects wha
 changed since the previous run and tells you about it — on a dashboard and on
 Telegram/Discord.
 
-It never scans or touches a target. It only reads public scope definitions.
+The scope collector only reads public scope definitions. Optional asset discovery uses subfinder passive sources and is run explicitly by the operator.
 
 <p align="center">
   <img src="img/Neon Watch Tower Monitoring Cycle.png" alt="Watch Tower architecture — datasets → Python collector → MongoDB → Laravel API → Vue dashboard, with Telegram/Discord notifications" width="860" />
@@ -40,7 +40,7 @@ It never scans or touches a target. It only reads public scope definitions.
 | Scheduler (`--watch`) and one-shot runs (`--once`) | ✅ |
 | REST API: programs, changes, stats, sources, subdomains, health | ✅ |
 | Dashboard: live stats, program browser, alert feed, sources, monitors | ✅ |
-| Subdomain / asset discovery monitors | 🚧 planned (collection + API exist, no enumerator yet) |
+| Subdomain / asset discovery | ✅ opt-in, passive subfinder discovery for wildcard scopes |
 | Authentication / multi-tenant workspaces | 🚧 planned |
 
 ---
@@ -77,6 +77,33 @@ The collector starts syncing immediately and then every 30 minutes
 events, so the alert feed is not flooded on a fresh install.
 
 Stop with `docker compose down` (add `-v` to drop the database volume).
+
+### Opt-in subdomain discovery
+
+After syncing programs, review the program rules and authorization before running discovery.
+Discovery is manual and only enumerates explicit `*.example.com` in-scope entries of
+one active program; exact hostnames are not treated as permission to enumerate their
+subdomains. Subfinder queries third-party passive sources, which may receive the domain.
+Results are filtered against machine-readable out-of-scope hostnames and wildcards;
+a program with an unparseable exclusion is skipped rather than guessed. This filtering
+cannot interpret all program policies, so validate results against the original rules.
+No DNS resolution or target probing is performed, and results are historical (not removed
+when a later run does not return them). API `/api/v2.1/subdomains` exposes the results.
+
+```bash
+# Docker: sync first, then use the source and slug shown in the program API
+docker compose --profile manual run --rm collector python monitor.py --once --sources hackerone
+docker compose --profile manual run --rm collector python discover.py --source hackerone --program PROGRAM_SLUG
+
+# Local: install ProjectDiscovery subfinder separately and ensure it is on PATH
+cd Watch-Tower-Python-Core
+python discover.py --source hackerone --program PROGRAM_SLUG
+```
+
+Use `--subfinder /path/to/subfinder` to choose the binary and `--timeout 300` to
+change the per-domain timeout. A failed enumeration returns a nonzero exit code;
+successful domains are still saved. The Docker collector image includes subfinder.
+Discovery is not scheduled automatically and does not generate change alerts.
 
 ### Enabling notifications
 

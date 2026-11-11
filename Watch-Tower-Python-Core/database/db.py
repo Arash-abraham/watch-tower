@@ -9,7 +9,7 @@ Collections
 ``programs``     one document per program/source, with ``scopes`` and ``outScopes``
 ``changes``      one document per detected scope change (the alert feed)
 ``sync_runs``    one document per collector execution (observability)
-``subdomains``   reserved for the upcoming asset-discovery monitors
+``subdomains``   passive discovery results by source, program and host
 """
 
 from __future__ import annotations
@@ -77,9 +77,19 @@ def ensure_indexes(db=None) -> None:
         db[CHANGES].create_index([("detected_at", DESCENDING)])
         db[CHANGES].create_index([("source", ASCENDING), ("detected_at", DESCENDING)])
         db[SYNC_RUNS].create_index([("started_at", DESCENDING)])
-        db[SUBDOMAINS].create_index([("host", ASCENDING)], unique=True)
     except PyMongoError as exc:  # index creation is best effort
         log.warning("could not create indexes: %s", exc)
+
+
+def ensure_subdomain_indexes(database=None) -> None:
+    """Upgrade the old host-only unique index before writing discovery results."""
+    database = database if database is not None else get_db()
+    collection = database[SUBDOMAINS]
+    for name, info in collection.index_information().items():
+        if info.get("unique") and list(info["key"]) == [("host", ASCENDING)]:
+            collection.drop_index(name)
+    collection.create_index([("source", ASCENDING), ("program_slug", ASCENDING),
+                             ("host", ASCENDING)], unique=True)
 
 
 def _program_document(program: dict, now: datetime) -> dict:
