@@ -45,11 +45,34 @@ The scope collector only reads public scope definitions. Optional asset discover
 
 ---
 
-## Dashboard preview
+## Screenshots
 
-<p align="center">
-  <img src="img/architecture.png" alt="Watch Tower dashboard — live stats, changes chart and alert feed" width="860" />
-</p>
+The screenshots below show the running Vue dashboard using the project's **demo API**;
+the programs, assets, alerts and health status shown are sample data, not live results.
+
+### Home
+![Home page](img/screenshots/home.jpg)
+
+### Dashboard
+![Dashboard overview](img/screenshots/dashboard.jpg)
+
+### Applications and sources
+![Applications and sources](img/screenshots/sources.jpg)
+
+### Targets and assets
+![Targets and assets](img/screenshots/programs.jpg)
+
+### Program details
+![Program details and scope inventory](img/screenshots/program-detail.jpg)
+
+### Monitors
+![Monitors](img/screenshots/monitors.jpg)
+
+### Alerts
+![Alerts](img/screenshots/alerts.jpg)
+
+### Settings
+![Settings](img/screenshots/settings.jpg)
 
 ---
 
