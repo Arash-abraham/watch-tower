@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::connection('mongodb')->create('subdomains', function (Blueprint $collection) {
-            $collection->unique('host');
+            $collection->unique(['source', 'program_slug', 'host']);
             $collection->index('program_slug');
         });
     }

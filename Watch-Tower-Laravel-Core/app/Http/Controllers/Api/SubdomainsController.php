@@ -8,8 +8,7 @@ use App\Models\Subdomain;
 use Illuminate\Http\Request;
 
 /**
- * Read-only for now: the collector will populate this collection once the
- * asset-discovery monitors are enabled.
+ * Read-only API for manually collected subdomain discovery results.
  */
 class SubdomainsController extends Controller
 {

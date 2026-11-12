@@ -5,8 +5,7 @@ namespace App\Models;
 use MongoDB\Laravel\Eloquent\Model;
 
 /**
- * Reserved for the asset-discovery monitors (subdomain take-over, new hosts).
- * The collection is created by the collector; the API is read-only for now.
+ * Passive discovery results written by the collector; the API is read-only.
  */
 class Subdomain extends Model
 {

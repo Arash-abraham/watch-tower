@@ -1,7 +1,12 @@
+FROM golang:1.24 AS subfinder
+RUN CGO_ENABLED=0 go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@v2.8.0
+
 FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
+
+COPY --from=subfinder /go/bin/subfinder /usr/local/bin/subfinder
 
 WORKDIR /app
 

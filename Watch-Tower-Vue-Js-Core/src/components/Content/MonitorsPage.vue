@@ -72,7 +72,7 @@
                 <div class="flex items-center justify-between mb-1">
                   <span class="text-sm text-white">{{ monitor.name }}</span>
                   <span class="rounded border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider" :class="monitor.enabled ? 'border-emerald-400/25 bg-emerald-400/[0.06] text-emerald-300/80' : 'border-white/10 text-gray-500'">
-                    {{ monitor.enabled ? 'ACTIVE' : 'PLANNED' }}
+                    {{ monitor.enabled ? 'ACTIVE' : 'MANUAL' }}
                   </span>
                 </div>
                 <p class="text-[11px] text-gray-500">{{ monitor.description }}</p>
@@ -147,7 +147,7 @@ const monitors = computed(() => [
   },
   {
     name: 'Asset discovery (subdomains)',
-    description: 'Reserved collection; enumeration is not implemented yet.',
+    description: 'Available on demand via the collector CLI; not scheduled automatically.',
     enabled: false,
   },
 ])
