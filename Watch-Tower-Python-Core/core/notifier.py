@@ -1,13 +1,9 @@
-"""Notification channels (Telegram + Discord).
-
-The notifier is deliberately dumb: it receives the list of change documents
-produced by the collector, renders a readable message and pushes it to every
-configured channel.  Channels without credentials are skipped, never fatal.
-"""
+"""Render and send collector alerts to Telegram and Discord."""
 
 from __future__ import annotations
 
 import logging
+import time
 from collections import defaultdict
 
 import requests
@@ -41,24 +37,32 @@ TYPE_MARKERS = {
 
 
 def _chunks(text: str, limit: int) -> list[str]:
+    """Split at line boundaries when possible, counting UTF-16 code units."""
     chunks: list[str] = []
-    current = ""
+    current: list[str] = []
+    size = 0
     for line in text.splitlines(keepends=True):
-        if current and len(current) + len(line) > limit:
-            chunks.append(current.rstrip())
-            current = ""
-        current += line
-    if current.strip():
-        chunks.append(current.rstrip())
-    return chunks or [text[:limit]]
+        line_size = len(line.encode("utf-16-le")) // 2
+        if current and size + line_size > limit:
+            chunks.append("".join(current))
+            current, size = [], 0
+        for char in line:
+            width = 2 if ord(char) > 0xFFFF else 1
+            if size + width > limit:
+                chunks.append("".join(current))
+                current, size = [], 0
+            current.append(char)
+            size += width
+    if current:
+        chunks.append("".join(current))
+    return [chunk for chunk in chunks if chunk.strip()]
 
 
-def build_message(changes: list[dict], max_items: int | None = None) -> str:
-    """Render a human-readable summary grouped by source and program."""
+def build_message(changes: list[dict]) -> str:
+    """Render every event in a batch, grouped by source and program."""
     if not changes:
         return ""
 
-    max_items = max_items or config.NOTIFY_MAX_ITEMS or 40
     grouped: dict[tuple[str, str], list[dict]] = defaultdict(list)
     for change in changes:
         grouped[(change.get("source", "?"), change.get("program_name", "?"))].append(change)
@@ -69,11 +73,7 @@ def build_message(changes: list[dict], max_items: int | None = None) -> str:
         "",
     ]
 
-    shown = 0
     for (source, program), events in sorted(grouped.items()):
-        if shown >= max_items:
-            lines.append(f"... and {len(changes) - shown} more event(s)")
-            break
         lines.append(f"[{source}] {program}")
         for event in events:
             marker = TYPE_MARKERS.get(event["type"], "·")
@@ -83,71 +83,87 @@ def build_message(changes: list[dict], max_items: int | None = None) -> str:
             if event.get("asset_type") and event.get("target"):
                 line += f" ({event['asset_type']})"
             lines.append(line)
-            shown += 1
         lines.append("")
 
     lines.append("Open the dashboard for details.")
     return "\n".join(lines).rstrip()
 
 
-def _post(url: str, payload: dict, timeout: int = 15) -> bool:
+def _retry_delay(response) -> float:
+    """Read a provider's rate-limit delay in seconds, if present."""
     try:
-        response = requests.post(url, json=payload, timeout=timeout)
-        if response.status_code >= 300:
-            log.error("notification failed (%s): %s", response.status_code, response.text[:300])
+        data = response.json()
+        if not isinstance(data, dict):
+            data = {}
+        candidate = data.get("parameters")
+        telegram_delay = candidate.get("retry_after") if isinstance(candidate, dict) else None
+        return float(response.headers.get("Retry-After") or telegram_delay or data.get("retry_after") or 0)
+    except (ValueError, TypeError):
+        return 0
+
+
+def _post(channel: str, url: str, payload: dict) -> bool:
+    for attempt in range(2):
+        try:
+            response = requests.post(
+                url, json=payload, timeout=15, allow_redirects=False,
+                params={"wait": "true"} if channel == "discord" else None,
+            )
+        except requests.RequestException as exc:
+            # Exception strings and response bodies may contain the webhook or bot token.
+            log.error("%s notification request failed (%s)", channel, type(exc).__name__)
+            return False
+
+        if response.status_code == 429 and attempt == 0:
+            delay = _retry_delay(response)
+            if 0 < delay <= 15:
+                time.sleep(delay)
+                continue
+        if not 200 <= response.status_code < 300:
+            log.error("%s notification rejected (HTTP %s)", channel, response.status_code)
+            return False
+        if channel == "telegram":
+            try:
+                data = response.json()
+                if isinstance(data, dict) and data.get("ok") is True:
+                    return True
+            except ValueError:
+                pass
+            log.error("telegram did not confirm delivery")
             return False
         return True
-    except requests.RequestException as exc:
-        log.error("notification request failed: %s", exc)
-        return False
+    return False
 
 
 def send_telegram(text: str) -> bool:
-    token = config.TELEGRAM_BOT_TOKEN
-    chat_id = config.TELEGRAM_CHAT_ID
-    if not token or not chat_id:
+    token, chat_id = config.TELEGRAM_BOT_TOKEN, config.TELEGRAM_CHAT_ID
+    if not token or not chat_id or not text.strip():
         return False
-
-    ok = True
-    for chunk in _chunks(text, TELEGRAM_LIMIT):
-        ok = _post(
-            f"https://api.telegram.org/bot{token}/sendMessage",
-            {"chat_id": chat_id, "text": chunk, "disable_web_page_preview": True},
-        ) and ok
-    return ok
+    return all(
+        _post(
+            "telegram", f"https://api.telegram.org/bot{token}/sendMessage",
+            {"chat_id": chat_id, "text": chunk, "link_preview_options": {"is_disabled": True}},
+        )
+        for chunk in _chunks(text, TELEGRAM_LIMIT)
+    )
 
 
 def send_discord(text: str) -> bool:
     webhook = config.DISCORD_WEBHOOK_URL
-    if not webhook:
+    if not webhook or not text.strip():
         return False
+    return all(
+        _post("discord", webhook, {"content": chunk, "allowed_mentions": {"parse": []}})
+        for chunk in _chunks(text, DISCORD_LIMIT)
+    )
 
-    ok = True
-    for chunk in _chunks(text, DISCORD_LIMIT):
-        ok = _post(webhook, {"content": chunk[:2000]}) and ok
-    return ok
+
+def configured_channels() -> tuple[str, ...]:
+    return tuple(channel for channel, enabled in (
+        ("telegram", config.TELEGRAM_BOT_TOKEN and config.TELEGRAM_CHAT_ID),
+        ("discord", config.DISCORD_WEBHOOK_URL),
+    ) if enabled)
 
 
-def notify(changes: list[dict]) -> dict[str, str]:
-    """Send changes to every configured channel.
-
-    Returns a mapping ``channel -> status`` where status is one of
-    ``sent``, ``failed`` or ``not_configured``.
-    """
-    results: dict[str, str] = {}
-    if not changes:
-        return results
-
-    message = build_message(changes)
-    if not message:
-        return results
-
-    results["telegram"] = "not_configured"
-    if config.TELEGRAM_BOT_TOKEN and config.TELEGRAM_CHAT_ID:
-        results["telegram"] = "sent" if send_telegram(message) else "failed"
-
-    results["discord"] = "not_configured"
-    if config.DISCORD_WEBHOOK_URL:
-        results["discord"] = "sent" if send_discord(message) else "failed"
-
-    return results
+def send(channel: str, text: str) -> bool:
+    return {"telegram": send_telegram, "discord": send_discord}[channel](text)

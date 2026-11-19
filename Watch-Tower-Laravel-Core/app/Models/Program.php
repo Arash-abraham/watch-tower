@@ -36,6 +36,7 @@ class Program extends Model
     ];
 
     protected $casts = [
+        'discovery' => 'array',
         'scopes' => 'array',
         'outScopes' => 'array',
         'scope_details' => 'array',

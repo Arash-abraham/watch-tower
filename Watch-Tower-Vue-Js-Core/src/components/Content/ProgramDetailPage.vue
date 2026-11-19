@@ -56,6 +56,12 @@
             <StatCard label="First seen" :value="firstSeen" accent="blue" hint="in Watch Tower" />
           </div>
 
+          <nav aria-label="Program sections" class="mb-6 flex flex-wrap gap-2">
+            <a href="#discovered-subdomains" class="btn-primary text-xs">Subdomains ↓</a>
+            <a href="#in-scope" class="btn-ghost text-xs">In-scope assets ↓</a>
+            <a href="#out-of-scope" class="btn-ghost text-xs">Out-of-scope assets ↓</a>
+          </nav>
+
           <!-- overview -->
           <section class="panel mb-6 p-6">
             <h2 class="panel-title mb-4">OVERVIEW</h2>
@@ -104,6 +110,8 @@
               </li>
             </ul>
           </section>
+
+          <ProgramSubdomains :key="program.id" :program="program" />
 
           <!-- ══════════ IN SCOPE — full paginated list ══════════ -->
           <section id="in-scope" ref="inScopeEl" class="panel mb-6 scroll-mt-24 overflow-hidden">
@@ -271,6 +279,7 @@ import { RouterLink, useRoute } from 'vue-router'
 import { api } from '../../services/api'
 import { useApi } from '../../composables/useApi'
 import { formatDateTime, formatMoney, formatNumber, sourceLabel, timeAgo } from '../../utils/format'
+import ProgramSubdomains from './ProgramSubdomains.vue'
 import PageHeader from '../ui/PageHeader.vue'
 import AsyncState from '../ui/AsyncState.vue'
 import Pagination from '../ui/Pagination.vue'
@@ -386,7 +395,7 @@ function goPage(section, value, element) {
 watch(loading, async (isLoading) => {
   if (isLoading || !program.value || !route.hash) return
   await nextTick()
-  document.querySelector(route.hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  document.getElementById(route.hash.slice(1))?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 })
 
 /* Reload when navigating between two program detail pages. */

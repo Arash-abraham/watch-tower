@@ -59,7 +59,7 @@
           <div class="px-5 py-4 border-t border-white/[0.06]">
             <p class="text-[11px] text-gray-600">
               Channels are configured in the collector's environment
-              (<code class="text-gray-400">Watch-Tower-Python-Core/.env</code>). The API only reports their state.
+              (<code class="text-gray-400">Watch-Tower-Python-Core/.env</code>). The badges reflect API display settings, not a live delivery check.
             </p>
           </div>
         </section>

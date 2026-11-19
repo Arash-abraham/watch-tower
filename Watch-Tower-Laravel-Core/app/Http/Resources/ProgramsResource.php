@@ -20,6 +20,7 @@ class ProgramsResource extends JsonResource
             'slug' => $this->slug,
             'name' => $this->program_name,
             'url' => $this->program_url,
+            'discovery' => $this->discovery,
             'active' => (bool) $this->active,
             'scopes' => $this->scopes ?? [],
             'out_of_scope' => $this->outScopes ?? [],

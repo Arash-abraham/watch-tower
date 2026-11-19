@@ -14,6 +14,7 @@ class SubdomainsResource extends JsonResource
             'host' => $this->host,
             'program' => $this->program_slug,
             'source' => $this->source,
+            'observations' => (object) ($this->observations ?? []),
             'resolved' => (bool) $this->resolved,
             'ip' => $this->ip,
             'first_seen_at' => optional($this->first_seen_at)->toIso8601String(),

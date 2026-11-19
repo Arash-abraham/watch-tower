@@ -26,6 +26,7 @@ class Subdomain extends Model
     ];
 
     protected $casts = [
+        'observations' => 'array',
         'resolved' => 'boolean',
         'first_seen_at' => 'datetime',
         'last_seen_at' => 'datetime',

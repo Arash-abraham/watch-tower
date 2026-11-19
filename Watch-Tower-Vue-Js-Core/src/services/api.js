@@ -57,6 +57,7 @@ export const api = {
 
   programs: (params = {}) => request('/programs', params),
   program: (id) => request(`/programs/${encodeURIComponent(id)}`),
+  subdomains: (params = {}) => request('/subdomains', params),
   changes: (params = {}) => request('/changes', params),
   changeCounts: () => request('/changes/count'),
   stats: () => request('/stats'),
