@@ -29,6 +29,8 @@ import signal
 import sys
 import time
 
+from pymongo.errors import PyMongoError
+
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from config import config  # noqa: E402
@@ -45,6 +47,8 @@ _running = True
 
 
 def setup_logging(level: str | None = None) -> None:
+    # urllib3 debug logs include credential-bearing Telegram/webhook paths.
+    logging.getLogger("urllib3.connectionpool").setLevel(logging.WARNING)
     logging.basicConfig(
         level=getattr(logging, (level or config.LOG_LEVEL or "INFO").upper(), logging.INFO),
         format="%(asctime)s %(levelname)-7s %(name)s: %(message)s",
@@ -144,7 +148,8 @@ def run_source(source: str, args) -> dict:
         return {"source": source, "dry_run": True, "programs": len(programs), "changes": []}
 
     try:
-        summary = db.sync_programs(source, programs)
+        channels = () if args.no_notify else notifier.configured_channels()
+        summary = db.sync_programs(source, programs, notification_channels=channels)
     except Exception as exc:  # noqa: BLE001 - one bad source must not stop the others
         log.exception("sync failed for %s", source)
         try:
@@ -153,14 +158,42 @@ def run_source(source: str, args) -> dict:
             log.debug("could not record the failed run", exc_info=True)
         return {"source": source, "error": str(exc), "changes": []}
 
-    changes = summary.get("changes") or []
-    if changes and not args.no_notify:
-        results = notifier.notify(changes)
-        log.info("notifications: %s", results)
-        if "sent" in results.values():
-            db.mark_notified([change["_id"] for change in changes if "_id" in change])
-
     return summary
+
+
+def deliver_notifications() -> int:
+    """Drain queued batches, leaving failed deliveries for the next run."""
+    failures = 0
+    batch_size = max(1, config.NOTIFY_MAX_ITEMS or 40)
+    for channel in notifier.configured_channels():
+        delivered = 0
+        try:
+            while changes := db.pending_notifications(channel, batch_size):
+                if not notifier.send(channel, notifier.build_message(changes)):
+                    failures += 1
+                    log.warning("%s alerts remain queued for the next run", channel)
+                    break
+                db.acknowledge_notifications(channel, [change["_id"] for change in changes])
+                delivered += len(changes)
+        except PyMongoError:
+            failures += 1
+            log.error("could not read or acknowledge %s alerts in MongoDB", channel)
+        if delivered:
+            log.info("%s: delivered %s alert(s)", channel, delivered)
+    return failures
+
+
+def test_notifications() -> int:
+    channels = notifier.configured_channels()
+    if not channels:
+        log.error("no notification channel configured; set the Telegram token and chat ID and/or the Discord webhook")
+        return 1
+    failed = False
+    for channel in channels:
+        sent = notifier.send(channel, "WATCH TOWER — notification test")
+        log.info("%s notification test: %s", channel, "sent" if sent else "failed")
+        failed = failed or not sent
+    return int(failed)
 
 
 def run_once(sources: list[str], args) -> int:
@@ -185,6 +218,8 @@ def run_once(sources: list[str], args) -> int:
         totals["changes"],
         failures,
     )
+    if not args.no_notify and not args.dry_run:
+        failures += deliver_notifications()
     return 1 if failures else 0
 
 
@@ -196,8 +231,10 @@ def _stop(signum, frame):  # noqa: ARG001
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Watch Tower collector")
-    parser.add_argument("--once", action="store_true", help="run a single sync (default)")
-    parser.add_argument("--watch", action="store_true", help="run forever, syncing on an interval")
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--test-notifications", action="store_true", help="send a test message to configured channels and exit")
+    mode.add_argument("--once", action="store_true", help="run a single sync (default)")
+    mode.add_argument("--watch", action="store_true", help="run forever, syncing on an interval")
     parser.add_argument("--interval", type=int, default=None, help="seconds between runs in --watch mode")
     parser.add_argument("--sources", action="append", help="comma separated list (default: all configured)")
     parser.add_argument("--local", action="store_true", help="also sync the local programs/ directory")
@@ -218,6 +255,10 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     setup_logging(args.log_level)
+    if args.test_notifications:
+        if args.no_notify or args.dry_run:
+            parser.error("--test-notifications cannot be combined with --no-notify or --dry-run")
+        return test_notifications()
 
     sources = parse_sources(args.sources)
     if args.local and LOCAL_SOURCE not in sources:

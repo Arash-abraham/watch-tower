@@ -76,6 +76,7 @@ def ensure_indexes(db=None) -> None:
         db[PROGRAMS].create_index([("last_synced_at", DESCENDING)])
         db[CHANGES].create_index([("detected_at", DESCENDING)])
         db[CHANGES].create_index([("source", ASCENDING), ("detected_at", DESCENDING)])
+        db[CHANGES].create_index([("notification_pending", ASCENDING), ("detected_at", ASCENDING)])
         db[SYNC_RUNS].create_index([("started_at", DESCENDING)])
     except PyMongoError as exc:  # index creation is best effort
         log.warning("could not create indexes: %s", exc)
@@ -90,6 +91,8 @@ def ensure_subdomain_indexes(database=None) -> None:
             collection.drop_index(name)
     collection.create_index([("source", ASCENDING), ("program_slug", ASCENDING),
                              ("host", ASCENDING)], unique=True)
+    collection.create_index([("source", ASCENDING), ("program_slug", ASCENDING),
+                             ("last_seen_at", DESCENDING), ("host", ASCENDING)])
 
 
 def _program_document(program: dict, now: datetime) -> dict:
@@ -115,6 +118,7 @@ def sync_programs(
     *,
     deactivate_missing: bool | None = None,
     record_run: bool = True,
+    notification_channels: tuple[str, ...] = (),
     now: datetime | None = None,
 ) -> dict:
     """Upsert a full snapshot for ``source`` and record every change.
@@ -187,6 +191,9 @@ def sync_programs(
                 )
 
     if pending_changes:
+        for change in pending_changes:
+            if notification_channels and (config.NOTIFY_ON_FIRST_SEEN or change["type"] != "program_added"):
+                change["notification_pending"] = list(notification_channels)
         changes_coll.insert_many(pending_changes)
 
     summary = {
@@ -268,6 +275,25 @@ def mark_notified(change_ids: Iterable) -> int:
         {"_id": {"$in": ids}}, {"$set": {"notified": True, "notified_at": utcnow()}}
     )
     return result.modified_count
+
+
+def pending_notifications(channel: str, limit: int) -> list[dict]:
+    return list(get_db()[CHANGES].find({"notification_pending": channel}).sort("detected_at", ASCENDING).limit(limit))
+
+
+def acknowledge_notifications(channel: str, change_ids: Iterable) -> None:
+    """Remove only this channel from the queue; finish events at the last delivery.
+
+    The collector has one delivery worker. Finish events waiting only on this
+    channel first, then remove it from events still waiting on other channels.
+    """
+    collection = get_db()[CHANGES]
+    pending = {"_id": {"$in": list(change_ids)}, "notification_pending": channel}
+    collection.update_many(
+        {**pending, "notification_pending": [channel]},
+        {"$set": {"notification_pending": [], "notified": True, "notified_at": utcnow()}},
+    )
+    collection.update_many(pending, {"$pull": {"notification_pending": channel}})
 
 
 def recent_changes(limit: int = 20) -> list[dict]:

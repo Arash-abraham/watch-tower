@@ -167,6 +167,42 @@ const programs = NAMES.map((name, index) => {
   }
 })
 
+// Synthetic subdomain history covers pagination, overlapping provenance and partial runs.
+const subdomains = programs.slice(1, 4).flatMap((program, index) => {
+  const count = [31, 8, 0][index]
+  const finished = iso(NOW - 2 * HOUR)
+  const rows = Array.from({ length: count }, (_, i) => ({
+    id: hexId(2000 + index * 100 + i),
+    host: `${['api', 'docs', 'status', 'portal', 'cdn'][i % 5]}-${i + 1}.${program.slug}.demo.example`,
+    program: program.slug,
+    source: program.source,
+    observations: i % 3 === 0 ? { crtsh: finished, certspotter: finished }
+      : i % 3 === 1 ? { crtsh: finished } : { subfinder: finished },
+    first_seen_at: iso(NOW - (i + 1) * DAY),
+    last_seen_at: finished,
+    resolved: false,
+    ip: null,
+  }))
+  const extra = ['commoncrawl', 'securitytrails', 'dnsdb', 'urlscan', 'chaos', 'certspotter', 'virustotal']
+  if (index === 1) {
+    extra.forEach((name, i) => { rows[i].observations[name] = finished })
+  }
+  const subfinderOnly = rows.filter((row) => row.observations.subfinder).length
+  const ctOnly = rows.filter((row) => row.observations.crtsh && !row.observations.certspotter).length
+  program.discovery = {
+    status: ['complete', 'partial', 'failed'][index],
+    finished_at: finished, roots: 2, hosts: count, failures: [0, 1, 4][index], limited: index === 1 ? 1 : 0,
+    providers: {
+      subfinder: { hosts: count - ctOnly, exclusive_hosts: subfinderOnly, succeeded: index === 2 ? 0 : 2, failures: index === 2 ? 2 : 0 },
+      crtsh: { hosts: count - subfinderOnly, exclusive_hosts: ctOnly, succeeded: 2 - index, failures: index },
+      ...(index === 1 ? Object.fromEntries(extra.map(name => [name, {
+        hosts: 1, exclusive_hosts: 0, succeeded: 2, failures: 0, limited: Number(name === 'commoncrawl'),
+      }])) : {}),
+    },
+  }
+  return rows
+})
+
 const changes = Array.from({ length: 90 }, (_, j) => {
   const program = programs[(j * 5) % programs.length]
   const type = CHANGE_TYPES[j % CHANGE_TYPES.length]
@@ -270,6 +306,18 @@ function listPrograms(url) {
   return paginate(items, url, 15)
 }
 
+function listSubdomains(url) {
+  const source = url.searchParams.get('source')
+  const program = url.searchParams.get('program')
+  const provider = url.searchParams.get('provider')
+  const q = (url.searchParams.get('q') || '').trim().toLowerCase()
+  const rows = subdomains.filter((row) => (!source || row.source === source)
+    && (!program || row.program === program) && (!provider || Object.hasOwn(row.observations, provider))
+    && (!q || row.host.includes(q)))
+  rows.sort((a, b) => b.last_seen_at.localeCompare(a.last_seen_at) || a.host.localeCompare(b.host))
+  return paginate(rows, url, 25)
+}
+
 function listChanges(url) {
   let items = [...changes]
   const source = url.searchParams.get('source')
@@ -320,6 +368,11 @@ const server = http.createServer((req, res) => {
     }
     if (path === `${API}/changes`) return send(200, listChanges(url))
     if (path === `${API}/programs`) return send(200, listPrograms(url))
+    if (path === `${API}/subdomains`) return send(200, listSubdomains(url))
+    if (path.startsWith(`${API}/subdomains/`)) {
+      const asset = subdomains.find((row) => row.id === path.split('/').at(-1))
+      return asset ? send(200, { data: asset }) : send(404, { message: 'Subdomain not found.' })
+    }
 
     const match = path.match(new RegExp(`^${API}/programs/([^/]+)$`))
     if (match) {

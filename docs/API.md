@@ -166,7 +166,7 @@ and `conflicts` is recalculated.
 | `type` | enum | — | `program_added`, `program_removed`, `scope_added`, `scope_removed`, `out_scope_added`, `out_scope_removed`, `conflict` |
 | `program` | string | — | Program slug |
 | `since` | ISO date | — | `detected_at >= since` |
-| `notified` | `1` / `0` | — | Delivery state |
+| `notified` | `1` / `0` | — | True once all channels queued for the change confirm delivery; false also includes alerts that were never queued |
 | `page`, `per_page` | int | `1`, `25` | |
 
 ```json
@@ -193,16 +193,45 @@ and `conflicts` is recalculated.
 
 ## Subdomains
 
-Reserved for the asset-discovery monitors. The collection exists and the API is
-read-only; the collector does not populate it yet.
+Read-only historical observations from manual passive discovery. An observation
+is not evidence that a hostname resolves, is live, or remains in scope.
 
 ### `GET /api/v2.1/subdomains`
 
-Filters: `source`, `program`, `q`, `page`, `per_page`.
+Filters: `source` (program platform), `program` (program slug), `q` (hostname
+substring), `provider` (observation source ID such as `crtsh`), `page`, `per_page`.
+Results are sorted by most recent collection first. The `observations` object maps
+source IDs to ISO timestamps when Watch Tower collected the name, not when the
+provider first saw it. Older records can have an empty `observations` object.
 
 ### `GET /api/v2.1/subdomains/{id}`
 
-Returns `{ "data": { ... } }` or `404`.
+Returns the same resource as a list item, wrapped in `{ "data": ... }`, or `404`.
+
+```json
+{
+  "data": {
+    "id": "6712f0c1a1b2c3d4e5f60718",
+    "host": "api.example.com",
+    "source": "hackerone",
+    "program": "example",
+    "observations": { "crtsh": "2026-11-19T09:00:00.000+00:00" },
+    "resolved": false,
+    "ip": null,
+    "first_seen_at": "2026-11-19T09:00:00+00:00",
+    "last_seen_at": "2026-11-19T09:00:00+00:00"
+  }
+}
+```
+
+The program resource has `discovery: null` before its first recorded run. A saved
+summary carries `status` (`complete`, `partial`, `failed`, `no_scope`, or `blocked_scope`),
+`finished_at`, `roots`, `hosts` (distinct accepted names), `failures` (failed
+provider/root attempts), `limited` (provider/root attempts truncated by a page or result cap),
+and `providers` keyed by collector ID (e.g. `subfinder`, `crtsh`, `commoncrawl`).
+Each path reports `hosts`, `exclusive_hosts` (names no other selected path returned),
+`succeeded`, `failures`, and `limited` (root counts). A limited response can still be
+counted as a successful request, while the overall run is reported as `partial`.
 
 ---
 

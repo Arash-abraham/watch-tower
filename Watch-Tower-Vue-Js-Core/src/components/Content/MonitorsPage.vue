@@ -147,7 +147,7 @@ const monitors = computed(() => [
   },
   {
     name: 'Asset discovery (subdomains)',
-    description: 'Available on demand via the collector CLI; not scheduled automatically.',
+    description: 'Manual passive collection from public indexes and configured providers. Find results on each program’s detail page.',
     enabled: false,
   },
 ])
